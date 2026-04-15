@@ -1,0 +1,38 @@
+---
+title: Documentation Health Metrics
+sidebar_position: 16
+description: Metrics for tracking documentation quality, freshness, ownership, and structural health across the Bisakerja docs platform.
+owner: platform-docs-maintainer
+reviewers:
+  - engineering-lead
+doc_status: active
+last_reviewed: 2026-04-15
+---
+
+# Documentation Health Metrics
+
+This document defines the metrics used to understand whether the documentation system is staying trustworthy over time.
+
+## Core Metrics
+
+| Metric                 | What It Measures                                                   |
+| ---------------------- | ------------------------------------------------------------------ |
+| Coverage               | Whether required docs exist for key sections and services          |
+| Freshness              | Whether pages are still within expected review cadence             |
+| Ownership completeness | Whether pages have clear owners and reviewers                      |
+| Broken links           | Whether readers can navigate successfully                          |
+| Sync health            | Whether synchronized docs are publishing and reconciling correctly |
+| Stale asset count      | Whether visuals are lagging behind system changes                  |
+
+## Suggested Operational Thresholds
+
+- no broken links in the published site
+- no ownerless active pages
+- no critical landing page older than the expected review cadence without an explicit exception
+- no failing sync health for core services without open follow-up
+
+## How To Use The Metrics
+
+- use them to spot drift, not only to produce dashboards
+- review them during governance or docs maintenance cycles
+- escalate when structural or ownership problems persist across review periods

@@ -1,0 +1,45 @@
+---
+title: Visual Asset Policy
+sidebar_position: 13
+description: Governance rules for diagrams, screenshots, and generated visual assets in Bisakerja documentation.
+owner: platform-docs-maintainer
+reviewers:
+  - engineering-lead
+doc_status: active
+last_reviewed: 2026-04-15
+---
+
+# Visual Asset Policy
+
+This document governs diagrams, screenshots, and other visual assets used in the documentation system.
+
+## Policy Goals
+
+- avoid stale visuals that contradict current system behavior
+- keep asset ownership and naming clear
+- prevent collisions during synchronization and versioning
+
+## Diagram Rules
+
+- diagrams should live near the page that owns them unless intentionally shared
+- diagrams must use descriptive names with service or domain prefixes
+- architecture diagrams should be updated whenever system boundaries materially change
+
+## Screenshot Rules
+
+- screenshots should be used only when they add real explanatory value
+- screenshots that frequently go stale should be replaced by structured text or diagrams when possible
+- screenshots should be versioned or refreshed when the UI changes materially
+
+## Generated Asset Rules
+
+- generated visuals such as exported diagrams or generated references should be identified clearly
+- pipelines should avoid publishing assets with ambiguous names
+
+## Stale Asset Handling
+
+If a visual asset no longer reflects the system:
+
+1. update it
+2. replace it with a clearer artifact
+3. remove it if the same information is already covered better in text

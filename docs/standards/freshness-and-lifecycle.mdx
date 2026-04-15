@@ -1,0 +1,56 @@
+---
+title: Freshness and Lifecycle
+sidebar_position: 12
+description: Freshness rules, review cadence, lifecycle states, and escalation paths for stale or ownerless documentation.
+owner: platform-docs-maintainer
+reviewers:
+  - engineering-lead
+doc_status: active
+last_reviewed: 2026-04-15
+---
+
+# Freshness and Lifecycle
+
+This document defines how pages stay current and what happens when they do not.
+
+## Lifecycle States
+
+| State        | Meaning                                              |
+| ------------ | ---------------------------------------------------- |
+| `draft`      | In progress and not yet authoritative                |
+| `active`     | Current and expected to be used                      |
+| `deprecated` | Still available, but should not be used for new work |
+| `archived`   | Kept only for historical reference                   |
+
+## Freshness Rules
+
+- every maintained page must include `last_reviewed`
+- central overview and standards pages should be reviewed on a regular cadence
+- synchronized docs should be considered fresh when their source manifest and central publish state match expected latest state
+
+## Recommended Review Cadence
+
+| Page Type                 | Cadence                                        |
+| ------------------------- | ---------------------------------------------- |
+| Standards and governance  | Every 90 days or after policy change           |
+| Overview and architecture | Every 90 days or after architecture change     |
+| Service landing pages     | Every 60 days or after major service change    |
+| Operational references    | Every 60 days or after operational incident    |
+| Synced service docs       | On source change plus scheduled reconciliation |
+
+## Staleness Escalation
+
+If a page is stale:
+
+1. notify the owner
+2. request review or update
+3. if no response, escalate to the relevant engineering lead
+4. if still unresolved, mark the document as stale, deprecated, or archived as appropriate
+
+## Ownerless Page Rule
+
+If a page has no clear owner:
+
+- it should not remain silently active
+- assign an owner or mark the page for deprecation or archival
+- unresolved ownership should be tracked as a documentation health issue

@@ -1,0 +1,40 @@
+---
+title: Structural Change Policy
+sidebar_position: 14
+description: Rules for changing navigation, paths, section structure, and stable documentation routes in the Bisakerja docs hub.
+owner: platform-docs-maintainer
+reviewers:
+  - engineering-lead
+doc_status: active
+last_reviewed: 2026-04-15
+---
+
+# Structural Change Policy
+
+This document governs changes to navigation, directory structure, stable routes, and document placement in the central docs repository.
+
+## Structural Changes Covered
+
+- sidebar or navbar changes
+- moving a page to a different section
+- changing stable service sync targets
+- renaming canonical docs paths
+- reorganizing top-level documentation sections
+
+## Rules
+
+- stable reader-facing routes should not change without a migration plan
+- structural changes must be reviewed as documentation architecture changes, not only content edits
+- service sync targets should remain stable unless there is a compelling platform-level reason to change them
+
+## Change Procedure
+
+1. identify the reason for the structural change
+2. list affected paths and navigation surfaces
+3. update related standards or landing pages
+4. validate the full docs site
+5. communicate the structural change in the relevant PR or release note
+
+## Breaking Change Rule
+
+If a structural change would break expected reading paths or synchronization assumptions, it should be treated as a breaking documentation change and reviewed accordingly.
