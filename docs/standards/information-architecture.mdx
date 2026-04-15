@@ -1,0 +1,73 @@
+---
+title: Information Architecture
+sidebar_position: 3
+---
+
+# Information Architecture
+
+The repository structure should support two reading modes:
+
+- top-down orientation for platform understanding
+- targeted navigation into service-specific details
+
+## Top-Level Sections
+
+| Section       | Purpose                                                                    |
+| ------------- | -------------------------------------------------------------------------- |
+| `overview/`   | Platform mission, architecture, service landscape, flows, and glossary     |
+| `services/`   | Service landing pages and synchronized service documentation               |
+| `operations/` | Shared operational documentation and environment references                |
+| `standards/`  | Contribution rules, metadata standards, naming conventions, and governance |
+| `references/` | Shared domain entities, integrations, and reusable reference material      |
+
+## Canonical Repository Layout
+
+```text
+docs/
+  intro.mdx
+  overview/
+    index.mdx
+  services/
+    index.mdx
+    frontend-ui/
+      index.mdx
+      synced/
+    backend-api/
+      index.mdx
+      synced/
+    scraper-api/
+      index.mdx
+      synced/
+    model-api/
+      index.mdx
+      synced/
+  operations/
+    index.mdx
+  standards/
+    index.mdx
+    scope-and-ownership.mdx
+    information-architecture.mdx
+    naming-conventions.mdx
+    metadata-standard.mdx
+    contribution-guide.mdx
+  references/
+    index.mdx
+```
+
+## Navigation Model
+
+The primary sidebar should reflect the platform view instead of the file system alone:
+
+1. Intro
+2. Overview
+3. Services
+4. Operations
+5. Standards
+6. References
+
+## Structural Rules
+
+- Every top-level section must have an `index.mdx` landing page.
+- Service sections must reserve a `synced/` directory for imported service documentation.
+- Shared standards live only in `standards/` and should be referenced rather than duplicated.
+- Cross-service documents should be placed by reader intent, not by owning team.

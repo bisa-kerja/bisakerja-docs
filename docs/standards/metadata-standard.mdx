@@ -1,0 +1,52 @@
+---
+title: Metadata Standard
+sidebar_position: 5
+---
+
+# Metadata Standard
+
+Every maintained document should expose enough metadata to support ownership, review, and future automation.
+
+## Required Metadata
+
+| Field           | Purpose                                                    |
+| --------------- | ---------------------------------------------------------- |
+| `title`         | Reader-facing page title                                   |
+| `description`   | Short summary used in navigation or search                 |
+| `owner`         | Responsible team or role                                   |
+| `reviewers`     | Required review roles for changes                          |
+| `source_repo`   | Origin repository for synced content                       |
+| `source_path`   | Original file path for synced content                      |
+| `doc_status`    | Lifecycle state such as `draft`, `active`, or `deprecated` |
+| `last_reviewed` | Most recent review date                                    |
+
+## Minimum Standard
+
+- Central docs should always include `owner`, `doc_status`, and `last_reviewed`.
+- Synchronized docs should also include `source_repo` and `source_path`.
+- Omit `source_repo` only for documents authored directly in this repository.
+
+## Example Frontmatter
+
+```md
+---
+title: Backend API Overview
+description: Service boundary, responsibilities, and integration points for the Backend API.
+owner: backend-owner
+reviewers:
+  - platform-docs-maintainer
+source_repo: backend-api
+source_path: docs/overview.md
+doc_status: active
+last_reviewed: 2026-04-15
+---
+```
+
+## Automation Expectations
+
+The metadata format should stay simple enough for CI pipelines to validate:
+
+- missing required fields
+- invalid lifecycle values
+- stale review dates
+- missing source attribution on synchronized pages

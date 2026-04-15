@@ -1,0 +1,33 @@
+---
+title: Naming Conventions
+sidebar_position: 4
+---
+
+# Naming Conventions
+
+Consistent naming is required so synchronized content does not create collisions and readers can predict where information lives.
+
+## File and Directory Rules
+
+- Use lowercase kebab-case for file names and directories.
+- Use `index.mdx` only for section landing pages.
+- Prefer descriptive nouns over generic names such as `notes.mdx` or `misc.mdx`.
+- Keep service identifiers stable: `frontend-ui`, `backend-api`, `scraper-api`, `model-api`.
+
+## Document Title Rules
+
+- Titles should describe the document's responsibility clearly.
+- Avoid repository-internal shorthand in page titles.
+- Use consistent wording for recurring patterns such as `Overview`, `Runbook`, `Reference`, and `Integration`.
+
+## Slug and Path Rules
+
+- Keep slugs stable after publication.
+- Do not rename synchronized paths without a redirect or migration plan.
+- Paths should reflect reader intent before team ownership.
+
+## Asset Rules
+
+- Prefix shared assets with the service or domain name, such as `backend-api-auth-flow.png`.
+- Avoid generic file names such as `diagram.png` or `architecture.svg`.
+- Keep assets next to the document that owns them unless they are intentionally shared.

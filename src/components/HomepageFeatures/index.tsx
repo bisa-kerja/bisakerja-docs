@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import clsx from "clsx";
 import Heading from "@theme/Heading";
+
 import styles from "./styles.module.css";
 
 type FeatureItem = {
@@ -9,50 +10,40 @@ type FeatureItem = {
 	description: ReactNode;
 };
 
-const FeatureList: FeatureItem[] = [
+const featureList: FeatureItem[] = [
 	{
-		title: "Easy to Use",
+		title: "Platform Orientation",
 		Svg: require("@site/static/img/undraw_docusaurus_mountain.svg").default,
-		description: (
-			<>
-				Docusaurus was designed from the ground up to be easily installed and
-				used to get your website up and running quickly.
-			</>
-		),
+		description:
+			"Overview pages establish the central mission, scope, and future architecture surface for the platform.",
 	},
 	{
-		title: "Focus on What Matters",
+		title: "Service Boundaries",
 		Svg: require("@site/static/img/undraw_docusaurus_tree.svg").default,
-		description: (
-			<>
-				Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-				ahead and move your docs into the <code>docs</code> directory.
-			</>
-		),
+		description:
+			"Dedicated service sections define ownership now and reserve stable sync targets for CI-managed content later.",
 	},
 	{
-		title: "Powered by React",
+		title: "Documentation Governance",
 		Svg: require("@site/static/img/undraw_docusaurus_react.svg").default,
-		description: (
-			<>
-				Extend or customize your website layout by reusing React. Docusaurus can
-				be extended while reusing the same header and footer.
-			</>
-		),
+		description:
+			"Standards for metadata, naming, contribution flow, and review keep the centralized documentation system maintainable.",
 	},
 ];
 
 function Feature({ title, Svg, description }: FeatureItem) {
 	return (
-		<div className={clsx("col col--4")}>
-			<div className="text--center">
+		<article className={clsx("col col--4", styles.featureCard)}>
+			<div className={styles.featureVisual}>
 				<Svg className={styles.featureSvg} role="img" />
 			</div>
-			<div className="text--center padding-horiz--md">
-				<Heading as="h3">{title}</Heading>
-				<p>{description}</p>
+			<div className={styles.featureBody}>
+				<Heading as="h2" className={styles.featureTitle}>
+					{title}
+				</Heading>
+				<p className={styles.featureDescription}>{description}</p>
 			</div>
-		</div>
+		</article>
 	);
 }
 
@@ -60,9 +51,20 @@ export default function HomepageFeatures(): ReactNode {
 	return (
 		<section className={styles.features}>
 			<div className="container">
+				<div className={styles.sectionHeader}>
+					<p className={styles.sectionLabel}>Foundation areas</p>
+					<Heading as="h2" className={styles.sectionTitle}>
+						Phase 1 establishes the documentation operating model
+					</Heading>
+					<p className={styles.sectionDescription}>
+						The repository now exposes the structure, ownership boundaries, and
+						contribution standards needed before deeper architecture and service
+						documentation is synchronized.
+					</p>
+				</div>
 				<div className="row">
-					{FeatureList.map((props, idx) => (
-						<Feature key={idx} {...props} />
+					{featureList.map((feature) => (
+						<Feature key={feature.title} {...feature} />
 					))}
 				</div>
 			</div>

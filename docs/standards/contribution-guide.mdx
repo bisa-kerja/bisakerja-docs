@@ -1,0 +1,49 @@
+---
+title: Contribution Guide
+sidebar_position: 6
+---
+
+# Contribution Guide
+
+This repository supports two contribution paths:
+
+- direct edits for central, platform-owned documentation
+- synchronized content from service repositories
+
+## Direct Contributions In This Repository
+
+Use direct edits for:
+
+- overview and platform-level documentation
+- documentation standards and governance
+- shared operational references
+- landing pages and navigation content
+
+### Workflow
+
+1. Choose the correct top-level section.
+2. Follow the naming and metadata standards.
+3. Keep content scoped to the central repository responsibility.
+4. Request review from the documented owner and required reviewers.
+
+## Synchronized Contributions From Service Repositories
+
+Use synchronization for:
+
+- service-specific technical documentation
+- API or interface details owned by one repository
+- internal architecture notes that should remain close to implementation
+
+### Workflow
+
+1. Author or update the source document in the service repository.
+2. Ensure metadata is present and paths follow the agreed naming rules.
+3. Let CI publish the document into the matching `services/<service>/synced/` path.
+4. Review the synchronized result in this repository as part of docs validation.
+
+## Rules For All Contributions
+
+- Do not duplicate a service-owned document in the central repository unless there is a documented exception.
+- Prefer links to canonical source content over manual copy-paste.
+- If a change affects service boundaries or cross-service behavior, notify all impacted service owners.
+- If a document becomes stale or ownerless, it should be marked and triaged instead of silently ignored.

@@ -1,0 +1,55 @@
+---
+title: Overview
+sidebar_position: 1
+---
+
+# Overview
+
+The central documentation repository is the documentation layer above the individual service repositories.
+
+Its role is to provide platform-level context that cannot be understood well from a single service in isolation.
+
+## Purpose
+
+This repository should become the default starting point for:
+
+- platform onboarding
+- cross-service architecture understanding
+- shared vocabulary and domain concepts
+- documentation standards and governance
+- navigation into deeper service-specific documentation
+
+## Scope Boundary
+
+The central repository owns:
+
+- platform overview and product context
+- system-level architecture and service relationships
+- documentation standards, structure, and governance
+- shared operational references and cross-service workflows
+
+The service repositories own:
+
+- service-specific implementation details
+- API and interface details tied to one service
+- internal runbooks or design notes that are only meaningful inside that service boundary
+- the source `/docs` content that will later be synchronized here
+
+## Initial Information Model
+
+Phase 1 defines these top-level sections:
+
+- `overview/` for platform-level orientation
+- `services/` for service landing pages and future synchronized docs
+- `operations/` for environment and operational references
+- `standards/` for contribution rules and documentation governance
+- `references/` for shared domain and integration reference material
+
+## What Comes Next
+
+The next implementation phases will add:
+
+- high-level system architecture and service interaction diagrams
+- data flow and database ownership documentation
+- example user journeys and platform walkthroughs
+- service-level documentation synchronization from CI/CD
