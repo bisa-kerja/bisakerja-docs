@@ -54,7 +54,7 @@ export default function HomepageFeatures(): ReactNode {
 				<div className={styles.sectionHeader}>
 					<p className={styles.sectionLabel}>Foundation areas</p>
 					<Heading as="h2" className={styles.sectionTitle}>
-						Phase 1 establishes the documentation operating model
+						The foundation establishes the documentation operating model
 					</Heading>
 					<p className={styles.sectionDescription}>
 						The repository now exposes the structure, ownership boundaries, and

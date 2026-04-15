@@ -15,7 +15,7 @@ function HomepageHeader() {
 		<header className={clsx("hero", styles.heroBanner)}>
 			<div className="container">
 				<div className={styles.heroContent}>
-					<p className={styles.eyebrow}>Phase 1 foundation implemented</p>
+					<p className={styles.eyebrow}>Documentation foundation implemented</p>
 					<Heading as="h1" className={styles.heroTitle}>
 						{siteConfig.title}
 					</Heading>
