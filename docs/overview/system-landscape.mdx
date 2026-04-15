@@ -1,0 +1,64 @@
+---
+title: System Landscape
+sidebar_position: 4
+description: High-level service inventory and responsibility map for the Bisakerja platform.
+owner: platform-docs-maintainer
+reviewers:
+  - engineering-lead
+doc_status: active
+last_reviewed: 2026-04-15
+---
+
+# System Landscape
+
+Bisakerja is organized as a multi-service system with one user-facing application and several backend capabilities around it.
+
+## Major Platform Components
+
+| Component         | Primary Responsibility                                                               | Main Consumers                       |
+| ----------------- | ------------------------------------------------------------------------------------ | ------------------------------------ |
+| Frontend UI       | User interface for discovery, scoring, profile management, and application tracking  | End users                            |
+| Backend API       | Main application backend, orchestration layer, auth, business logic, and persistence | Frontend UI, internal platform flows |
+| Scraper API       | Collects and normalizes job data from external job platforms                         | Backend API, database layer          |
+| Model API         | Serves job fit scoring, explanations, and recommendation outputs                     | Backend API                          |
+| PostgreSQL        | Stores user data, job data, preferences, and tracking records                        | Backend API, data ingestion flows    |
+| Documentation Hub | Provides centralized product, architecture, and service documentation                | Engineers and stakeholders           |
+
+## Responsibility Breakdown
+
+### Frontend UI
+
+- renders the job search and fit-scoring experience
+- captures user preferences and application state
+- consumes backend endpoints rather than calling data or model services directly
+
+### Backend API
+
+- acts as the primary application control plane
+- manages authentication, authorization, and data access
+- orchestrates calls to the Model API
+- exposes job, profile, preference, and application features to the frontend
+
+### Scraper API
+
+- integrates with external job listing sources such as Glints, Jobstreet, Kalibrr, and Dealls
+- normalizes incoming job data
+- supports recurring refresh of job listings and related market signals
+
+### Model API
+
+- serves fit-scoring logic
+- returns explainable outputs for score breakdown
+- supports skill gap analysis and recommendation results
+
+## Supporting Concepts
+
+The core services depend on shared platform capabilities:
+
+- a transactional database for application state and normalized job data
+- CI/CD pipelines for deployment and, later, docs synchronization
+- service-specific repositories that remain the source of implementation detail
+
+## Current Architectural Assumption
+
+Until the service repositories are synchronized into this docs hub, the platform should be treated as a hub-and-spoke system where the Backend API is the main orchestrator between the frontend, the data ingestion layer, and the model layer.

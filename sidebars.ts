@@ -6,7 +6,18 @@ const sidebars: SidebarsConfig = {
 		{
 			type: "category",
 			label: "Overview",
-			items: ["overview/index"],
+			items: [
+				"overview/index",
+				"overview/product-overview",
+				"overview/project-preview",
+				"overview/system-landscape",
+				"overview/system-architecture",
+				"overview/service-interactions",
+				"overview/database-overview",
+				"overview/data-flow",
+				"overview/user-journeys",
+				"overview/glossary",
+			],
 		},
 		{
 			type: "category",
@@ -39,7 +50,7 @@ const sidebars: SidebarsConfig = {
 		{
 			type: "category",
 			label: "References",
-			items: ["references/index"],
+			items: ["references/index", "references/domain-entities"],
 		},
 	],
 };

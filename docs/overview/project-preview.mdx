@@ -1,0 +1,64 @@
+---
+title: Project Preview
+sidebar_position: 3
+description: User and product-facing preview of how Bisakerja should feel and what the core experience includes.
+owner: platform-docs-maintainer
+reviewers:
+  - engineering-lead
+doc_status: active
+last_reviewed: 2026-04-15
+---
+
+# Project Preview
+
+This page explains Bisakerja from the product and user perspective before discussing internal architecture.
+
+## What A User Should See
+
+For a user, Bisakerja should look like a single workspace for job search strategy:
+
+- discover jobs from multiple platforms in one place
+- evaluate how well a role matches current skills and preferences
+- understand why the score is high or low
+- identify missing skills and likely next actions
+- track applications and learn from outcomes
+
+## Experience Tiers
+
+The current product definition suggests two usage tiers:
+
+| User State         | Available Experience                                                                       |
+| ------------------ | ------------------------------------------------------------------------------------------ |
+| Guest user         | Browse and search aggregated job listings with limited analysis                            |
+| Authenticated user | Access fit scoring, skill gap analysis, personalized preferences, and application tracking |
+
+## Core Screens Or Product Areas
+
+The Phase 2 overview assumes the platform will expose at least these user-facing areas:
+
+- home or discovery page
+- job search and filter results
+- job detail page
+- fit score and explanation panel
+- skill gap and recommendation area
+- user profile and preference settings
+- application tracker dashboard
+
+## Product Narrative
+
+The expected product loop is:
+
+1. A user discovers or searches for jobs.
+2. The user opens a role and checks fit.
+3. The system explains strengths, mismatches, and missing skills.
+4. The user decides whether to apply now or improve readiness first.
+5. The user tracks outcomes and uses that history to refine future strategy.
+
+## Why This Matters For Documentation
+
+This product preview is important because technical readers need to understand the user promise behind the architecture:
+
+- the scraper layer exists to power job discovery
+- the backend exists to orchestrate product workflows and persist user state
+- the model layer exists to generate scoring and explanations
+- the frontend exists to make these capabilities understandable and actionable

@@ -1,0 +1,47 @@
+---
+title: Domain Entities
+sidebar_position: 2
+description: Shared domain entities and ownership map for the Bisakerja platform.
+owner: platform-docs-maintainer
+reviewers:
+  - engineering-lead
+doc_status: active
+last_reviewed: 2026-04-15
+---
+
+# Domain Entities
+
+This page defines the core domain entities that appear across the Bisakerja system.
+
+## Entity Catalog
+
+| Entity             | Description                                                                                    | Primary Owner                                          |
+| ------------------ | ---------------------------------------------------------------------------------------------- | ------------------------------------------------------ |
+| User               | An account holder using the platform                                                           | Backend API                                            |
+| User Profile       | A structured representation of skills, experience, and career background                       | Backend API                                            |
+| User Preference    | User-selected constraints such as location, role preference, and salary expectation            | Backend API                                            |
+| Job Listing        | A normalized representation of an external job opportunity                                     | Scraper API for creation, Backend API for usage        |
+| Job Requirement    | Structured requirements derived from a job listing, such as skills and experience expectations | Scraper API                                            |
+| Fit Score Result   | The computed result of a job-to-user matching request                                          | Model API for generation, Backend API for presentation |
+| Skill Gap Result   | The identified missing or weak skills for a target role                                        | Model API for generation, Backend API for presentation |
+| Application Record | A user-specific tracked state for a job application                                            | Backend API                                            |
+| Source Platform    | An external provider of job listing data such as Glints or Jobstreet                           | Scraper API integration concern                        |
+
+## Relationship Overview
+
+- one user can have one or more profile updates over time
+- one user can define one active set of preferences at a time, or versioned preferences if the product later supports history
+- one job listing can produce many fit-score evaluations across many users
+- one user can create many application records linked to different jobs
+- one job listing originates from one external source platform but may be refreshed many times
+
+## Why This Matters
+
+These entities create a shared vocabulary across:
+
+- product documentation
+- backend contracts
+- data pipeline design
+- model input and output design
+
+As service repos are synchronized into this hub, entity naming should stay aligned with this reference unless there is a deliberate, documented change.

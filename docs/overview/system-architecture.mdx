@@ -1,0 +1,78 @@
+---
+title: System Architecture
+sidebar_position: 5
+description: High-level architecture and runtime topology for the Bisakerja platform.
+owner: platform-docs-maintainer
+reviewers:
+  - engineering-lead
+doc_status: active
+last_reviewed: 2026-04-15
+---
+
+# System Architecture
+
+This page documents the intended high-level runtime architecture for Bisakerja based on the current project brief.
+
+## Architecture Summary
+
+Bisakerja should be understood as a layered system:
+
+- the Frontend UI presents search, scoring, and tracking experiences
+- the Backend API acts as the primary business and orchestration layer
+- the Scraper API feeds normalized job data into the platform
+- the Model API computes scoring and explanation results for the backend
+- PostgreSQL holds the core application state and normalized job records
+
+## Logical Topology
+
+```text
+Users
+  -> Frontend UI
+      -> Backend API
+          -> PostgreSQL
+          -> Model API
+          -> Scraper-managed job data
+
+External Job Platforms
+  -> Scraper API
+      -> normalized job records
+          -> PostgreSQL
+              -> Backend API
+                  -> Frontend UI
+```
+
+## Architectural Principles
+
+### Single frontend entry point
+
+The user experience should be delivered through one primary web application so job search, recommendations, and application tracking feel unified.
+
+### Backend as orchestration layer
+
+The Backend API should own application workflows. It should shield the frontend from scraper complexity and model-serving complexity.
+
+### Dedicated inference boundary
+
+The Model API should focus on prediction and explanation responsibilities, not general application state management.
+
+### Normalized data before recommendation
+
+Job data should be normalized before the backend exposes it widely or sends relevant context into scoring workflows.
+
+## Shared Infrastructure
+
+The current brief strongly implies these platform dependencies:
+
+- PostgreSQL as the primary relational database
+- containerized deployment using Docker
+- backend services in TypeScript or Node.js and Python
+- CI/CD for deployment and, later, documentation synchronization
+
+## Documentation Note
+
+This architecture is intentionally high-level. Service repos should later supply:
+
+- deployment topology by environment
+- API contracts
+- infrastructure configuration details
+- operational runbooks and failure modes
