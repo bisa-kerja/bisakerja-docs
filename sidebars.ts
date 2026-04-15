@@ -39,6 +39,7 @@ const sidebars: SidebarsConfig = {
 			label: "Operations",
 			items: [
 				"operations/index",
+				"operations/deployment-overview",
 				"operations/environments",
 				"operations/failure-scenarios",
 			],
@@ -54,6 +55,7 @@ const sidebars: SidebarsConfig = {
 				"standards/metadata-standard",
 				"standards/contribution-guide",
 				"standards/service-documentation-integration",
+				"standards/documentation-sync-and-versioning",
 			],
 		},
 		{
