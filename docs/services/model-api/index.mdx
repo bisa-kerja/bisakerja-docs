@@ -1,19 +1,69 @@
 ---
 title: Model API
 sidebar_position: 4
+description: Central landing page for Model API documentation, ownership boundaries, and planned synchronized content.
+owner: model-platform-owner
+reviewers:
+  - platform-docs-maintainer
+doc_status: active
+last_reviewed: 2026-04-15
 ---
 
 # Model API
 
-This section is reserved for the model-serving and inference service summary and synchronized service documentation.
+The Model API is the inference service for Bisakerja. It is responsible for generating fit scores, explainable score breakdowns, and skill gap outputs that help users decide how to approach a job opportunity.
 
-## Phase 1 Status
+## Source Repository And Sync Target
 
-- Section created
-- Ownership boundary defined
-- `synced/` directory reserved for CI-managed content
+- Assumed source repository: `model-api`
+- Source docs root: `/docs/**`
+- Central sync target: `docs/services/model-api/synced/**`
 
-## Expected Owner
+## Platform Responsibilities
 
-- Primary owner: ML or model platform owner
-- Reviewer: platform docs maintainer
+- compute job fit score using job, profile, and preference context
+- generate explainable outputs for score interpretation
+- support skill gap and recommendation results returned through the backend
+- provide a stable inference boundary to the rest of the application
+
+## Key Dependencies And Consumers
+
+| Type                  | System                            | Why It Matters                                                               |
+| --------------------- | --------------------------------- | ---------------------------------------------------------------------------- |
+| Upstream consumer     | Backend API                       | The backend invokes the model layer for user-facing recommendation workflows |
+| Upstream data context | User, preference, and job records | Model output depends on prepared data assembled by the backend               |
+| Cross-service context | Overview docs                     | Explains why model inference is part of the product promise                  |
+
+## Central Docs Maintained Here
+
+- this landing page
+- cross-links to [Product Overview](../../overview/product-overview.mdx)
+- cross-links to [Service Interactions](../../overview/service-interactions.mdx)
+- cross-links to [User Journeys](../../overview/user-journeys.mdx)
+
+## Service-Owned Documentation Expected From Source Repo
+
+- model service overview
+- model input and output contract
+- explanation strategy and score interpretation notes
+- inference serving and deployment notes
+- model versioning and artifact handling notes
+- known quality, bias, or limitation statements
+
+## Pre-Sync Documentation Gap Assessment
+
+The central repository does not yet contain synchronized Model API content. Before synchronization starts, the source repository should provide or confirm:
+
+- [ ] service overview page
+- [ ] inference contract documentation
+- [ ] explainability output documentation
+- [ ] deployment and serving notes
+- [ ] model versioning notes
+- [ ] limitations and quality caveats
+
+## Related Docs
+
+- [Services](../index.mdx)
+- [Product Overview](../../overview/product-overview.mdx)
+- [Service Interactions](../../overview/service-interactions.mdx)
+- [Glossary](../../overview/glossary.mdx)

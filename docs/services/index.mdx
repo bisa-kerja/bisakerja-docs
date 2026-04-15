@@ -1,13 +1,38 @@
 ---
 title: Services
 sidebar_position: 1
+description: Centralized entry point for service-owned documentation and synchronization rules across core Bisakerja services.
+owner: platform-docs-maintainer
+reviewers:
+  - engineering-lead
+doc_status: active
+last_reviewed: 2026-04-15
 ---
 
 # Services
 
 The services section is the landing area for service-owned documentation that will later be synchronized from the individual repositories.
 
-Phase 1 establishes the structure and ownership boundaries. Later phases will populate these sections with architecture, API, and operational content.
+Phase 3 defines how this section should work as the bridge between platform-level documentation and service-owned source repositories.
+
+## Integration Model
+
+The integration approach for service documentation is defined in [Service Documentation Integration](../standards/service-documentation-integration.mdx).
+
+At a high level:
+
+- this repository owns the landing pages and cross-service context
+- the service repositories own detailed technical content
+- synchronized docs will live under each service's `synced/` subtree
+
+## Service Map
+
+| Service     | Central Landing Page                  | Planned Sync Target                   | Primary Purpose                       |
+| ----------- | ------------------------------------- | ------------------------------------- | ------------------------------------- |
+| Frontend UI | `docs/services/frontend-ui/index.mdx` | `docs/services/frontend-ui/synced/**` | User-facing web experience            |
+| Backend API | `docs/services/backend-api/index.mdx` | `docs/services/backend-api/synced/**` | Main business and orchestration layer |
+| Scraper API | `docs/services/scraper-api/index.mdx` | `docs/services/scraper-api/synced/**` | Job ingestion and normalization       |
+| Model API   | `docs/services/model-api/index.mdx`   | `docs/services/model-api/synced/**`   | Fit scoring and explainable inference |
 
 ## Service Sections
 
@@ -22,3 +47,11 @@ Each service directory contains:
 
 - a locally maintained `index.mdx` page for service summary and navigation
 - a `synced/` directory reserved for imported service documentation
+
+## Reading Path
+
+Readers should usually move through the documentation in this order:
+
+1. start with [Overview](../overview/index.mdx) for product and system context
+2. open the relevant service landing page for ownership boundaries and expected content
+3. read synchronized service docs in `synced/` when implementation-level detail is needed

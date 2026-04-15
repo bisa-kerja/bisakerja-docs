@@ -1,19 +1,67 @@
 ---
 title: Frontend UI
 sidebar_position: 1
+description: Central landing page for Frontend UI documentation, ownership boundaries, and planned synchronized content.
+owner: frontend-owner
+reviewers:
+  - platform-docs-maintainer
+doc_status: active
+last_reviewed: 2026-04-15
 ---
 
 # Frontend UI
 
-This section is reserved for the frontend application's service summary and synchronized service documentation.
+The Frontend UI is the user-facing web application for Bisakerja. It is responsible for presenting job discovery, fit analysis, preference management, and application tracking in one coherent experience.
 
-## Phase 1 Status
+## Source Repository And Sync Target
 
-- Section created
-- Ownership boundary defined
-- `synced/` directory reserved for CI-managed content
+- Assumed source repository: `frontend-ui`
+- Source docs root: `/docs/**`
+- Central sync target: `docs/services/frontend-ui/synced/**`
 
-## Expected Owner
+## Platform Responsibilities
 
-- Primary owner: frontend owner
-- Reviewer: platform docs maintainer
+- render the job search and job detail experience
+- capture user input for profile and preferences
+- surface fit score, explanation, and skill gap results returned through the backend
+- expose application tracking workflows to the user
+
+## Key Dependencies And Consumers
+
+| Type                  | System        | Why It Matters                                               |
+| --------------------- | ------------- | ------------------------------------------------------------ |
+| Downstream dependency | Backend API   | Provides all user-facing data and workflow actions           |
+| Cross-service context | Overview docs | Explains how frontend behavior maps to platform architecture |
+| Primary consumer      | End users     | The frontend is the visible product surface                  |
+
+## Central Docs Maintained Here
+
+- this landing page
+- cross-links to [Product Overview](../../overview/product-overview.mdx)
+- cross-links to [System Architecture](../../overview/system-architecture.mdx)
+- cross-links to [User Journeys](../../overview/user-journeys.mdx)
+
+## Service-Owned Documentation Expected From Source Repo
+
+- frontend application overview
+- route or page structure documentation
+- state management and data-fetching patterns
+- UI architecture and component system notes
+- deployment and environment-specific setup
+- known frontend constraints and tradeoffs
+
+## Pre-Sync Documentation Gap Assessment
+
+The central repository does not yet contain synchronized Frontend UI content. Before synchronization starts, the source repository should provide or confirm:
+
+- [ ] service overview page
+- [ ] route or feature map
+- [ ] API consumption conventions
+- [ ] environment and deployment notes
+- [ ] known limitations and UX constraints
+
+## Related Docs
+
+- [Services](../index.mdx)
+- [System Landscape](../../overview/system-landscape.mdx)
+- [Service Interactions](../../overview/service-interactions.mdx)

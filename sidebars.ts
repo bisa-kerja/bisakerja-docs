@@ -45,6 +45,7 @@ const sidebars: SidebarsConfig = {
 				"standards/naming-conventions",
 				"standards/metadata-standard",
 				"standards/contribution-guide",
+				"standards/service-documentation-integration",
 			],
 		},
 		{
