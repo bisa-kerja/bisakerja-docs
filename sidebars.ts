@@ -17,6 +17,10 @@ const sidebars: SidebarsConfig = {
 				"overview/data-flow",
 				"overview/user-journeys",
 				"overview/glossary",
+				"overview/service-dependency-map",
+				"overview/request-response-flows",
+				"overview/asynchronous-workflows",
+				"overview/authentication-and-trust-boundaries",
 			],
 		},
 		{
@@ -33,7 +37,11 @@ const sidebars: SidebarsConfig = {
 		{
 			type: "category",
 			label: "Operations",
-			items: ["operations/index"],
+			items: [
+				"operations/index",
+				"operations/environments",
+				"operations/failure-scenarios",
+			],
 		},
 		{
 			type: "category",
@@ -51,7 +59,11 @@ const sidebars: SidebarsConfig = {
 		{
 			type: "category",
 			label: "References",
-			items: ["references/index", "references/domain-entities"],
+			items: [
+				"references/index",
+				"references/domain-entities",
+				"references/integrations",
+			],
 		},
 	],
 };

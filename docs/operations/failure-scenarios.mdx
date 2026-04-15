@@ -1,0 +1,100 @@
+---
+title: Failure Scenarios
+sidebar_position: 3
+description: Common cross-service failure scenarios, affected components, and debugging priorities for Bisakerja.
+owner: platform-docs-maintainer
+reviewers:
+  - engineering-lead
+doc_status: active
+last_reviewed: 2026-04-15
+---
+
+# Failure Scenarios
+
+This page captures the common cross-service incidents that engineers are likely to debug in Bisakerja.
+
+## Scenario 1: Users Can Browse Jobs But Fit Analysis Fails
+
+### Likely Symptoms
+
+- search and job detail pages still work
+- score, explanation, or skill gap sections fail or time out
+
+### Most Likely Affected Components
+
+- Backend API to Model API integration
+- Model API runtime or artifact load
+- backend request shaping for inference
+
+### First Checks
+
+1. confirm backend connectivity to the model service
+2. confirm inference payload contract compatibility
+3. confirm current model artifact availability
+
+## Scenario 2: Search Results Look Stale
+
+### Likely Symptoms
+
+- users see old or missing listings
+- search works technically, but the catalog no longer reflects current openings
+
+### Most Likely Affected Components
+
+- Scraper API
+- ingestion scheduler
+- normalization or upsert pipeline
+
+### First Checks
+
+1. confirm scrape jobs are still running
+2. confirm external source connectors have not drifted
+3. confirm normalized records are still reaching the database
+
+## Scenario 3: Authenticated Actions Fail But Public Pages Still Load
+
+### Likely Symptoms
+
+- guests can browse jobs
+- login-required features such as tracker updates or preference edits fail
+
+### Most Likely Affected Components
+
+- Backend API authentication or authorization flow
+- database write path for user-scoped records
+
+### First Checks
+
+1. confirm session or token validation path
+2. confirm user-ownership checks are passing
+3. confirm database writes for user state are healthy
+
+## Scenario 4: Platform-Wide User Failure
+
+### Likely Symptoms
+
+- frontend loads partially or not at all
+- most user actions fail together
+
+### Most Likely Affected Components
+
+- Backend API availability
+- PostgreSQL availability
+- deployment or environment configuration mismatch
+
+### First Checks
+
+1. confirm backend health
+2. confirm database health
+3. confirm environment configuration and recent deploy changes
+
+## Failure Prioritization Rule
+
+When triaging incidents, classify them by user impact first:
+
+- core platform unavailable
+- authenticated workflows degraded
+- fit analysis degraded
+- data freshness degraded
+
+This order helps keep debugging aligned with the most visible user pain.

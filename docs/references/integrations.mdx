@@ -1,0 +1,67 @@
+---
+title: Integrations
+sidebar_position: 3
+description: External dependencies, third-party systems, and integration risk considerations for Bisakerja.
+owner: platform-docs-maintainer
+reviewers:
+  - engineering-lead
+doc_status: active
+last_reviewed: 2026-04-15
+---
+
+# Integrations
+
+This page tracks the major external dependencies and platform integrations that influence system behavior.
+
+## External Job Platforms
+
+The project brief names these primary job data sources:
+
+- Glints
+- Jobstreet
+- Kalibrr
+- Dealls
+
+### Integration Concerns
+
+- changes in page structure or API surface
+- throttling and anti-bot protections
+- inconsistent salary, location, or requirement fields
+- duplicate listings across sources
+
+## Model and AI Stack
+
+The product brief references these model-related components:
+
+- TensorFlow
+- sentence-transformer style embedding or semantic processing workflows
+- FastAPI for inference serving
+
+### Integration Concerns
+
+- model artifact compatibility with serving runtime
+- input schema drift between backend and model service
+- explainability output consistency
+
+## Platform And Development Tooling
+
+The current brief references:
+
+- PostgreSQL
+- Prisma
+- Docker
+- Git and GitHub
+
+### Integration Concerns
+
+- schema drift between services
+- environment configuration mismatches
+- local versus deployed runtime differences
+
+## Why This Reference Exists
+
+These integrations matter because many user-visible incidents in Bisakerja will not come from one service alone. They often emerge at the boundaries between:
+
+- scraper logic and external job platforms
+- backend orchestration and model-serving contracts
+- deployment configuration and runtime behavior

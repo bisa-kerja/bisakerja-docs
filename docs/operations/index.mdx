@@ -1,17 +1,29 @@
 ---
 title: Operations
 sidebar_position: 1
+description: Shared operational references for environments, release assumptions, and common failure scenarios across Bisakerja services.
+owner: platform-docs-maintainer
+reviewers:
+  - engineering-lead
+doc_status: active
+last_reviewed: 2026-04-15
 ---
 
 # Operations
 
 The operations section is reserved for shared platform operational documentation.
 
-Phase 1 creates the section boundary only. Later phases will add environment topology, deployment references, and cross-service incident guidance.
+Phase 4 expands this section into operationally useful shared references.
 
-## Intended Content
+## Available Operational References
 
-- environment overview
-- deployment and release references
-- common failure scenarios
-- platform-level operational runbooks
+- [Environments](./environments.mdx)
+- [Failure Scenarios](./failure-scenarios.mdx)
+
+## Scope
+
+This section should stay focused on cross-service operational concerns:
+
+- environment topology and runtime expectations
+- deployment and release assumptions that affect multiple services
+- failure scenarios that require coordination across service boundaries
