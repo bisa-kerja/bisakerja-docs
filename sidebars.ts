@@ -8,6 +8,12 @@ const sidebars: SidebarsConfig = {
 			label: "Overview",
 			items: [
 				"overview/index",
+				"overview/start-here",
+				"overview/for-product-stakeholders",
+				"overview/for-frontend-engineers",
+				"overview/for-backend-engineers",
+				"overview/for-platform-engineers",
+				"overview/for-new-team-members",
 				"overview/product-overview",
 				"overview/project-preview",
 				"overview/system-landscape",
@@ -64,6 +70,7 @@ const sidebars: SidebarsConfig = {
 				"standards/structural-change-policy",
 				"standards/terminology-governance",
 				"standards/documentation-health-metrics",
+				"standards/navigation-and-discoverability",
 			],
 		},
 		{

@@ -1,0 +1,105 @@
+---
+title: Navigation and Discoverability
+sidebar_position: 17
+description: Standards for navigation, onboarding paths, search relevance, and reader-oriented entry points in Bisakerja documentation.
+owner: platform-docs-maintainer
+reviewers:
+  - engineering-lead
+doc_status: active
+last_reviewed: 2026-04-15
+---
+
+# Navigation and Discoverability
+
+This document defines how readers should find their way through the central docs repository without already knowing the platform structure.
+
+## Navigation Principles
+
+- readers should be able to start by goal or role, not only by folder structure
+- overview content and service-owned content should remain clearly separated
+- high-level platform understanding should come before deep implementation detail
+- synced service docs should be discoverable without being mistaken for platform-level guidance
+
+## Section Separation Rules
+
+### Overview versus Services
+
+- the `overview/` section is the first stop for platform understanding, onboarding, and cross-service context
+- the `services/` section is the first stop for service ownership boundaries and, later, synced service detail
+- synced docs should stay under `services/<service>/synced/` and should not be mixed into overview navigation
+
+### Standards versus Operations
+
+- `standards/` defines how documentation should be authored and governed
+- `operations/` explains shared operational workflows and troubleshooting context
+
+## Sidebar Strategy
+
+The sidebar should support this reading order:
+
+1. `intro`
+2. start-here and role-based entry pages
+3. overview and architecture references
+4. service landing pages
+5. operations and standards
+6. reusable references
+
+Role and onboarding pages should be surfaced early in the overview category so a reader can choose a path before browsing the deeper technical corpus.
+
+## Search Relevance Rules
+
+Because the repo uses structured markdown and metadata, search relevance should be improved through content discipline.
+
+### Required Practices
+
+- use clear `title` and `description` frontmatter
+- mention canonical service names and key domain terms early in the document
+- prefer stable headings such as `Purpose`, `Scope`, `Related Docs`, or `First Checks`
+- include role or use-case language in landing pages so users can search by intent
+
+### Avoid
+
+- generic titles such as `Overview 2` or `Notes`
+- documents that omit the main service or concept name from the first screen of content
+- duplicate pages with slightly different names but the same purpose
+
+## Content Conventions For Discoverability
+
+### Start Here Pattern
+
+- onboarding or high-level entry pages should explicitly tell the reader what to open next
+- start-here pages should branch by role or goal
+
+### Related Docs Pattern
+
+- landing pages and orientation pages should end with a `Related Docs` section
+- related docs should point to the next most useful page, not a long unsorted list
+
+### Quick-Start Pattern
+
+- quick-start sections should be scoped by reader intent, such as “understand the platform” or “debug service boundaries”
+- quick-starts should prioritize 3 to 5 links, not dump the full section index
+
+### FAQ and Callout Pattern
+
+- use FAQ-style sections when repeated reader questions are known
+- use short callout-style wording for critical caveats or assumptions, but do not overload pages with visual noise
+
+### Diagram Pattern
+
+- diagrams should appear where a reader benefits from a visual mental model
+- do not force readers to open a diagram before basic text explains the flow
+
+## Role-Oriented Entry Requirement
+
+The central docs should support at least these role-based entry pages:
+
+- product stakeholders
+- frontend engineers
+- backend engineers
+- platform or documentation maintainers
+- new team members
+
+## Goal
+
+The documentation system should be understandable both by a reader who knows the platform well and by a reader who has never seen the repository before.

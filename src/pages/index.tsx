@@ -28,7 +28,7 @@ function HomepageHeader() {
 					<div className={styles.actions}>
 						<Link
 							className="button button--primary button--lg"
-							to="/docs/intro"
+							to="/docs/overview/start-here"
 						>
 							Open documentation
 						</Link>
