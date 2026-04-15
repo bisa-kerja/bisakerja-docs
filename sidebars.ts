@@ -48,6 +48,7 @@ const sidebars: SidebarsConfig = {
 				"operations/deployment-overview",
 				"operations/environments",
 				"operations/failure-scenarios",
+				"operations/documentation-platform-operations",
 			],
 		},
 		{
@@ -71,6 +72,9 @@ const sidebars: SidebarsConfig = {
 				"standards/terminology-governance",
 				"standards/documentation-health-metrics",
 				"standards/navigation-and-discoverability",
+				"standards/scaling-and-extension-strategy",
+				"standards/versioning-and-audience-strategy",
+				"standards/archival-strategy",
 			],
 		},
 		{
