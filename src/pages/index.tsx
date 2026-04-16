@@ -12,33 +12,27 @@ function HomepageHeader() {
 	const { siteConfig } = useDocusaurusContext();
 
 	return (
-		<header className={clsx("hero", styles.heroBanner)}>
+		<header className={clsx("hero hero--primary", styles.heroBanner)}>
 			<div className="container">
-				<div className={styles.heroContent}>
-					<p className={styles.eyebrow}>Documentation foundation implemented</p>
-					<Heading as="h1" className={styles.heroTitle}>
-						{siteConfig.title}
-					</Heading>
-					<p className={styles.heroSubtitle}>{siteConfig.tagline}</p>
-					<p className={styles.heroBody}>
-						A single place to understand the platform, navigate service
-						documentation, and enforce documentation standards across the
-						system.
-					</p>
-					<div className={styles.actions}>
-						<Link
-							className="button button--primary button--lg"
-							to="/docs/overview/start-here"
-						>
-							Open documentation
-						</Link>
-						<Link
-							className="button button--secondary button--lg"
-							to="/docs/standards/contribution-guide"
-						>
-							View contribution rules
-						</Link>
-					</div>
+				<Heading as="h1" className="hero__title">
+					{siteConfig.title}
+				</Heading>
+				<p className="hero__subtitle">
+					Internal Documentation Hub for Bisakerja Engineering
+				</p>
+				<div className={styles.actions}>
+					<Link
+						className="button button--secondary button--lg"
+						to="/docs/overview/start-here"
+					>
+						Get Started
+					</Link>
+					<Link
+						className="button button--outline button--secondary button--lg"
+						to="/docs/standards/contribution-guide"
+					>
+						Contribution Guide
+					</Link>
 				</div>
 			</div>
 		</header>
@@ -51,7 +45,7 @@ export default function Home(): ReactNode {
 	return (
 		<Layout
 			title={siteConfig.title}
-			description="Centralized platform documentation for Bisakerja services, standards, and future synchronized service docs."
+			description="Internal Documentation Hub for Bisakerja Engineering."
 		>
 			<HomepageHeader />
 			<main>
