@@ -59,11 +59,6 @@ const config: Config = {
 					position: "left",
 					label: "Documentation",
 				},
-				{
-					to: "/docs/standards/",
-					label: "Standards",
-					position: "left",
-				},
 			],
 		},
 		footer: {
