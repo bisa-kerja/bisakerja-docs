@@ -1,57 +1,48 @@
 import type { ReactNode } from "react";
 import clsx from "clsx";
 import Heading from "@theme/Heading";
+import Link from "@docusaurus/Link";
+
 import styles from "./styles.module.css";
 
 type FeatureItem = {
 	title: string;
-	Svg: React.ComponentType<React.ComponentProps<"svg">>;
 	description: ReactNode;
+	link: string;
 };
 
-const FeatureList: FeatureItem[] = [
+const featureList: FeatureItem[] = [
 	{
-		title: "Easy to Use",
-		Svg: require("@site/static/img/undraw_docusaurus_mountain.svg").default,
-		description: (
-			<>
-				Docusaurus was designed from the ground up to be easily installed and
-				used to get your website up and running quickly.
-			</>
-		),
+		title: "Platform Overview",
+		description:
+			"Architecture, system boundaries, and high-level design documents.",
+		link: "/docs/overview/start-here",
 	},
 	{
-		title: "Focus on What Matters",
-		Svg: require("@site/static/img/undraw_docusaurus_tree.svg").default,
-		description: (
-			<>
-				Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-				ahead and move your docs into the <code>docs</code> directory.
-			</>
-		),
+		title: "Service Documentation",
+		description:
+			"Detailed documentation for individual microservices and components.",
+		link: "/docs/services",
 	},
 	{
-		title: "Powered by React",
-		Svg: require("@site/static/img/undraw_docusaurus_react.svg").default,
-		description: (
-			<>
-				Extend or customize your website layout by reusing React. Docusaurus can
-				be extended while reusing the same header and footer.
-			</>
-		),
+		title: "Standards & Guides",
+		description:
+			"Coding standards, contribution guides, and operational playbooks.",
+		link: "/docs/standards/contribution-guide",
 	},
 ];
 
-function Feature({ title, Svg, description }: FeatureItem) {
+function Feature({ title, description, link }: FeatureItem) {
 	return (
 		<div className={clsx("col col--4")}>
-			<div className="text--center">
-				<Svg className={styles.featureSvg} role="img" />
-			</div>
-			<div className="text--center padding-horiz--md">
-				<Heading as="h3">{title}</Heading>
-				<p>{description}</p>
-			</div>
+			<Link to={link} className={clsx("card", styles.featureCard)}>
+				<div className="card__header">
+					<Heading as="h3">{title}</Heading>
+				</div>
+				<div className="card__body">
+					<p>{description}</p>
+				</div>
+			</Link>
 		</div>
 	);
 }
@@ -61,8 +52,8 @@ export default function HomepageFeatures(): ReactNode {
 		<section className={styles.features}>
 			<div className="container">
 				<div className="row">
-					{FeatureList.map((props, idx) => (
-						<Feature key={idx} {...props} />
+					{featureList.map((feature, idx) => (
+						<Feature key={idx} {...feature} />
 					))}
 				</div>
 			</div>

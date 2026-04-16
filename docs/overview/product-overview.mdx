@@ -1,0 +1,84 @@
+---
+title: Product Overview
+sidebar_position: 2
+description: Product purpose, user segments, MVP scope, and platform capabilities for Bisakerja.
+owner: platform-docs-maintainer
+reviewers:
+  - engineering-lead
+doc_status: active
+last_reviewed: 2026-04-15
+---
+
+# Product Overview
+
+Bisakerja is an AI-assisted career decision platform for Indonesian job seekers. It is designed to reduce trial-and-error job applications by combining aggregated job data, user preferences, fit scoring, skill gap analysis, and application tracking into one workflow.
+
+## Problem Statement
+
+Bisakerja is built around three persistent problems:
+
+- job opportunities are fragmented across multiple platforms, making discovery inefficient
+- job seekers do not have clear visibility into how well they match a role before applying
+- users lack an objective, explainable way to understand missing skills and improve application strategy
+
+The product aims to turn job search from repeated guesswork into a more data-driven decision process.
+
+## Primary Users
+
+The intended users from the current product brief are:
+
+- fresh graduates entering the workforce
+- early-career professionals with roughly 0 to 3 years of experience
+- career switchers moving into digital or technology roles
+
+## Core Product Capabilities
+
+At the platform level, Bisakerja is expected to deliver these capabilities:
+
+| Capability            | What It Does                                    | Why It Matters                            |
+| --------------------- | ----------------------------------------------- | ----------------------------------------- |
+| Job aggregation       | Collects jobs from multiple hiring platforms    | Reduces search fragmentation              |
+| Structured discovery  | Supports search and filtering                   | Helps users focus on relevant jobs        |
+| Job Fit Scoring       | Calculates role fit for a user                  | Improves application targeting            |
+| Explainable AI        | Explains the reasons behind fit scores          | Builds trust and actionability            |
+| Skill Gap Analysis    | Highlights missing or weaker capabilities       | Helps users prioritize improvement        |
+| Application tracking  | Tracks progress across job applications         | Creates a feedback loop for user strategy |
+| Preference management | Stores skills, location, and salary preferences | Personalizes recommendations              |
+
+## Product Scope For The Current System
+
+The central system should be treated as a web-first MVP with these boundaries:
+
+### In Scope
+
+- web application experience for anonymous and authenticated users
+- job aggregation from external sources
+- centralized job browsing and filtering
+- AI-based scoring and explanation workflow
+- user-managed application tracking
+
+### Out Of Scope
+
+- native mobile applications
+- automatic application submission to third-party job sites
+- direct ATS or employer-system integration
+- payment and premium monetization flows
+- advanced OCR-based resume verification
+
+## Platform Value Proposition
+
+Bisakerja should not behave like a generic job board. The product value is the decision layer on top of job data:
+
+- it helps users decide whether to apply now
+- it explains why a role fits or does not fit
+- it highlights what should be improved next
+- it gives users a way to reflect on application outcomes over time
+
+## Product Success Lens
+
+From a documentation perspective, the platform should be described as successful when readers can understand:
+
+- who the platform is for
+- what product problem it solves
+- what capabilities are central versus optional
+- how the technical system supports the product promise

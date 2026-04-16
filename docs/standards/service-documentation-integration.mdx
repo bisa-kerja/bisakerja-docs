@@ -1,0 +1,138 @@
+---
+title: Service Documentation Integration
+sidebar_position: 7
+description: Standard for integrating service-owned documentation into the centralized docs repository.
+owner: platform-docs-maintainer
+reviewers:
+  - engineering-lead
+doc_status: active
+last_reviewed: 2026-04-15
+---
+
+# Service Documentation Integration
+
+This standard defines how service-owned documentation from the Frontend UI, Backend API, Scraper API, and Model API repositories is represented in this centralized documentation hub.
+
+The goal is to centralize navigation and platform understanding without duplicating ownership or creating documentation drift.
+
+For CI/CD behavior, publish validation, rollback, and release snapshot rules, see [Documentation Sync and Versioning](./documentation-sync-and-versioning.mdx).
+
+## Integration Principles
+
+- service repositories remain the source of truth for service-specific technical content
+- this repository owns the platform view, service landing pages, and cross-service context
+- synchronized content must preserve source attribution and stable paths
+- central pages should summarize and route, not replace the owning service repository
+
+## Standard Service Landing Page Template
+
+Every service section landing page in `docs/services/<service>/index.mdx` should contain these sections:
+
+1. Service summary
+2. Source repository and sync target
+3. Platform responsibilities
+4. Key dependencies and consumers
+5. Central documentation owned in this repository
+6. Service-owned documentation expected from the source repository
+7. Cross-links to overview and shared references
+8. Pre-sync documentation gap assessment
+
+## Minimum Content Package For Each Service
+
+Before synchronization is considered healthy, each service repository should be able to provide at least this minimum documentation set.
+
+| Document                         | Purpose                                                     | Expected Owner     |
+| -------------------------------- | ----------------------------------------------------------- | ------------------ |
+| Service overview                 | Describe service purpose and boundaries                     | Service repository |
+| Responsibilities and constraints | Clarify what the service owns and does not own              | Service repository |
+| API or interface reference       | Explain external or internal integration points             | Service repository |
+| Dependencies                     | Document upstream and downstream dependencies               | Service repository |
+| Deployment or runtime notes      | Explain how the service runs by environment                 | Service repository |
+| Known constraints                | Capture practical limitations and assumptions               | Service repository |
+| Central landing page             | Route readers and summarize service context in the platform | Central repository |
+
+## Mirroring Rules
+
+The central repository uses stable service paths even if actual repository names differ.
+
+| Service     | Assumed Source Repository | Source Content Root | Central Sync Target                   |
+| ----------- | ------------------------- | ------------------- | ------------------------------------- |
+| Frontend UI | `frontend-ui`             | `/docs/**`          | `docs/services/frontend-ui/synced/**` |
+| Backend API | `backend-api`             | `/docs/**`          | `docs/services/backend-api/synced/**` |
+| Scraper API | `scraper-api`             | `/docs/**`          | `docs/services/scraper-api/synced/**` |
+| Model API   | `model-api`               | `/docs/**`          | `docs/services/model-api/synced/**`   |
+
+If a real repository slug differs from the assumed slug above, the sync pipeline may translate the source repository name, but the central path should remain stable.
+
+## Ownership Split
+
+| Content Type                            | Central Repository     | Service Repository              |
+| --------------------------------------- | ---------------------- | ------------------------------- |
+| Service landing page                    | Owns                   | Contributes context when needed |
+| Cross-service summaries                 | Owns                   | References only                 |
+| Architecture internal to one service    | Links to or summarizes | Owns                            |
+| API internals and implementation detail | Links to or syncs      | Owns                            |
+| Deployment details for one service      | Links to or syncs      | Owns                            |
+| Shared standards and sync rules         | Owns                   | Follows                         |
+
+## Cross-Linking Rules
+
+- overview pages should link to the service landing pages, not directly to service-owned low-level pages by default
+- service landing pages should link back to relevant overview pages such as system architecture, service interactions, data flow, and domain entities
+- synchronized pages should keep local relative links where possible inside the same service subtree
+- cross-service links inside synchronized docs should target stable central routes, not raw source repository URLs
+- when a service page references a platform concern, prefer linking to the central overview page rather than duplicating the explanation
+
+## Source Attribution Rules
+
+Every synchronized page must identify where it came from.
+
+### Required Frontmatter For Synced Pages
+
+```md
+---
+title: Authentication Flows
+description: Authentication flows for the Backend API service.
+owner: backend-owner
+reviewers:
+  - platform-docs-maintainer
+source_repo: backend-api
+source_path: docs/authentication-flows.mdx
+doc_status: active
+last_reviewed: 2026-04-15
+---
+```
+
+### Display Rules
+
+- retain the `source_repo` and `source_path` fields
+- do not strip ownership metadata during synchronization
+- if the synchronized page is transformed materially, record both the original source and the transformation owner in pipeline metadata or commit history
+
+## README, Diagram, and Asset Handling
+
+### README Handling
+
+- do not blindly copy a repository `README.md` into the central docs tree
+- if the README contains service summary content, distill it into the service landing page or sync it into a clearly named page under `synced/`
+- avoid creating duplicate overview content when a service already has a dedicated docs overview page
+
+### Diagram Handling
+
+- preserve diagrams that are needed to understand service-local behavior
+- store synced diagrams next to the synced document that references them
+- rename generic asset files to avoid collisions when the pipeline copies them
+
+### Asset Naming
+
+- use service-prefixed names such as `frontend-ui-routing-diagram.svg`
+- never publish ambiguous names such as `image.png` or `diagram.svg`
+
+## Pre-Sync Readiness Checklist
+
+- the service repository has an identifiable docs root
+- the service repository documents at least the minimum content package
+- service pages include required metadata
+- local asset paths are resolvable after sync
+- central path collisions are checked before publishing
+- the service landing page in this repository is updated with current routing and ownership information

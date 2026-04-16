@@ -1,0 +1,70 @@
+---
+title: Scraper API
+sidebar_position: 3
+description: Central landing page for Scraper API documentation, ownership boundaries, and planned synchronized content.
+owner: data-ingestion-owner
+reviewers:
+  - platform-docs-maintainer
+doc_status: active
+last_reviewed: 2026-04-15
+---
+
+# Scraper API
+
+The Scraper API is the ingestion service responsible for collecting job data from external platforms and transforming it into normalized records that the rest of the Bisakerja platform can use.
+
+## Source Repository And Sync Target
+
+- Assumed source repository: `scraper-api`
+- Source docs root: `/docs/**`
+- Central sync target: `docs/services/scraper-api/synced/**`
+
+## Platform Responsibilities
+
+- fetch job data from external job platforms
+- normalize heterogeneous source data into a stable internal shape
+- support recurring refresh of job inventory and related metadata
+- provide the raw-to-normalized bridge that powers search and recommendations
+
+## Key Dependencies And Consumers
+
+| Type                  | System                 | Why It Matters                                             |
+| --------------------- | ---------------------- | ---------------------------------------------------------- |
+| Upstream source       | External job platforms | Provide raw listings and platform-specific formats         |
+| Downstream dependency | PostgreSQL             | Stores normalized job records                              |
+| Downstream consumer   | Backend API            | Reads normalized jobs for user-facing search and retrieval |
+| Cross-service context | Data Flow docs         | Explains how ingestion becomes usable platform data        |
+
+## Central Docs Maintained Here
+
+- this landing page
+- cross-links to [System Landscape](../../overview/system-landscape.mdx)
+- cross-links to [Data Flow](../../overview/data-flow.mdx)
+- cross-links to [Database Overview](../../overview/database-overview.mdx)
+
+## Service-Owned Documentation Expected From Source Repo
+
+- scraper service overview
+- source platform inventory and connector rules
+- normalization strategy and field mapping notes
+- scheduling or refresh strategy
+- failure handling for source instability, throttling, or parsing issues
+- operational notes for running scraping jobs safely
+
+## Pre-Sync Documentation Gap Assessment
+
+The central repository does not yet contain synchronized Scraper API content. Before synchronization starts, the source repository should provide or confirm:
+
+- [ ] service overview page
+- [ ] supported source list and connector notes
+- [ ] normalization and data-shaping documentation
+- [ ] scheduling and refresh strategy
+- [ ] failure and retry behavior notes
+- [ ] runtime and operational constraints
+
+## Related Docs
+
+- [Services](../index.mdx)
+- [System Architecture](../../overview/system-architecture.mdx)
+- [Data Flow](../../overview/data-flow.mdx)
+- [Domain Entities](../../references/domain-entities.mdx)

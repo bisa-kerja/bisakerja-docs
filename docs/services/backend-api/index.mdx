@@ -1,0 +1,70 @@
+---
+title: Backend API
+sidebar_position: 2
+description: Central landing page for Backend API documentation, ownership boundaries, and planned synchronized content.
+owner: backend-owner
+reviewers:
+  - platform-docs-maintainer
+doc_status: active
+last_reviewed: 2026-04-15
+---
+
+# Backend API
+
+The Backend API is the primary application backend for Bisakerja. It owns authentication, business logic, persistence, and orchestration between the frontend, the data ingestion layer, and the model-serving layer.
+
+## Source Repository And Sync Target
+
+- Assumed source repository: `backend-api`
+- Source docs root: `/docs/**`
+- Central sync target: `docs/services/backend-api/synced/**`
+
+## Platform Responsibilities
+
+- authenticate and authorize users
+- expose search, profile, preference, and application-tracker workflows
+- orchestrate fit-scoring and explanation requests to the Model API
+- read and persist normalized jobs and user state in PostgreSQL
+
+## Key Dependencies And Consumers
+
+| Type                  | System      | Why It Matters                                                 |
+| --------------------- | ----------- | -------------------------------------------------------------- |
+| Upstream consumer     | Frontend UI | The frontend depends on the backend for every product workflow |
+| Downstream dependency | PostgreSQL  | Stores application state and normalized job data               |
+| Downstream dependency | Model API   | Provides fit and explanation outputs                           |
+| Upstream data source  | Scraper API | Supplies normalized job inventory used by backend features     |
+
+## Central Docs Maintained Here
+
+- this landing page
+- cross-links to [System Architecture](../../overview/system-architecture.mdx)
+- cross-links to [Database Overview](../../overview/database-overview.mdx)
+- cross-links to [Data Flow](../../overview/data-flow.mdx)
+
+## Service-Owned Documentation Expected From Source Repo
+
+- backend service overview
+- authentication and authorization design
+- API endpoint or contract reference
+- database access patterns and persistence notes
+- integration notes for Model API and scraper-fed job data
+- deployment, configuration, and operational constraints
+
+## Pre-Sync Documentation Gap Assessment
+
+The central repository does not yet contain synchronized Backend API content. Before synchronization starts, the source repository should provide or confirm:
+
+- [ ] service overview page
+- [ ] auth and security documentation
+- [ ] API reference or route map
+- [ ] persistence and database notes
+- [ ] deployment and runtime configuration notes
+- [ ] known constraints and failure considerations
+
+## Related Docs
+
+- [Services](../index.mdx)
+- [Service Interactions](../../overview/service-interactions.mdx)
+- [Database Overview](../../overview/database-overview.mdx)
+- [Domain Entities](../../references/domain-entities.mdx)

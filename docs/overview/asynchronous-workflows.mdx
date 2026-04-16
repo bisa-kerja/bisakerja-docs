@@ -1,0 +1,100 @@
+---
+title: Asynchronous Workflows
+sidebar_position: 13
+description: Scheduled and asynchronous workflows for job ingestion, normalization, and downstream freshness in Bisakerja.
+owner: platform-docs-maintainer
+reviewers:
+  - engineering-lead
+doc_status: active
+last_reviewed: 2026-04-15
+---
+
+# Asynchronous Workflows
+
+Not every important system behavior happens on a user request. This page documents the asynchronous workflows that keep the platform useful over time.
+
+## Workflow 1: Job Ingestion Refresh
+
+### Purpose
+
+Collect fresh job data from external platforms on a recurring schedule.
+
+```text
+Scheduler -> Scraper API: trigger scrape run
+Scraper API -> External Job Platforms: fetch listings
+External Platforms -> Scraper API: raw job payloads
+Scraper API -> Scraper API: normalize and validate records
+Scraper API -> PostgreSQL: upsert normalized jobs
+PostgreSQL -> Backend API: fresh data becomes available to search flows
+```
+
+### Why It Matters
+
+- users rely on the platform to surface current openings
+- search quality degrades if this workflow stalls
+
+## Workflow 2: Data Normalization And Enrichment
+
+### Purpose
+
+Convert inconsistent source data into a stable platform format suitable for search and recommendation.
+
+```text
+Raw source fields -> normalization rules
+Normalization rules -> stable job attributes
+Stable job attributes -> database records
+Database records -> backend filtering and model input preparation
+```
+
+### Typical Concerns
+
+- platform-specific field names
+- inconsistent salary formatting
+- missing location or skill data
+- duplicate or stale job entries
+
+## Workflow 3: Model Artifact Usage
+
+### Purpose
+
+Keep inference serving stable by loading approved model artifacts rather than recalculating or retraining on request paths.
+
+```text
+Approved model artifact -> Model API runtime
+Backend prepared payload -> Model API
+Model API -> inference result
+Inference result -> Backend API -> Frontend UI
+```
+
+### Notes
+
+- retraining is not treated as a user-facing runtime flow here
+- the central docs currently focus on inference-serving behavior rather than training pipelines
+
+## Workflow 4: Documentation Sync Readiness
+
+### Purpose
+
+Prepare service-owned docs to be published into this repository through CI/CD in subsequent milestones.
+
+```text
+Service repo docs update
+  -> metadata validation
+  -> path mapping validation
+  -> asset collision checks
+  -> central sync target
+```
+
+### Notes
+
+- this workflow is documented here because stale documentation is also an operational risk
+- the full CI/CD design remains a subsequent-milestone concern
+
+## Asynchronous Risk Areas
+
+| Workflow               | Main Risk                             | User Impact                                  |
+| ---------------------- | ------------------------------------- | -------------------------------------------- |
+| Job ingestion refresh  | external source changes or throttling | stale search results                         |
+| Normalization          | parser drift or malformed fields      | degraded filtering and weak model input      |
+| Model artifact loading | wrong artifact or failed deployment   | scoring unavailable or inconsistent          |
+| Docs sync readiness    | bad metadata or path collisions       | central docs drift or publish failures later |

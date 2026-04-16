@@ -1,0 +1,103 @@
+---
+title: User Journeys
+sidebar_position: 9
+description: Example end-to-end user flows that connect product behavior to backend and service interactions.
+owner: platform-docs-maintainer
+reviewers:
+  - engineering-lead
+doc_status: active
+last_reviewed: 2026-04-15
+---
+
+# User Journeys
+
+This page maps the main product journeys to the underlying service behavior.
+
+## Journey 1: Guest Browses Jobs
+
+### User Goal
+
+Understand what jobs are available without creating an account yet.
+
+### Flow
+
+1. The user visits the Frontend UI.
+2. The user searches jobs using keyword, location, or work-type filters.
+3. The Frontend UI requests matching jobs from the Backend API.
+4. The Backend API retrieves normalized job listings from the database.
+5. The frontend renders result cards and job detail pages.
+
+### Services Involved
+
+- Frontend UI
+- Backend API
+- PostgreSQL
+- Scraper API as upstream data supplier
+
+## Journey 2: User Evaluates Job Fit
+
+### User Goal
+
+Decide whether a specific role is worth applying to now.
+
+### Flow
+
+1. The authenticated user opens a job detail page.
+2. The Backend API reads the user's profile and preferences.
+3. The Backend API sends job and user context to the Model API.
+4. The Model API returns fit score, explanation, and skill gap results.
+5. The Frontend UI presents the score, reasoning, and suggested next steps.
+
+### Services Involved
+
+- Frontend UI
+- Backend API
+- Model API
+- PostgreSQL
+
+## Journey 3: User Updates Skill Strategy
+
+### User Goal
+
+Understand which capabilities to improve before targeting similar jobs again.
+
+### Flow
+
+1. The user reads a low fit score and skill gap explanation.
+2. The frontend surfaces missing or weak skills grouped by priority.
+3. The user updates profile or preference data if needed.
+4. The Backend API persists profile changes for future scoring requests.
+
+### Services Involved
+
+- Frontend UI
+- Backend API
+- Model API
+- PostgreSQL
+
+## Journey 4: User Tracks Application Outcomes
+
+### User Goal
+
+Track application progress and build feedback into job search decisions.
+
+### Flow
+
+1. The user marks a role as applied.
+2. The user later updates the status to interview, rejected, or another tracked state.
+3. The Backend API stores each state update.
+4. The frontend renders the tracked application history in one place.
+
+### Services Involved
+
+- Frontend UI
+- Backend API
+- PostgreSQL
+
+## Why Journeys Matter
+
+These journeys are the bridge between product scope and system design:
+
+- they show why the backend must orchestrate multiple data sources
+- they show why normalized job data matters before scoring happens
+- they show why explainability is part of the product, not an internal-only model concern

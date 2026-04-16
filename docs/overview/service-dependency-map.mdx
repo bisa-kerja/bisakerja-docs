@@ -1,0 +1,64 @@
+---
+title: Service Dependency Map
+sidebar_position: 11
+description: Detailed upstream and downstream dependency map across Bisakerja services and shared platform components.
+owner: platform-docs-maintainer
+reviewers:
+  - engineering-lead
+doc_status: active
+last_reviewed: 2026-04-15
+---
+
+# Service Dependency Map
+
+This page expands the high-level system landscape into a more explicit dependency map for engineering use.
+
+## Dependency Overview
+
+| Service or Component | Upstream Dependencies                                                   | Downstream Consumers                                     | Notes                                                                 |
+| -------------------- | ----------------------------------------------------------------------- | -------------------------------------------------------- | --------------------------------------------------------------------- |
+| Frontend UI          | Backend API                                                             | End users                                                | Frontend should treat the backend as its single application interface |
+| Backend API          | PostgreSQL, Model API, normalized job data, auth/session infrastructure | Frontend UI                                              | Main orchestration layer for user-facing workflows                    |
+| Scraper API          | External job platforms, scheduling runtime, parsing logic               | PostgreSQL, Backend API indirectly                       | Feeds normalized job inventory into the platform                      |
+| Model API            | Prepared job and user context, model artifacts, inference runtime       | Backend API                                              | Returns fit, explanation, and skill gap outputs                       |
+| PostgreSQL           | Service write operations, schema management                             | Backend API primarily; platform analytics later if added | Durable storage for application state and normalized jobs             |
+
+## Dependency Types
+
+### Runtime dependencies
+
+- Frontend UI depends on the Backend API being reachable and contract-compatible
+- Backend API depends on the database and model-serving path for complete feature execution
+- Model API depends on valid input assembled by the backend and available model artifacts
+- Scraper API depends on third-party job platforms and parsing stability
+
+### Data dependencies
+
+- search and job detail experiences depend on normalized job listings
+- fit scoring depends on profile, preference, and job requirement data
+- application tracking depends on backend persistence
+
+### Operational dependencies
+
+- deployment sequencing matters because frontend features can degrade when backend or model APIs are unavailable
+- scraper instability affects data freshness rather than immediate login or tracker functionality
+
+## Cross-Service Risk Points
+
+| Risk Point              | Affected Services                      | Likely User Impact                                         |
+| ----------------------- | -------------------------------------- | ---------------------------------------------------------- |
+| Backend API unavailable | Frontend UI, Model API path, DB reads  | Most user workflows fail                                   |
+| Model API degraded      | Backend API, Frontend UI               | Search works, but scoring and recommendation flows degrade |
+| Scraper API stale       | Backend API, Frontend UI               | Existing data still works, but job freshness drops         |
+| PostgreSQL issues       | Backend API, indirectly all user flows | Auth, tracker, profile, and job retrieval degrade together |
+
+## Dependency Rule Of Thumb
+
+Engineers should reason about the system in this order:
+
+1. Can the frontend reach the backend?
+2. Can the backend read and write core state?
+3. Can the backend retrieve current job data?
+4. Can the backend invoke model inference successfully?
+
+This ordering reflects how user-visible failure usually appears in the platform.

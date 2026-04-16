@@ -1,0 +1,70 @@
+---
+title: Data Flow
+sidebar_position: 8
+description: End-to-end system flow from job ingestion through recommendation and application tracking.
+owner: platform-docs-maintainer
+reviewers:
+  - engineering-lead
+doc_status: active
+last_reviewed: 2026-04-15
+---
+
+# Data Flow
+
+This page maps the major platform flow from job ingestion to user-facing recommendations.
+
+## End-To-End Flow
+
+```text
+External Job Sources
+  -> Scraper API
+      -> normalized job records
+          -> PostgreSQL
+              -> Backend API
+                  -> Frontend UI
+                      -> user actions and profile updates
+                          -> Backend API
+                              -> Model API
+                                  -> fit score and explanation
+                                      -> Backend API
+                                          -> Frontend UI
+```
+
+## Flow 1: Job Ingestion
+
+1. The Scraper API fetches jobs from supported external platforms.
+2. Raw results are cleaned and normalized into a consistent internal shape.
+3. Normalized job records are persisted into the shared data layer.
+4. The Backend API exposes those records for filtering, search, and display.
+
+## Flow 2: Job Discovery
+
+1. A guest or authenticated user searches the job catalog in the Frontend UI.
+2. The Frontend UI sends search and filter parameters to the Backend API.
+3. The Backend API reads normalized jobs and returns a user-facing result set.
+4. The Frontend UI renders the search results and individual job details.
+
+## Flow 3: Fit Scoring
+
+1. An authenticated user opens a job and requests or views fit analysis.
+2. The Backend API gathers user profile, user preferences, and job attributes.
+3. The Backend API sends the relevant context to the Model API.
+4. The Model API returns fit score, explanation breakdown, and skill gap outputs.
+5. The Backend API formats the result for frontend consumption and optionally persists it.
+6. The Frontend UI renders score, rationale, and suggested next actions.
+
+## Flow 4: Application Tracking
+
+1. The user marks a job as applied, interviewing, rejected, or another tracked state.
+2. The Frontend UI sends the state change to the Backend API.
+3. The Backend API validates and persists the tracker update.
+4. The updated tracker state becomes part of the user's ongoing job search history.
+
+## Data Flow Outcome
+
+The system works only if these transitions stay clean:
+
+- scraper output becomes normalized job data
+- normalized job data becomes user-facing discovery content
+- user profile plus job data becomes model input
+- model output becomes understandable user guidance

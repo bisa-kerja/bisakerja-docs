@@ -1,0 +1,101 @@
+---
+title: Request and Response Flows
+sidebar_position: 12
+description: Core synchronous request and response paths across frontend, backend, and model services.
+owner: platform-docs-maintainer
+reviewers:
+  - engineering-lead
+doc_status: active
+last_reviewed: 2026-04-15
+---
+
+# Request and Response Flows
+
+This page documents the main synchronous flows that users feel immediately in the product.
+
+## Flow 1: Job Search
+
+### Purpose
+
+Return a filtered list of normalized jobs to the frontend.
+
+```text
+User -> Frontend UI: enter keyword / filters
+Frontend UI -> Backend API: request jobs
+Backend API -> PostgreSQL: query normalized jobs
+PostgreSQL -> Backend API: result set
+Backend API -> Frontend UI: filtered jobs
+Frontend UI -> User: render results
+```
+
+### Notes
+
+- this flow should work for both guest and authenticated users
+- this flow depends on scraper freshness indirectly, but not on live scraper availability
+
+## Flow 2: Job Detail
+
+### Purpose
+
+Return a single structured job detail record for user review.
+
+```text
+User -> Frontend UI: open job detail
+Frontend UI -> Backend API: request job detail
+Backend API -> PostgreSQL: load normalized job record
+PostgreSQL -> Backend API: job detail data
+Backend API -> Frontend UI: job detail response
+Frontend UI -> User: render structured detail page
+```
+
+### Notes
+
+- this flow should expose enough normalized data for fit analysis
+- frontend should not need to interpret source-platform-specific raw fields
+
+## Flow 3: Fit Score Request
+
+### Purpose
+
+Evaluate how well a user matches a role.
+
+```text
+User -> Frontend UI: open fit analysis
+Frontend UI -> Backend API: request fit analysis
+Backend API -> PostgreSQL: load user profile, preferences, and job record
+Backend API -> Model API: send prepared inference payload
+Model API -> Backend API: return fit score and explanation
+Backend API -> Frontend UI: formatted fit analysis response
+Frontend UI -> User: render score, rationale, and skill gap
+```
+
+### Notes
+
+- the backend should remain the only service assembling inference payloads
+- the frontend should receive product-friendly output, not raw model internals
+
+## Flow 4: Application Tracker Update
+
+### Purpose
+
+Persist a user’s application state change for a role.
+
+```text
+User -> Frontend UI: mark job as applied or interviewed
+Frontend UI -> Backend API: submit tracker update
+Backend API -> PostgreSQL: validate and persist state change
+PostgreSQL -> Backend API: write confirmation
+Backend API -> Frontend UI: updated tracker state
+Frontend UI -> User: show new application status
+```
+
+### Notes
+
+- this flow should be transactional and user-specific
+- even if fit scoring is unavailable, tracker updates should still work if backend and database are healthy
+
+## Synchronous Flow Design Guidance
+
+- frontend calls should terminate at the backend, not at data or model services directly
+- backend responses should be shaped for product use, not internal-only debugging
+- failure states should distinguish between unavailable data, unavailable inference, and unavailable persistence

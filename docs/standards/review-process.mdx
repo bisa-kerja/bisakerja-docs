@@ -1,0 +1,53 @@
+---
+title: Review Process
+sidebar_position: 11
+description: Required review workflow for central docs, synchronized docs, and architecture or structure changes in Bisakerja documentation.
+owner: platform-docs-maintainer
+reviewers:
+  - engineering-lead
+doc_status: active
+last_reviewed: 2026-04-15
+---
+
+# Review Process
+
+This document defines how documentation changes should be reviewed before they are considered trusted.
+
+## Review Categories
+
+| Change Type                    | Minimum Review Requirement                            |
+| ------------------------------ | ----------------------------------------------------- |
+| Typo or low-risk wording fix   | Owner or delegated maintainer                         |
+| Central overview change        | Owner plus engineering lead review                    |
+| Service landing page change    | Service owner plus platform docs maintainer           |
+| Standards or governance change | Platform docs maintainer plus engineering lead        |
+| Synced service doc publish     | Source service owner plus central validation pipeline |
+| Structural navigation change   | Platform docs maintainer plus engineering lead        |
+
+## Review Workflow
+
+1. Author updates the document.
+2. Author ensures metadata and template rules are met.
+3. Required reviewers check correctness, scope, and link impact.
+4. Validation passes at the repository level.
+5. The change is merged or published.
+
+## Review Focus Areas
+
+- is the content correct and in the right repository
+- does the page duplicate another canonical source unnecessarily
+- do links and navigation still work
+- is the page owner correct
+- is the document lifecycle state still accurate
+
+## Architecture Change Rule
+
+If a document changes cross-service architecture, trust boundaries, or system responsibilities, the review must include stakeholders from all materially affected service areas.
+
+## Synced Documentation Rule
+
+Human review for synchronized docs should focus on:
+
+- whether the source service is still the right owner
+- whether the central path and metadata are correct
+- whether the published content still fits the central information architecture

@@ -1,0 +1,71 @@
+---
+title: Overview
+sidebar_position: 1
+description: Platform-level orientation for Bisakerja, including product context, system architecture, data flow, and user journeys.
+owner: platform-docs-maintainer
+reviewers:
+  - engineering-lead
+doc_status: active
+last_reviewed: 2026-04-15
+---
+
+# Overview
+
+The central documentation repository is the platform layer above the individual service repositories.
+
+Its role is to explain the Bisakerja system from a product, architecture, and data perspective before readers dive into service-owned implementation details.
+
+## Overview Set
+
+The foundational overview set includes:
+
+- [Start Here](./start-here.mdx)
+- [For Product Stakeholders](./for-product-stakeholders.mdx)
+- [For Frontend Engineers](./for-frontend-engineers.mdx)
+- [For Backend Engineers](./for-backend-engineers.mdx)
+- [For Platform Engineers](./for-platform-engineers.mdx)
+- [For New Team Members](./for-new-team-members.mdx)
+- [Product Overview](./product-overview.mdx)
+- [Project Preview](./project-preview.mdx)
+- [System Landscape](./system-landscape.mdx)
+- [System Architecture](./system-architecture.mdx)
+- [Service Interactions](./service-interactions.mdx)
+- [Database Overview](./database-overview.mdx)
+- [Data Flow](./data-flow.mdx)
+- [User Journeys](./user-journeys.mdx)
+- [Glossary](./glossary.mdx)
+
+The deeper cross-service technical references include:
+
+- [Service Dependency Map](./service-dependency-map.mdx)
+- [Request and Response Flows](./request-response-flows.mdx)
+- [Asynchronous Workflows](./asynchronous-workflows.mdx)
+- [Authentication and Trust Boundaries](./authentication-and-trust-boundaries.mdx)
+
+## What This Section Explains
+
+This section now explains:
+
+- the problem Bisakerja is solving for job seekers in Indonesia
+- the responsibilities of Frontend UI, Backend API, Scraper API, and Model API
+- the platform's end-to-end data movement from ingestion to recommendation
+- the main application data domains and ownership boundaries
+- concrete user-facing flows such as browsing jobs, scoring job fit, and tracking applications
+
+It also now provides role-oriented reading paths so the documentation can be entered by reader intent instead of only by folder structure.
+
+## Current Documentation Boundary
+
+The overview section remains intentionally platform-oriented:
+
+- it defines the shared system picture
+- it does not replace service-owned implementation details
+- it assumes the service repositories will later contribute deeper technical docs through synchronization
+
+## Source Basis
+
+The content in this section is based on:
+
+- the current Bisakerja project brief and product definition in `REFERENCE.md`
+- the documentation standards already implemented in this repository
+- reasonable architectural assumptions for a four-service web platform until service repositories are synchronized here

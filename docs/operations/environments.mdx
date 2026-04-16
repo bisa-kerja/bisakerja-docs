@@ -1,0 +1,81 @@
+---
+title: Environments
+sidebar_position: 2
+description: Intended environment topology and runtime expectations for local, staging, and production Bisakerja deployments.
+owner: platform-docs-maintainer
+reviewers:
+  - engineering-lead
+doc_status: active
+last_reviewed: 2026-04-15
+---
+
+# Environments
+
+This page documents the intended environment topology for Bisakerja at the platform level. It is based on current project assumptions and should be refined when service repositories contribute their deployment-specific documentation.
+
+## Environment Model
+
+| Environment | Purpose                                | Expected Characteristics                                                   |
+| ----------- | -------------------------------------- | -------------------------------------------------------------------------- |
+| Local       | Developer workflow and feature testing | Fast iteration, local service composition, lower data fidelity             |
+| Staging     | Pre-release integration and validation | Production-like service interaction, safer test data, deployment rehearsal |
+| Production  | User-facing runtime                    | Stable releases, controlled secrets, monitored services                    |
+
+## Local Environment
+
+The local environment should support:
+
+- frontend development against a reachable backend
+- backend development with local or shared development database access
+- model API availability for integration testing when fit-scoring work is in scope
+- optional scraper execution or fixture-based data for local search behavior
+
+## Staging Environment
+
+The staging environment should exist to validate:
+
+- cross-service compatibility before release
+- frontend, backend, and model integration together
+- migration safety and configuration correctness
+- non-production operational behavior such as release candidate testing
+
+## Production Environment
+
+The production environment should prioritize:
+
+- availability of the Backend API and database path
+- reliability of model-serving for fit analysis
+- controlled scraping or ingestion freshness pipelines
+- secure handling of user account and tracker data
+
+## Environment Topology Assumption
+
+```text
+Local:
+  developer machine
+    -> frontend
+    -> backend
+    -> optional model service
+    -> local or shared database
+
+Staging:
+  deployed frontend
+    -> deployed backend
+      -> staging database
+      -> staging model service
+      -> staging-friendly ingestion path
+
+Production:
+  public frontend
+    -> production backend
+      -> production database
+      -> production model service
+      -> production ingestion or refresh pipeline
+```
+
+## Open Questions For Later Service Docs
+
+- exact hosting targets for each service
+- deployment ordering and rollback rules
+- environment-specific secret management
+- scraper execution scheduling by environment

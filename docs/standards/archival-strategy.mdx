@@ -1,0 +1,47 @@
+---
+title: Archival Strategy
+sidebar_position: 20
+description: Long-term archival strategy for deprecated services, legacy flows, and superseded architecture in Bisakerja documentation.
+owner: platform-docs-maintainer
+reviewers:
+  - engineering-lead
+doc_status: active
+last_reviewed: 2026-04-15
+---
+
+# Archival Strategy
+
+This document defines how old or superseded documentation should be retired without losing useful historical context.
+
+## When To Archive
+
+Archive a document when:
+
+- a service is deprecated or replaced
+- a major architecture pattern is no longer current
+- a user flow is no longer supported
+- historical evidence is useful, but the page should not guide new work
+
+## Archive States
+
+- use `deprecated` when readers may still need the page temporarily
+- use `archived` when the page is for history only
+
+## Archive Placement
+
+Preferred archive models:
+
+- keep archived service material under the service subtree with clear lifecycle metadata
+- move cross-service historical material into a clearly named archival subtree only if volume justifies it
+
+## Archive Rules
+
+- archived pages should not appear as the primary recommended path in onboarding or landing pages
+- archived pages should explain what replaced them
+- archived pages should preserve enough metadata to support incident review, audits, or migration work
+
+## What Not To Archive Silently
+
+- architecture decisions that still influence the present system
+- runbooks still used in current operations
+- compliance evidence still required for active controls

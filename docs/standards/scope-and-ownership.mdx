@@ -1,0 +1,48 @@
+---
+title: Scope and Ownership
+sidebar_position: 2
+---
+
+# Scope and Ownership
+
+This document defines what the central docs repository owns, what stays with service repositories, and who is accountable for review.
+
+## Target Audiences
+
+| Audience                          | Primary Need                                        | Typical Entry Point         |
+| --------------------------------- | --------------------------------------------------- | --------------------------- |
+| New engineers                     | Understand the platform quickly                     | `intro`, `overview/`        |
+| Cross-team engineers              | Understand service boundaries and integrations      | `overview/`, `services/`    |
+| Product and delivery stakeholders | Understand platform capabilities and system shape   | `overview/`                 |
+| Platform maintainers              | Keep structure, standards, and docs quality healthy | `standards/`, `operations/` |
+
+## Content Ownership Split
+
+| Content Type                            | Central Repository | Service Repository                      |
+| --------------------------------------- | ------------------ | --------------------------------------- |
+| Product and platform overview           | Owns               | References only                         |
+| Cross-service architecture              | Owns               | Contributes source details              |
+| Service-specific implementation details | Links to           | Owns                                    |
+| Service API internals                   | Links to or syncs  | Owns                                    |
+| Documentation standards and governance  | Owns               | Follows                                 |
+| Shared operational references           | Owns               | Contributes source details where needed |
+
+## Documentation Owners
+
+Use role ownership first. Personal names can change without requiring a structural rewrite.
+
+| Area                       | Primary Owner                  | Required Reviewer        |
+| -------------------------- | ------------------------------ | ------------------------ |
+| Overview and platform docs | Platform or architecture owner | Engineering lead         |
+| Frontend UI docs           | Frontend owner                 | Platform docs maintainer |
+| Backend API docs           | Backend owner                  | Platform docs maintainer |
+| Scraper API docs           | Data ingestion owner           | Platform docs maintainer |
+| Model API docs             | ML or model platform owner     | Platform docs maintainer |
+| Documentation standards    | Platform docs maintainer       | Engineering lead         |
+
+## Ownership Rules
+
+- Central overview documents are maintained in this repository.
+- Service-specific content should remain authored in the service repository unless there is a documented exception.
+- Synchronized documents must preserve the source repository and owning team in metadata.
+- Cross-service documents require review from every service owner materially affected by the change.

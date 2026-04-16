@@ -1,0 +1,82 @@
+---
+title: Authentication and Trust Boundaries
+sidebar_position: 14
+description: Authentication, authorization, and trust boundary guidance across frontend, backend, data, and model services.
+owner: platform-docs-maintainer
+reviewers:
+  - engineering-lead
+doc_status: active
+last_reviewed: 2026-04-15
+---
+
+# Authentication and Trust Boundaries
+
+This page documents the main trust boundaries in the Bisakerja platform and where authentication and authorization decisions should live.
+
+## Primary Trust Boundaries
+
+| Boundary                              | Reason It Matters                                                          |
+| ------------------------------------- | -------------------------------------------------------------------------- |
+| User browser to Frontend UI           | User input is untrusted until validated server-side                        |
+| Frontend UI to Backend API            | All application actions should pass through authenticated backend controls |
+| Backend API to PostgreSQL             | Data access must be controlled and service-mediated                        |
+| Backend API to Model API              | Inference should be invoked from trusted backend paths only                |
+| Scraper API to external job platforms | Third-party data is untrusted until validated and normalized               |
+
+## Authentication Model
+
+The current architectural assumption is:
+
+- authentication should be handled by the Backend API
+- the Frontend UI should store and forward authenticated session state or tokens according to backend rules
+- service-to-service trust should rely on internal network controls and service credentials, not frontend-originated identity
+
+## Authorization Model
+
+Authorization decisions should remain in the Backend API for product actions such as:
+
+- reading or editing a user profile
+- updating user preferences
+- creating or modifying application tracker records
+- viewing user-specific score history if it is stored
+
+The Model API should not decide whether a user is allowed to act. It should trust the backend to send only authorized requests.
+
+## Trust Boundary Rules
+
+### Frontend UI
+
+- treat all user input as untrusted
+- avoid placing authorization logic solely in the client
+- do not call internal model or scraper services directly
+
+### Backend API
+
+- validate request identity and user ownership
+- sanitize and validate input before persistence or inference
+- limit service-to-service payloads to what downstream services actually need
+
+### Scraper API
+
+- treat external platform data as untrusted
+- validate shape and normalize before it becomes platform data
+
+### Model API
+
+- treat backend requests as trusted application-originated calls
+- return inference results without taking ownership of end-user authorization
+
+## Common Security Failure Modes
+
+- frontend assumes a user can mutate any tracker record without backend ownership checks
+- backend forwards excessive user or job data into model-serving calls
+- scraper pipeline stores malformed source payloads without normalization safeguards
+
+## Documentation Gap
+
+Later service repositories should provide:
+
+- real authentication mechanism details
+- session or token model specifics
+- internal service credential handling
+- audit or logging strategy for sensitive operations

@@ -1,47 +1,66 @@
 ---
+title: Central Documentation Hub
 sidebar_position: 1
+description: Entry point for Bisakerja platform documentation, including standards, architecture overview, and service navigation.
+owner: platform-docs-maintainer
+reviewers:
+  - engineering-lead
+doc_status: active
+last_reviewed: 2026-04-15
 ---
 
-# Tutorial Intro
+# Central Documentation Hub
 
-Let's discover **Docusaurus in less than 5 minutes**.
+This repository is the single entry point for understanding the Bisakerja platform at the system level.
 
-## Getting Started
+It exists to do three things well:
 
-Get started by **creating a new site**.
+- explain the platform in one place for new engineers, product stakeholders, and cross-team contributors
+- aggregate service-owned documentation from the Frontend UI, Backend API, Scraper API, and Model API repositories
+- define the standards that keep distributed documentation consistent, reviewable, and maintainable
 
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
+## What Is Implemented In The Foundation Layer
 
-### What you'll need
+The foundation layer establishes the documentation baseline:
 
-- [Node.js](https://nodejs.org/en/download/) version 20.0 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
+- scope and ownership boundaries
+- information architecture and repository structure
+- naming conventions and document metadata
+- contribution and review rules
+- top-level documentation sections for overview, services, operations, standards, and references
 
-## Generate a new site
+System architecture, end-to-end data flow, and deeper service documentation are planned next and intentionally separated into subsequent milestones.
 
-Generate a new Docusaurus site using the **classic template**.
+## Start Here
 
-The classic template will automatically be added to your project after you run the command:
+- Read [Start Here](./overview/start-here.mdx) for the guided onboarding path.
+- Read [Overview](./overview/index.mdx) for the mission, product context, architecture, and data flow of the platform.
+- Read [Documentation Standards](./standards/index.mdx) for ownership, structure, metadata, and contribution rules.
+- Read [Services](./services/index.mdx) for the service section layout that future sync pipelines will populate.
 
-```bash
-npm init docusaurus@latest my-website classic
-```
+## Foundation Outcome
 
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
+With the foundation in place, this repository should answer these questions clearly:
 
-The command also installs all necessary dependencies you need to run Docusaurus.
+- what belongs in the central repository versus service repositories
+- how documentation is organized and navigated
+- who owns each documentation domain
+- how new documents must be named, tagged, reviewed, and maintained
 
-## Start your site
+## Overview Outcome
 
-Run the development server:
+The overview layer adds the platform overview set that explains:
 
-```bash
-cd my-website
-npm run start
-```
+- the product problem and intended user experience
+- the role of each major service in the system
+- the platform's high-level architecture and service interaction model
+- database ownership and the main domain entities
+- end-to-end user journeys from job discovery to application tracking
 
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
+## Reader Orientation Outcome
 
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
+The reader-orientation layer adds:
 
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads automatically** and displays your changes.
+- where product, overview, service, and synced docs should be entered
+- how different reader roles should navigate the docs
+- how onboarding and related-doc patterns reduce dead ends

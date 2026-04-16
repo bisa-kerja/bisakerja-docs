@@ -1,0 +1,65 @@
+---
+title: Service Interactions
+sidebar_position: 6
+description: Interaction patterns, boundaries, and handoff points between Bisakerja services.
+owner: platform-docs-maintainer
+reviewers:
+  - engineering-lead
+doc_status: active
+last_reviewed: 2026-04-15
+---
+
+# Service Interactions
+
+This page describes how the major Bisakerja services should interact with each other.
+
+## Interaction Types
+
+| Interaction Type                    | Producer    | Consumer                               | Purpose                                                                   |
+| ----------------------------------- | ----------- | -------------------------------------- | ------------------------------------------------------------------------- |
+| Synchronous HTTP                    | Frontend UI | Backend API                            | User-facing reads, writes, and workflow actions                           |
+| Synchronous HTTP                    | Backend API | Model API                              | Fit scoring, explanations, and recommendation results                     |
+| Asynchronous or scheduled ingestion | Scraper API | Database and backend-owned job records | Periodic refresh of job listings                                          |
+| Database persistence                | Backend API | PostgreSQL                             | Store user accounts, profiles, preferences, and application tracker state |
+| Normalized job persistence          | Scraper API | PostgreSQL                             | Store scraped and normalized job listings                                 |
+
+## Primary Interaction Rules
+
+### Frontend UI to Backend API
+
+- the frontend should not depend directly on the scraper layer
+- the frontend should not call the model-serving layer directly
+- all user-facing application state should go through the Backend API
+
+### Backend API to Model API
+
+- the backend sends the relevant job, user, and preference context
+- the model returns fit score and explainability output
+- the backend formats and persists any needed result history for user experience
+
+### Scraper API to Shared Data Layer
+
+- the scraper collects raw data from external job sources
+- it transforms those records into a normalized platform shape
+- normalized records are written into storage for backend retrieval
+
+## Handoff Boundaries
+
+| Boundary                       | Owned By    | Notes                                          |
+| ------------------------------ | ----------- | ---------------------------------------------- |
+| Presentation boundary          | Frontend UI | UI state, rendering, user input capture        |
+| Application workflow boundary  | Backend API | Auth, validation, orchestration, persistence   |
+| Ingestion boundary             | Scraper API | External source fetching and normalization     |
+| Inference boundary             | Model API   | Scoring, explanation, and model-driven outputs |
+| Transactional storage boundary | PostgreSQL  | Durable application and job state              |
+
+## Design Intent
+
+This separation is important because it keeps:
+
+- user experience concerns in the frontend
+- application and security concerns in the backend
+- data acquisition concerns in the scraper layer
+- AI and explanation concerns in the model layer
+
+That boundary discipline will make later service-specific documentation and CI-based synchronization easier to maintain.

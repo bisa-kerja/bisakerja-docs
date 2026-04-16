@@ -1,0 +1,75 @@
+---
+title: Database Overview
+sidebar_position: 7
+description: Data domains, ownership boundaries, and database responsibilities for the Bisakerja platform.
+owner: platform-docs-maintainer
+reviewers:
+  - engineering-lead
+doc_status: active
+last_reviewed: 2026-04-15
+---
+
+# Database Overview
+
+The project brief identifies PostgreSQL as the primary relational database for the Bisakerja platform.
+
+## Data Ownership Model
+
+At the platform level, the database should be treated as the source of truth for user-facing application state and normalized job data.
+
+## Major Data Domains
+
+| Data Domain                 | Description                                          | Primary Writing Service | Primary Reading Service            |
+| --------------------------- | ---------------------------------------------------- | ----------------------- | ---------------------------------- |
+| User accounts               | Authentication identity and basic account state      | Backend API             | Backend API                        |
+| User profiles               | Career profile, experience, and self-declared skills | Backend API             | Backend API, Model API via backend |
+| User preferences            | Desired location, role, salary, and work preferences | Backend API             | Backend API, Model API via backend |
+| Job listings                | Normalized records from external job sources         | Scraper API             | Backend API                        |
+| Job metadata                | Required skills, job attributes, source details      | Scraper API             | Backend API, Model API via backend |
+| Application tracker records | User-managed job application state and updates       | Backend API             | Backend API                        |
+| Recommendation history      | Stored scoring or explanation snapshots if persisted | Backend API             | Backend API                        |
+
+## Ownership Boundaries
+
+### Backend API-owned records
+
+The Backend API should be considered the owner of:
+
+- users
+- profiles
+- preferences
+- bookmarks or saved jobs if implemented
+- application tracker state
+- any persisted scoring history presented to users
+
+### Scraper API-owned records
+
+The Scraper API should be considered the owner of:
+
+- ingested raw job data before normalization
+- normalized job listing refresh logic
+- source freshness and ingestion metadata
+
+### Model API data relationship
+
+The Model API should not be treated as the system of record for transactional data. It consumes prepared data and returns derived outputs such as:
+
+- fit scores
+- explanation breakdowns
+- skill gap results
+- strategy recommendations
+
+## Data Design Guidance
+
+- normalized job records should be stable enough for frontend display and backend filtering
+- user state should remain transactional and auditable
+- derived AI output should be stored only when it improves the user workflow or historical analysis
+
+## Documentation Gap To Fill Later
+
+The central docs currently define ownership and data domains, but service repos should later provide:
+
+- concrete schema documentation
+- table-level relationships
+- migration strategy
+- data retention policy
