@@ -184,14 +184,16 @@ Changes that affect service boundaries, synchronization, or central structure sh
 
 The Docusaurus site configuration currently targets:
 
-- Production URL: `https://docs.bisakerja.com`
+- Production URL: `https://bisakerja-docs.netlify.app`
 - Base URL: `/`
 - Default locale: `en`
 
-Deployment is handled through Docusaurus' standard deploy flow:
+The published site is currently hosted on Netlify. The primary deployment target is the static output generated from:
 
 ```bash
-npm run deploy
+npm run build
 ```
 
-If the hosting target changes, update the relevant values in `docusaurus.config.ts` before deploying.
+The `npm run deploy` script still exists as a Docusaurus helper, but it should not be treated as the primary Netlify publishing path unless the hosting strategy changes again.
+
+If the hosting target changes, update the relevant values in `docusaurus.config.ts` and the root documentation before deploying.

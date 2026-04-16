@@ -13,7 +13,7 @@ const config: Config = {
 	},
 
 	// Update deployment values if the hosting target changes.
-	url: "https://docs.bisakerja.com",
+	url: "https://bisakerja-docs.netlify.app",
 	baseUrl: "/",
 
 	organizationName: "bisakerja",
