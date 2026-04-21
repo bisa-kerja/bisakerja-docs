@@ -8,6 +8,9 @@ loadEnv({ path: ".env", quiet: true });
 const algoliaAppId = process.env.DOCSEARCH_APP_ID;
 const algoliaApiKey = process.env.DOCSEARCH_API_KEY;
 const algoliaIndexName = process.env.DOCSEARCH_INDEX_NAME;
+const algoliaAskAiAssistantId = process.env.DOCSEARCH_ASK_AI_ASSISTANT_ID;
+const algoliaAskAiSuggestedQuestions =
+	process.env.DOCSEARCH_ASK_AI_SUGGESTED_QUESTIONS === "true";
 
 const algolia =
 	algoliaAppId && algoliaApiKey && algoliaIndexName
@@ -18,6 +21,17 @@ const algolia =
 				contextualSearch: true,
 				searchPagePath: "search",
 				insights: false,
+				...(algoliaAskAiAssistantId
+					? {
+							askAi: {
+								assistantId: algoliaAskAiAssistantId,
+								indexName: algoliaIndexName,
+								apiKey: algoliaApiKey,
+								appId: algoliaAppId,
+								suggestedQuestions: algoliaAskAiSuggestedQuestions,
+							},
+						}
+					: {}),
 			}
 		: undefined;
 
