@@ -11,6 +11,7 @@ The site is built with Docusaurus and published for use as the primary entry poi
 - [Documentation Map](#documentation-map)
 - [Tech Stack](#tech-stack)
 - [Getting Started](#getting-started)
+- [Search Configuration](#search-configuration)
 - [Available Scripts](#available-scripts)
 - [Content Model](#content-model)
 - [Contribution Guide](#contribution-guide)
@@ -102,6 +103,64 @@ npm run build
 ```
 
 The local dev server supports live reload, so most documentation and UI changes appear without restarting the process.
+
+## Search Configuration
+
+This site supports Docusaurus' official Algolia DocSearch integration.
+
+The search UI is enabled only when all three Algolia values are present in a local `.env` file:
+
+- `DOCSEARCH_APP_ID`
+- `DOCSEARCH_API_KEY`
+- `DOCSEARCH_INDEX_NAME`
+
+If any of these values are missing, the site still builds normally and the search bar stays hidden.
+
+### Local Setup
+
+Copy the example file, then fill in your Algolia DocSearch values:
+
+```bash
+cp .env.example .env
+```
+
+Use this content in `.env`:
+
+```dotenv
+DOCSEARCH_APP_ID=YOUR_APP_ID
+DOCSEARCH_API_KEY=YOUR_SEARCH_API_KEY
+DOCSEARCH_INDEX_NAME=YOUR_INDEX_NAME
+```
+
+After `.env` is populated, start the dev server:
+
+```bash
+npm run start
+```
+
+For a production build:
+
+```bash
+npm run build
+```
+
+### Netlify Setup
+
+For local development, the Docusaurus config reads values from `.env`.
+
+For Netlify, configure the same values as environment variables in the site dashboard:
+
+1. Open the site dashboard.
+2. Go to `Site configuration` -> `Environment variables`.
+3. Add `DOCSEARCH_APP_ID`, `DOCSEARCH_API_KEY`, and `DOCSEARCH_INDEX_NAME`.
+4. Trigger a new deploy after saving the values.
+
+### Algolia Operational Notes
+
+- Apply to the Algolia DocSearch program if the site is eligible: <https://docsearch.algolia.com/docs/who-can-apply/>
+- Use the recommended Docusaurus v3 crawler template: <https://docsearch.algolia.com/docs/templates/#docusaurus-v3-template>
+- Search results will not appear reliably until Algolia approves the setup and completes the first crawl.
+- If content changes significantly and search results look stale, trigger a new crawl from the Algolia dashboard.
 
 ## Available Scripts
 

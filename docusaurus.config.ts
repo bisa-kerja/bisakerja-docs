@@ -1,11 +1,39 @@
 import { themes as prismThemes } from "prism-react-renderer";
 import type { Config } from "@docusaurus/types";
 import type * as Preset from "@docusaurus/preset-classic";
+import { config as loadEnv } from "dotenv";
+
+loadEnv({ path: ".env", quiet: true });
+
+const algoliaAppId = process.env.DOCSEARCH_APP_ID;
+const algoliaApiKey = process.env.DOCSEARCH_API_KEY;
+const algoliaIndexName = process.env.DOCSEARCH_INDEX_NAME;
+
+const algolia =
+	algoliaAppId && algoliaApiKey && algoliaIndexName
+		? {
+				appId: algoliaAppId,
+				apiKey: algoliaApiKey,
+				indexName: algoliaIndexName,
+				contextualSearch: true,
+				searchPagePath: "search",
+				insights: false,
+			}
+		: undefined;
 
 const config: Config = {
 	title: "Bisakerja Docs",
 	tagline: "Internal documentation hub for Bisakerja Engineering",
 	favicon: "img/favicon.ico",
+	headTags: [
+		{
+			tagName: "meta",
+			attributes: {
+				name: "algolia-site-verification",
+				content: "BC8807116185890A",
+			},
+		},
+	],
 
 	future: {
 		v4: true,
@@ -100,6 +128,7 @@ const config: Config = {
 			theme: prismThemes.github,
 			darkTheme: prismThemes.dracula,
 		},
+		...(algolia ? { algolia } : {}),
 	} satisfies Preset.ThemeConfig,
 };
 
