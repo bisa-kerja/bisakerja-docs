@@ -15,10 +15,10 @@ This document defines how the documentation platform should scale beyond the cur
 
 ## Scaling Principles
 
-- new capabilities should fit the existing structure before creating new top-level sections
-- service onboarding should be repeatable and low-friction
-- future extension points should preserve stable routes and ownership boundaries
-- automation should reduce manual coordination, not hide responsibility
+- New capabilities should fit the existing structure before creating new top-level sections
+- Service onboarding should be repeatable and low-friction
+- Future extension points should preserve stable routes and ownership boundaries
+- Automation should reduce manual coordination, not hide responsibility
 
 ## Adding A New Service
 
@@ -30,32 +30,32 @@ New services should be onboarded through a consistent checklist.
 2. Create a central landing page under `docs/services/<service>/index.mdx`.
 3. Reserve a `docs/services/<service>/synced/` subtree for latest synced docs.
 4. Register the service in sync and versioning configuration.
-5. Add ownership metadata and the service’s required reviewers.
+5. Add ownership metadata and the serviceâ€™s required reviewers.
 6. Add the service to central navigation and the service index.
 7. Validate that the service can produce the minimum content package defined in the service documentation integration standard.
 
 ### Optional Step
 
-- enable `versioned/<release>/` snapshots if the service has meaningful release-specific behavior or contracts
+- Enable `versioned/<release>/` snapshots if the service has meaningful release-specific behavior or contracts
 
 ## When To Add New Top-Level Sections
 
 Do not add a new top-level section unless:
 
-- the content cannot fit naturally into `overview/`, `services/`, `operations/`, `standards/`, or `references/`
-- there is an ongoing body of content with its own navigation needs
-- ownership and lifecycle rules are clear
+- The content cannot fit naturally into `overview/`, `services/`, `operations/`, `standards/`, or `references/`
+- There is an ongoing body of content with its own navigation needs
+- Ownership and lifecycle rules are clear
 
 ## Future Documentation Types
 
 The current model should be able to grow to include:
 
-- service release snapshots
-- generated API or schema references
-- architecture decision records
-- runbooks
-- incident retrospectives
-- compliance or evidence documentation
+- Service release snapshots
+- Generated API or schema references
+- Architecture decision records
+- Runbooks
+- Incident retrospectives
+- Compliance or evidence documentation
 
 ### Preferred Placement
 
@@ -72,7 +72,7 @@ The current model should be able to grow to include:
 
 Every new documentation type should first answer:
 
-- who owns it
-- how it is reviewed
-- how it becomes stale
-- whether it is synchronized, authored centrally, or generated
+- Who owns it
+- How it is reviewed
+- How it becomes stale
+- Whether it is synchronized, authored centrally, or generated

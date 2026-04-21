@@ -21,9 +21,9 @@ Bisakerja should use a **hybrid synchronization model**.
 
 ### Why Hybrid
 
-- push-based sync from service repositories keeps the central docs fresh when teams merge documentation changes
-- scheduled pull or reconciliation from the central repository detects drift, retries failed syncs, and verifies that expected docs are still aligned
-- release-triggered sync allows stable documentation snapshots to be captured alongside service releases
+- Push-based sync from service repositories keeps the central docs fresh when teams merge documentation changes
+- Scheduled pull or reconciliation from the central repository detects drift, retries failed syncs, and verifies that expected docs are still aligned
+- Release-triggered sync allows stable documentation snapshots to be captured alongside service releases
 
 ## Sync Triggers
 
@@ -46,9 +46,9 @@ The central repository keeps stable paths even if repository internals evolve.
 
 ### Mapping Rules
 
-- only files inside the service repo `/docs/` tree are eligible for automatic sync
-- stable central paths are derived from the service alias, not from the source repository display name
-- service landing pages in this repository are never overwritten by sync jobs
+- Only files inside the service repo `/docs/` tree are eligible for automatic sync
+- Stable central paths are derived from the service alias, not from the source repository display name
+- Service landing pages in this repository are never overwritten by sync jobs
 - `synced/` represents the current latest state for a service
 - `versioned/<release>/` stores immutable release snapshots when release sync is enabled
 
@@ -80,28 +80,28 @@ sync-bundle/
 
 ### Synced Page Metadata Rules
 
-- required metadata from earlier milestones must remain intact
-- synced pages must retain `source_repo` and `source_path`
-- release snapshots should also include `source_ref` or an equivalent release identifier in frontmatter or manifest metadata
+- Required metadata from earlier milestones must remain intact
+- Synced pages must retain `source_repo` and `source_path`
+- Release snapshots should also include `source_ref` or an equivalent release identifier in frontmatter or manifest metadata
 
 ## Asset and Generated Reference Handling
 
 ### Asset Rules
 
-- copy only assets referenced by synced docs or explicitly declared in the sync bundle
-- preserve relative relationships between docs and assets where possible
-- rename conflicting or generic asset names during bundle generation before central publish
+- Copy only assets referenced by synced docs or explicitly declared in the sync bundle
+- Preserve relative relationships between docs and assets where possible
+- Rename conflicting or generic asset names during bundle generation before central publish
 
 ### Generated Reference Rules
 
-- generated docs such as API references or schema pages should be published into a clearly named subtree inside the service sync target
-- generated references should be identified explicitly in metadata or manifest data so reviewers know they were machine-produced
+- Generated docs such as API references or schema pages should be published into a clearly named subtree inside the service sync target
+- Generated references should be identified explicitly in metadata or manifest data so reviewers know they were machine-produced
 
 ### Versioning Rules For Assets
 
-- latest assets live with the `synced/` content
-- release assets live with the matching `versioned/<release>/` content
-- assets should not be shared across release snapshots unless the pipeline guarantees immutability
+- Latest assets live with the `synced/` content
+- Release assets live with the matching `versioned/<release>/` content
+- Assets should not be shared across release snapshots unless the pipeline guarantees immutability
 
 ## Validation Checks
 
@@ -109,14 +109,14 @@ Every sync pipeline should validate the bundle before the central repository acc
 
 ### Required Checks
 
-- source service alias is recognized
-- manifest fields are present and valid
-- synced docs contain required metadata
-- target paths stay inside the allowed service subtree
-- no landing page outside `synced/` or `versioned/` is overwritten
-- asset references resolve correctly after mapping
-- no duplicate target paths are produced inside the same bundle
-- central broken-link and build validation still pass after applying the bundle
+- Source service alias is recognized
+- Manifest fields are present and valid
+- Synced docs contain required metadata
+- Target paths stay inside the allowed service subtree
+- No landing page outside `synced/` or `versioned/` is overwritten
+- Asset references resolve correctly after mapping
+- No duplicate target paths are produced inside the same bundle
+- Central broken-link and build validation still pass after applying the bundle
 
 ## Conflict Handling
 
@@ -124,18 +124,18 @@ Conflicts should be handled deterministically.
 
 ### Path Conflicts
 
-- if two services attempt to publish to the same central target path, fail the sync and require path correction
-- central landing pages always win over service bundles
+- If two services attempt to publish to the same central target path, fail the sync and require path correction
+- Central landing pages always win over service bundles
 
 ### Asset Conflicts
 
-- conflicting generic asset names should be renamed in the source bundle generation step
-- if the conflict survives into the central sync step, fail validation instead of overwriting silently
+- Conflicting generic asset names should be renamed in the source bundle generation step
+- If the conflict survives into the central sync step, fail validation instead of overwriting silently
 
 ### Metadata Conflicts
 
-- if frontmatter is missing required source attribution, reject the bundle
-- if service alias and source metadata disagree, reject the bundle
+- If frontmatter is missing required source attribution, reject the bundle
+- If service alias and source metadata disagree, reject the bundle
 
 ## Rollback Strategy
 
@@ -143,10 +143,10 @@ Documentation sync should behave like a controlled publish, not an uncontrolled 
 
 ### Rollback Rules
 
-- apply sync changes atomically in a dedicated commit or publish step
-- keep the previous successful central state as the rollback target
-- if central validation fails, do not publish the new bundle
-- if a published sync is later found to be bad, revert the sync commit or restore the last known good bundle
+- Apply sync changes atomically in a dedicated commit or publish step
+- Keep the previous successful central state as the rollback target
+- If central validation fails, do not publish the new bundle
+- If a published sync is later found to be bad, revert the sync commit or restore the last known good bundle
 
 ### Last-Known-Good Principle
 
@@ -159,18 +159,18 @@ Bisakerja should separate **latest** documentation from **release snapshot** doc
 ### Latest Track
 
 - `synced/` always reflects the latest accepted service documentation
-- latest is the default reading path for most users
+- Latest is the default reading path for most users
 
 ### Release Track
 
 - `versioned/<release>/` stores immutable snapshots for tagged or release-driven syncs
-- release snapshots are useful when the central docs must explain behavior tied to a specific shipped service version
+- Release snapshots are useful when the central docs must explain behavior tied to a specific shipped service version
 
 ### When To Use Release Snapshots
 
-- service contracts or behavior differ materially by release
-- incident review needs historical documentation context
-- regulated or stakeholder-reviewed releases require stable docs evidence
+- Service contracts or behavior differ materially by release
+- Incident review needs historical documentation context
+- Regulated or stakeholder-reviewed releases require stable docs evidence
 
 ## Changelog and Release-Note Behavior
 
@@ -178,18 +178,18 @@ The central repository should not generate verbose changelogs for every sync by 
 
 ### Merge Sync Behavior
 
-- use commit messages or PR summaries for routine latest-doc updates
-- avoid noisy changelog generation for every small sync
+- Use commit messages or PR summaries for routine latest-doc updates
+- Avoid noisy changelog generation for every small sync
 
 ### Release Sync Behavior
 
-- create a concise release-note summary listing changed services and release snapshot identifiers
-- link the release note to the corresponding `versioned/<release>/` paths
+- Create a concise release-note summary listing changed services and release snapshot identifiers
+- Link the release note to the corresponding `versioned/<release>/` paths
 
 ### Scheduled Reconciliation Behavior
 
-- scheduled reconciliation should produce drift or health reports, not reader-facing release notes
+- Scheduled reconciliation should produce drift or health reports, not reader-facing release notes
 
 ## Approval Boundary
 
-This document defines the technical design for synchronization and versioning. It does **not** itself imply organizational approval to deploy the pipeline. Formal approval should happen through the team’s normal engineering review process.
+This document defines the technical design for synchronization and versioning. It does **not** itself imply organizational approval to deploy the pipeline. Formal approval should happen through the teamâ€™s normal engineering review process.

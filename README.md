@@ -7,10 +7,14 @@ The site is built with Docusaurus and published for use as the primary entry poi
 ## Table of Contents
 
 - [Overview](#overview)
+- [Platform Context](#platform-context)
+- [Service Boundaries](#service-boundaries)
+- [User-Facing Flows](#user-facing-flows)
 - [What Lives Here](#what-lives-here)
 - [Documentation Map](#documentation-map)
 - [Tech Stack](#tech-stack)
 - [Getting Started](#getting-started)
+- [Bash And Bun Workflow](#bash-and-bun-workflow)
 - [Search Configuration](#search-configuration)
 - [Available Scripts](#available-scripts)
 - [Content Model](#content-model)
@@ -23,13 +27,49 @@ Bisakerja is positioned as an AI-powered career decision engine for job seekers 
 
 This repo is responsible for:
 
-- platform overview and onboarding material
-- architecture, data flow, and cross-service understanding
-- shared operational references
-- documentation standards, governance, and review rules
-- service landing pages that route to synchronized service documentation
+- Platform overview and onboarding material
+- Architecture, data flow, and cross-service understanding
+- Shared operational references
+- Documentation standards, governance, and review rules
+- Service landing pages that route to synchronized service documentation
 
 It is not intended to replace the source-of-truth technical documentation that belongs inside each service repository.
+
+## Platform Context
+
+Bisakerja is not documented as a generic job board. The current documentation frames it as a decision layer for Indonesian job seekers who need clearer signals before applying.
+
+The product problem is centered on:
+
+- Fragmented job discovery across multiple hiring platforms
+- Limited visibility into job-to-user fit before applying
+- Weak feedback loops for improving skills, preferences, and application strategy
+
+The platform answer combines aggregated job data, profile and preference context, fit scoring, explainable recommendations, skill gap analysis, and application tracking.
+
+## Service Boundaries
+
+The platform is currently described as a four-service web platform with PostgreSQL as the shared application data layer:
+
+| Service     | Responsibility                                                                 | Documentation Entry                   |
+| ----------- | ------------------------------------------------------------------------------ | ------------------------------------- |
+| Frontend UI | Presents job discovery, fit analysis, preferences, and application tracking    | `docs/services/frontend-ui/index.mdx` |
+| Backend API | Owns auth, business workflows, persistence, and cross-service orchestration    | `docs/services/backend-api/index.mdx` |
+| Scraper API | Collects external job data and normalizes it into platform-owned job records   | `docs/services/scraper-api/index.mdx` |
+| Model API   | Produces fit scores, explanation breakdowns, skill gaps, and recommendations   | `docs/services/model-api/index.mdx`   |
+| PostgreSQL  | Stores user state, normalized jobs, preferences, fit outputs, and applications | `docs/overview/database-overview.mdx` |
+
+The Backend API is the main orchestrator. The frontend talks to the backend, the backend prepares context for the Model API, and scraper-managed job data becomes usable only after normalization and persistence.
+
+## User-Facing Flows
+
+The overview documentation now connects architecture to concrete product flows:
+
+- Job ingestion moves external listings through the Scraper API into normalized records.
+- Job discovery lets guests or authenticated users search and filter available roles.
+- Fit scoring combines user profile, preferences, and job attributes before invoking the Model API.
+- Skill gap analysis explains weaker or missing capabilities in user-facing terms.
+- Application tracking stores user-specific progress such as applied, interview, rejected, or other tracked states.
 
 ## What Lives Here
 
@@ -48,8 +88,9 @@ Supporting project files include:
 - `docusaurus.config.ts` for site configuration and published URL settings
 - `sidebars.ts` for documentation navigation
 - `src/` for the Docusaurus homepage and theme-level customizations
-- `REFERENCE.md` for project background and source context used to build the docs foundation
-- `TODO.md` for the documentation roadmap and milestone tracking
+- `.env.example` for optional Algolia DocSearch environment variables
+- `package.json` for Docusaurus, validation, and formatting scripts
+- `bun.lock` for Bun-managed dependency locking
 
 ## Documentation Map
 
@@ -75,34 +116,54 @@ The current top-level sidebar is organized into:
 - Docusaurus 3
 - TypeScript
 - React 19
+- Bun
 - ESLint
 - Prettier
 
 Runtime requirement:
 
 - Node.js `>=20.0`
+- Bun installed locally or in CI
 
 ## Getting Started
+
+This repository uses Bash-style command examples and Bun as the package manager reference.
 
 Install dependencies:
 
 ```bash
-npm install
+bun install
 ```
 
 Start the local development server:
 
 ```bash
-npm run start
+bun run start
 ```
 
 Create a production build:
 
 ```bash
-npm run build
+bun run build
 ```
 
 The local dev server supports live reload, so most documentation and UI changes appear without restarting the process.
+
+## Bash And Bun Workflow
+
+Use Bash-compatible commands for local setup and documentation workflows:
+
+- Use Bun for install, script execution, and dependency locking.
+- Prefer path examples such as `./docs/overview`.
+- Keep generated dependency changes aligned with `bun.lock`.
+- Use `package.json` scripts as the source of available project commands.
+
+Quick verification for the expected toolchain:
+
+```bash
+bun --version
+node --version
+```
 
 ## Search Configuration
 
@@ -135,13 +196,13 @@ DOCSEARCH_INDEX_NAME=YOUR_INDEX_NAME
 After `.env` is populated, start the dev server:
 
 ```bash
-npm run start
+bun run start
 ```
 
 For a production build:
 
 ```bash
-npm run build
+bun run build
 ```
 
 ### Netlify Setup
@@ -168,27 +229,27 @@ All available package scripts come from `package.json`.
 
 | Command                      | Purpose                                           |
 | ---------------------------- | ------------------------------------------------- |
-| `npm run start`              | Run the Docusaurus development server             |
-| `npm run build`              | Generate the production static site into `build/` |
-| `npm run serve`              | Serve the generated production build locally      |
-| `npm run lint`               | Run ESLint across the repository                  |
-| `npm run lint:fix`           | Run ESLint with automatic fixes where possible    |
-| `npm run typecheck`          | Run TypeScript type checking                      |
-| `npm run format`             | Format files with Prettier                        |
-| `npm run format:check`       | Check formatting without changing files           |
-| `npm run clear`              | Clear Docusaurus cache artifacts                  |
-| `npm run swizzle`            | Customize Docusaurus theme components             |
-| `npm run write-translations` | Generate translation scaffolding                  |
-| `npm run write-heading-ids`  | Write explicit heading IDs for docs               |
-| `npm run deploy`             | Deploy the site with Docusaurus deployment flow   |
+| `bun run start`              | Run the Docusaurus development server             |
+| `bun run build`              | Generate the production static site into `build/` |
+| `bun run serve`              | Serve the generated production build locally      |
+| `bun run lint`               | Run ESLint across the repository                  |
+| `bun run lint:fix`           | Run ESLint with automatic fixes where possible    |
+| `bun run typecheck`          | Run TypeScript type checking                      |
+| `bun run format`             | Format files with Prettier                        |
+| `bun run format:check`       | Check formatting without changing files           |
+| `bun run clear`              | Clear Docusaurus cache artifacts                  |
+| `bun run swizzle`            | Customize Docusaurus theme components             |
+| `bun run write-translations` | Generate translation scaffolding                  |
+| `bun run write-heading-ids`  | Write explicit heading IDs for docs               |
+| `bun run deploy`             | Deploy the site with Docusaurus deployment flow   |
 
 Recommended checks before merging documentation changes:
 
 ```bash
-npm run lint
-npm run typecheck
-npm run format:check
-npm run build
+bun run lint
+bun run typecheck
+bun run format:check
+bun run build
 ```
 
 ## Content Model
@@ -201,17 +262,17 @@ This repository follows a deliberate ownership split:
 
 Use direct edits in this repository for:
 
-- overview and onboarding content
-- standards and governance
-- shared operations references
-- service landing pages and navigation
+- Overview and onboarding content
+- Standards and governance
+- Shared operations references
+- Service landing pages and navigation
 
 Use service-repository authored content for:
 
-- service internals
+- Service internals
 - API or interface details
-- runtime notes tied to one codebase
-- implementation-level architecture that should remain close to the source code
+- Runtime notes tied to one codebase
+- Implementation-level architecture that should remain close to the source code
 
 For the detailed rules, see:
 
@@ -231,11 +292,11 @@ When contributing to this repository:
 
 Good contribution targets in this repo:
 
-- cross-service documentation
-- onboarding improvements
-- architecture and data flow explanations
-- governance and review process updates
-- service landing page summaries
+- Cross-service documentation
+- Onboarding improvements
+- Architecture and data flow explanations
+- Governance and review process updates
+- Service landing page summaries
 
 Changes that affect service boundaries, synchronization, or central structure should be aligned with the standards section before merge.
 
@@ -250,9 +311,9 @@ The Docusaurus site configuration currently targets:
 The published site is currently hosted on Netlify. The primary deployment target is the static output generated from:
 
 ```bash
-npm run build
+bun run build
 ```
 
-The `npm run deploy` script still exists as a Docusaurus helper, but it should not be treated as the primary Netlify publishing path unless the hosting strategy changes again.
+The `bun run deploy` script still exists as a Docusaurus helper, but it should not be treated as the primary Netlify publishing path unless the hosting strategy changes again.
 
 If the hosting target changes, update the relevant values in `docusaurus.config.ts` and the root documentation before deploying.

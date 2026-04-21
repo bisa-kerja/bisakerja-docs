@@ -24,24 +24,24 @@ The project brief names these primary job data sources:
 
 ### Integration Concerns
 
-- changes in page structure or API surface
-- throttling and anti-bot protections
-- inconsistent salary, location, or requirement fields
-- duplicate listings across sources
+- Changes in page structure or API surface
+- Throttling and anti-bot protections
+- Inconsistent salary, location, or requirement fields
+- Duplicate listings across sources
 
 ## Model and AI Stack
 
 The product brief references these model-related components:
 
 - TensorFlow
-- sentence-transformer style embedding or semantic processing workflows
+- Sentence-transformer style embedding or semantic processing workflows
 - FastAPI for inference serving
 
 ### Integration Concerns
 
-- model artifact compatibility with serving runtime
-- input schema drift between backend and model service
-- explainability output consistency
+- Model artifact compatibility with serving runtime
+- Input schema drift between backend and model service
+- Explainability output consistency
 
 ## Platform And Development Tooling
 
@@ -54,14 +54,14 @@ The current brief references:
 
 ### Integration Concerns
 
-- schema drift between services
-- environment configuration mismatches
-- local versus deployed runtime differences
+- Schema drift between services
+- Environment configuration mismatches
+- Local versus deployed runtime differences
 
 ## Why This Reference Exists
 
 These integrations matter because many user-visible incidents in Bisakerja will not come from one service alone. They often emerge at the boundaries between:
 
-- scraper logic and external job platforms
-- backend orchestration and model-serving contracts
-- deployment configuration and runtime behavior
+- Scraper logic and external job platforms
+- Backend orchestration and model-serving contracts
+- Deployment configuration and runtime behavior

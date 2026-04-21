@@ -17,84 +17,84 @@ This page captures the common cross-service incidents that engineers are likely 
 
 ### Likely Symptoms
 
-- search and job detail pages still work
-- score, explanation, or skill gap sections fail or time out
+- Search and job detail pages still work
+- Score, explanation, or skill gap sections fail or time out
 
 ### Most Likely Affected Components
 
 - Backend API to Model API integration
 - Model API runtime or artifact load
-- backend request shaping for inference
+- Backend request shaping for inference
 
 ### First Checks
 
-1. confirm backend connectivity to the model service
-2. confirm inference payload contract compatibility
-3. confirm current model artifact availability
+1. Confirm backend connectivity to the model service
+2. Confirm inference payload contract compatibility
+3. Confirm current model artifact availability
 
 ## Scenario 2: Search Results Look Stale
 
 ### Likely Symptoms
 
-- users see old or missing listings
-- search works technically, but the catalog no longer reflects current openings
+- Users see old or missing listings
+- Search works technically, but the catalog no longer reflects current openings
 
 ### Most Likely Affected Components
 
 - Scraper API
-- ingestion scheduler
-- normalization or upsert pipeline
+- Ingestion scheduler
+- Normalization or upsert pipeline
 
 ### First Checks
 
-1. confirm scrape jobs are still running
-2. confirm external source connectors have not drifted
-3. confirm normalized records are still reaching the database
+1. Confirm scrape jobs are still running
+2. Confirm external source connectors have not drifted
+3. Confirm normalized records are still reaching the database
 
 ## Scenario 3: Authenticated Actions Fail But Public Pages Still Load
 
 ### Likely Symptoms
 
-- guests can browse jobs
-- login-required features such as tracker updates or preference edits fail
+- Guests can browse jobs
+- Login-required features such as tracker updates or preference edits fail
 
 ### Most Likely Affected Components
 
 - Backend API authentication or authorization flow
-- database write path for user-scoped records
+- Database write path for user-scoped records
 
 ### First Checks
 
-1. confirm session or token validation path
-2. confirm user-ownership checks are passing
-3. confirm database writes for user state are healthy
+1. Confirm session or token validation path
+2. Confirm user-ownership checks are passing
+3. Confirm database writes for user state are healthy
 
 ## Scenario 4: Platform-Wide User Failure
 
 ### Likely Symptoms
 
-- frontend loads partially or not at all
-- most user actions fail together
+- Frontend loads partially or not at all
+- Most user actions fail together
 
 ### Most Likely Affected Components
 
 - Backend API availability
 - PostgreSQL availability
-- deployment or environment configuration mismatch
+- Deployment or environment configuration mismatch
 
 ### First Checks
 
-1. confirm backend health
-2. confirm database health
-3. confirm environment configuration and recent deploy changes
+1. Confirm backend health
+2. Confirm database health
+3. Confirm environment configuration and recent deploy changes
 
 ## Failure Prioritization Rule
 
 When triaging incidents, classify them by user impact first:
 
-- core platform unavailable
-- authenticated workflows degraded
-- fit analysis degraded
-- data freshness degraded
+- Core platform unavailable
+- Authenticated workflows degraded
+- Fit analysis degraded
+- Data freshness degraded
 
 This order helps keep debugging aligned with the most visible user pain.

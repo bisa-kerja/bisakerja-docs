@@ -27,18 +27,18 @@ This page documents the main trust boundaries in the Bisakerja platform and wher
 
 The current architectural assumption is:
 
-- authentication should be handled by the Backend API
-- the Frontend UI should store and forward authenticated session state or tokens according to backend rules
-- service-to-service trust should rely on internal network controls and service credentials, not frontend-originated identity
+- Authentication should be handled by the Backend API
+- The Frontend UI should store and forward authenticated session state or tokens according to backend rules
+- Service-to-service trust should rely on internal network controls and service credentials, not frontend-originated identity
 
 ## Authorization Model
 
 Authorization decisions should remain in the Backend API for product actions such as:
 
-- reading or editing a user profile
-- updating user preferences
-- creating or modifying application tracker records
-- viewing user-specific score history if it is stored
+- Reading or editing a user profile
+- Updating user preferences
+- Creating or modifying application tracker records
+- Viewing user-specific score history if it is stored
 
 The Model API should not decide whether a user is allowed to act. It should trust the backend to send only authorized requests.
 
@@ -46,37 +46,37 @@ The Model API should not decide whether a user is allowed to act. It should trus
 
 ### Frontend UI
 
-- treat all user input as untrusted
-- avoid placing authorization logic solely in the client
-- do not call internal model or scraper services directly
+- Treat all user input as untrusted
+- Avoid placing authorization logic solely in the client
+- Do not call internal model or scraper services directly
 
 ### Backend API
 
-- validate request identity and user ownership
-- sanitize and validate input before persistence or inference
-- limit service-to-service payloads to what downstream services actually need
+- Validate request identity and user ownership
+- Sanitize and validate input before persistence or inference
+- Limit service-to-service payloads to what downstream services actually need
 
 ### Scraper API
 
-- treat external platform data as untrusted
-- validate shape and normalize before it becomes platform data
+- Treat external platform data as untrusted
+- Validate shape and normalize before it becomes platform data
 
 ### Model API
 
-- treat backend requests as trusted application-originated calls
-- return inference results without taking ownership of end-user authorization
+- Treat backend requests as trusted application-originated calls
+- Return inference results without taking ownership of end-user authorization
 
 ## Common Security Failure Modes
 
-- frontend assumes a user can mutate any tracker record without backend ownership checks
-- backend forwards excessive user or job data into model-serving calls
-- scraper pipeline stores malformed source payloads without normalization safeguards
+- Frontend assumes a user can mutate any tracker record without backend ownership checks
+- Backend forwards excessive user or job data into model-serving calls
+- Scraper pipeline stores malformed source payloads without normalization safeguards
 
 ## Documentation Gap
 
 Later service repositories should provide:
 
-- real authentication mechanism details
-- session or token model specifics
-- internal service credential handling
-- audit or logging strategy for sensitive operations
+- Real authentication mechanism details
+- Session or token model specifics
+- Internal service credential handling
+- Audit or logging strategy for sensitive operations

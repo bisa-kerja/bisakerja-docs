@@ -19,10 +19,10 @@ For CI/CD behavior, publish validation, rollback, and release snapshot rules, se
 
 ## Integration Principles
 
-- service repositories remain the source of truth for service-specific technical content
-- this repository owns the platform view, service landing pages, and cross-service context
-- synchronized content must preserve source attribution and stable paths
-- central pages should summarize and route, not replace the owning service repository
+- Service repositories remain the source of truth for service-specific technical content
+- This repository owns the platform view, service landing pages, and cross-service context
+- Synchronized content must preserve source attribution and stable paths
+- Central pages should summarize and route, not replace the owning service repository
 
 ## Standard Service Landing Page Template
 
@@ -77,11 +77,11 @@ If a real repository slug differs from the assumed slug above, the sync pipeline
 
 ## Cross-Linking Rules
 
-- overview pages should link to the service landing pages, not directly to service-owned low-level pages by default
-- service landing pages should link back to relevant overview pages such as system architecture, service interactions, data flow, and domain entities
-- synchronized pages should keep local relative links where possible inside the same service subtree
-- cross-service links inside synchronized docs should target stable central routes, not raw source repository URLs
-- when a service page references a platform concern, prefer linking to the central overview page rather than duplicating the explanation
+- Overview pages should link to the service landing pages, not directly to service-owned low-level pages by default
+- Service landing pages should link back to relevant overview pages such as system architecture, service interactions, data flow, and domain entities
+- Synchronized pages should keep local relative links where possible inside the same service subtree
+- Cross-service links inside synchronized docs should target stable central routes, not raw source repository URLs
+- When a service page references a platform concern, prefer linking to the central overview page rather than duplicating the explanation
 
 ## Source Attribution Rules
 
@@ -105,34 +105,34 @@ last_reviewed: 2026-04-15
 
 ### Display Rules
 
-- retain the `source_repo` and `source_path` fields
-- do not strip ownership metadata during synchronization
-- if the synchronized page is transformed materially, record both the original source and the transformation owner in pipeline metadata or commit history
+- Retain the `source_repo` and `source_path` fields
+- Do not strip ownership metadata during synchronization
+- If the synchronized page is transformed materially, record both the original source and the transformation owner in pipeline metadata or commit history
 
 ## README, Diagram, and Asset Handling
 
 ### README Handling
 
-- do not blindly copy a repository `README.md` into the central docs tree
-- if the README contains service summary content, distill it into the service landing page or sync it into a clearly named page under `synced/`
-- avoid creating duplicate overview content when a service already has a dedicated docs overview page
+- Do not blindly copy a repository `README.md` into the central docs tree
+- If the README contains service summary content, distill it into the service landing page or sync it into a clearly named page under `synced/`
+- Avoid creating duplicate overview content when a service already has a dedicated docs overview page
 
 ### Diagram Handling
 
-- preserve diagrams that are needed to understand service-local behavior
-- store synced diagrams next to the synced document that references them
-- rename generic asset files to avoid collisions when the pipeline copies them
+- Preserve diagrams that are needed to understand service-local behavior
+- Store synced diagrams next to the synced document that references them
+- Rename generic asset files to avoid collisions when the pipeline copies them
 
 ### Asset Naming
 
-- use service-prefixed names such as `frontend-ui-routing-diagram.svg`
-- never publish ambiguous names such as `image.png` or `diagram.svg`
+- Use service-prefixed names such as `frontend-ui-routing-diagram.svg`
+- Never publish ambiguous names such as `image.png` or `diagram.svg`
 
 ## Pre-Sync Readiness Checklist
 
-- the service repository has an identifiable docs root
-- the service repository documents at least the minimum content package
-- service pages include required metadata
-- local asset paths are resolvable after sync
-- central path collisions are checked before publishing
-- the service landing page in this repository is updated with current routing and ownership information
+- The service repository has an identifiable docs root
+- The service repository documents at least the minimum content package
+- Service pages include required metadata
+- Local asset paths are resolvable after sync
+- Central path collisions are checked before publishing
+- The service landing page in this repository is updated with current routing and ownership information

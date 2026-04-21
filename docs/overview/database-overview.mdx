@@ -35,41 +35,41 @@ At the platform level, the database should be treated as the source of truth for
 
 The Backend API should be considered the owner of:
 
-- users
-- profiles
-- preferences
-- bookmarks or saved jobs if implemented
-- application tracker state
-- any persisted scoring history presented to users
+- Users
+- Profiles
+- Preferences
+- Bookmarks or saved jobs if implemented
+- Application tracker state
+- Any persisted scoring history presented to users
 
 ### Scraper API-owned records
 
 The Scraper API should be considered the owner of:
 
-- ingested raw job data before normalization
-- normalized job listing refresh logic
-- source freshness and ingestion metadata
+- Ingested raw job data before normalization
+- Normalized job listing refresh logic
+- Source freshness and ingestion metadata
 
 ### Model API data relationship
 
 The Model API should not be treated as the system of record for transactional data. It consumes prepared data and returns derived outputs such as:
 
-- fit scores
-- explanation breakdowns
-- skill gap results
-- strategy recommendations
+- Fit scores
+- Explanation breakdowns
+- Skill gap results
+- Strategy recommendations
 
 ## Data Design Guidance
 
-- normalized job records should be stable enough for frontend display and backend filtering
-- user state should remain transactional and auditable
-- derived AI output should be stored only when it improves the user workflow or historical analysis
+- Normalized job records should be stable enough for frontend display and backend filtering
+- User state should remain transactional and auditable
+- Derived AI output should be stored only when it improves the user workflow or historical analysis
 
 ## Documentation Gap To Fill Later
 
 The central docs currently define ownership and data domains, but service repos should later provide:
 
-- concrete schema documentation
-- table-level relationships
-- migration strategy
-- data retention policy
+- Concrete schema documentation
+- Table-level relationships
+- Migration strategy
+- Data retention policy

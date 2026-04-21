@@ -17,10 +17,10 @@ This page documents the intended high-level runtime architecture for Bisakerja b
 
 Bisakerja should be understood as a layered system:
 
-- the Frontend UI presents search, scoring, and tracking experiences
-- the Backend API acts as the primary business and orchestration layer
-- the Scraper API feeds normalized job data into the platform
-- the Model API computes scoring and explanation results for the backend
+- The Frontend UI presents search, scoring, and tracking experiences
+- The Backend API acts as the primary business and orchestration layer
+- The Scraper API feeds normalized job data into the platform
+- The Model API computes scoring and explanation results for the backend
 - PostgreSQL holds the core application state and normalized job records
 
 ## Logical Topology
@@ -64,15 +64,15 @@ Job data should be normalized before the backend exposes it widely or sends rele
 The current brief strongly implies these platform dependencies:
 
 - PostgreSQL as the primary relational database
-- containerized deployment using Docker
-- backend services in TypeScript or Node.js and Python
+- Containerized deployment using Docker
+- Backend services in TypeScript or Node.js and Python
 - CI/CD for deployment and, later, documentation synchronization
 
 ## Documentation Note
 
 This architecture is intentionally high-level. Service repos should later supply:
 
-- deployment topology by environment
+- Deployment topology by environment
 - API contracts
-- infrastructure configuration details
-- operational runbooks and failure modes
+- Infrastructure configuration details
+- Operational runbooks and failure modes

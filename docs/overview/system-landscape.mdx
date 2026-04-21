@@ -28,36 +28,36 @@ Bisakerja is organized as a multi-service system with one user-facing applicatio
 
 ### Frontend UI
 
-- renders the job search and fit-scoring experience
-- captures user preferences and application state
-- consumes backend endpoints rather than calling data or model services directly
+- Renders the job search and fit-scoring experience
+- Captures user preferences and application state
+- Consumes backend endpoints rather than calling data or model services directly
 
 ### Backend API
 
-- acts as the primary application control plane
-- manages authentication, authorization, and data access
-- orchestrates calls to the Model API
-- exposes job, profile, preference, and application features to the frontend
+- Acts as the primary application control plane
+- Manages authentication, authorization, and data access
+- Orchestrates calls to the Model API
+- Exposes job, profile, preference, and application features to the frontend
 
 ### Scraper API
 
-- integrates with external job listing sources such as Glints, Jobstreet, Kalibrr, and Dealls
-- normalizes incoming job data
-- supports recurring refresh of job listings and related market signals
+- Integrates with external job listing sources such as Glints, Jobstreet, Kalibrr, and Dealls
+- Normalizes incoming job data
+- Supports recurring refresh of job listings and related market signals
 
 ### Model API
 
-- serves fit-scoring logic
-- returns explainable outputs for score breakdown
-- supports skill gap analysis and recommendation results
+- Serves fit-scoring logic
+- Returns explainable outputs for score breakdown
+- Supports skill gap analysis and recommendation results
 
 ## Supporting Concepts
 
 The core services depend on shared platform capabilities:
 
-- a transactional database for application state and normalized job data
+- A transactional database for application state and normalized job data
 - CI/CD pipelines for deployment and, later, docs synchronization
-- service-specific repositories that remain the source of implementation detail
+- Service-specific repositories that remain the source of implementation detail
 
 ## Current Architectural Assumption
 

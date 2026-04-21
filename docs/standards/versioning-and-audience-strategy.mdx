@@ -20,20 +20,20 @@ The current synchronization and versioning model already defines service release
 ### Use Cases For Versioned Docs
 
 - API behavior differs by release
-- service contracts change materially over time
-- support or incident review requires historical documentation context
-- stakeholder review needs a stable release-aligned docs set
+- Service contracts change materially over time
+- Support or incident review requires historical documentation context
+- Stakeholder review needs a stable release-aligned docs set
 
 ### Recommended Model
 
-- keep `synced/` as the latest track
-- use `versioned/<release>/` for release-specific snapshots
-- avoid versioning all content by default; version only where the maintenance cost is justified
+- Keep `synced/` as the latest track
+- Use `versioned/<release>/` for release-specific snapshots
+- Avoid versioning all content by default; version only where the maintenance cost is justified
 
 ### Scope Rule
 
-- version service-local docs first
-- version central overview docs only if platform behavior is meaningfully release-coupled
+- Version service-local docs first
+- Version central overview docs only if platform behavior is meaningfully release-coupled
 
 ## Localization Strategy
 
@@ -41,27 +41,27 @@ Localization should be added only when there is a real audience need and a susta
 
 ### Preconditions
 
-- stable source language ownership
-- translation review responsibility
-- clear decision on which sections must be localized
+- Stable source language ownership
+- Translation review responsibility
+- Clear decision on which sections must be localized
 
 ### Recommended Priority
 
-1. onboarding and start-here pages
-2. product-facing overview content
-3. selected service or operational content as needed
+1. Onboarding and start-here pages
+2. Product-facing overview content
+3. Selected service or operational content as needed
 
 ### Non-Goal
 
-- do not localize every low-level technical page by default if freshness cannot be maintained
+- Do not localize every low-level technical page by default if freshness cannot be maintained
 
 ## Audience-Specific Views
 
 Not every audience needs the same reading path. Future enhancements may include:
 
-- stakeholder-focused entry collections
-- engineer-focused deep-dive collections
-- support or operations-focused collections
+- Stakeholder-focused entry collections
+- Engineer-focused deep-dive collections
+- Support or operations-focused collections
 
 The existing role-oriented guides are the first form of this strategy and should be extended rather than replaced.
 
@@ -72,13 +72,13 @@ Generated references are appropriate when manual maintenance is less reliable th
 ### Good Candidates
 
 - API endpoint references
-- schema references
-- model contract summaries
-- interface catalogs
+- Schema references
+- Model contract summaries
+- Interface catalogs
 
 ### Rules
 
-- generated docs must be clearly labeled as generated
-- generated docs should live in a predictable subtree
-- generated docs must still satisfy metadata and validation requirements
-- human-authored orientation pages should introduce generated reference sets instead of exposing them without context
+- Generated docs must be clearly labeled as generated
+- Generated docs should live in a predictable subtree
+- Generated docs must still satisfy metadata and validation requirements
+- Human-authored orientation pages should introduce generated reference sets instead of exposing them without context
