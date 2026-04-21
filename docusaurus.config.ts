@@ -1,6 +1,7 @@
 import { themes as prismThemes } from "prism-react-renderer";
 import type { Config } from "@docusaurus/types";
 import type * as Preset from "@docusaurus/preset-classic";
+import type { UserThemeConfig as DocSearchThemeConfig } from "@docsearch/docusaurus-adapter";
 import { config as loadEnv } from "dotenv";
 
 loadEnv({ path: ".env", quiet: true });
@@ -12,7 +13,7 @@ const algoliaAskAiAssistantId = process.env.DOCSEARCH_ASK_AI_ASSISTANT_ID;
 const algoliaAskAiSuggestedQuestions =
 	process.env.DOCSEARCH_ASK_AI_SUGGESTED_QUESTIONS === "true";
 
-const algolia =
+const docsearch =
 	algoliaAppId && algoliaApiKey && algoliaIndexName
 		? {
 				appId: algoliaAppId,
@@ -28,6 +29,16 @@ const algolia =
 								indexName: algoliaIndexName,
 								apiKey: algoliaApiKey,
 								appId: algoliaAppId,
+								agentStudio: true,
+								searchParameters: {
+									[algoliaIndexName]: {
+										filters: "type:content AND language:en",
+										attributesToRetrieve: ["title", "content", "url"],
+										restrictSearchableAttributes: ["title", "content"],
+										distinct: "url",
+									},
+								},
+								sidePanel: true,
 								suggestedQuestions: algoliaAskAiSuggestedQuestions,
 							},
 						}
@@ -81,6 +92,7 @@ const config: Config = {
 			} satisfies Preset.Options,
 		],
 	],
+	plugins: ["@docsearch/docusaurus-adapter"],
 
 	themeConfig: {
 		image: "img/docusaurus-social-card.jpg",
@@ -142,8 +154,8 @@ const config: Config = {
 			theme: prismThemes.github,
 			darkTheme: prismThemes.dracula,
 		},
-		...(algolia ? { algolia } : {}),
-	} satisfies Preset.ThemeConfig,
+		...(docsearch ? { docsearch } : {}),
+	} satisfies Preset.ThemeConfig & DocSearchThemeConfig,
 };
 
 export default config;
