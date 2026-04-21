@@ -1,12 +1,53 @@
 import { themes as prismThemes } from "prism-react-renderer";
 import type { Config } from "@docusaurus/types";
 import type * as Preset from "@docusaurus/preset-classic";
+import { config as loadEnv } from "dotenv";
+
+loadEnv({ path: ".env", quiet: true });
+
+const algoliaAppId = process.env.DOCSEARCH_APP_ID;
+const algoliaApiKey = process.env.DOCSEARCH_API_KEY;
+const algoliaIndexName = process.env.DOCSEARCH_INDEX_NAME;
+const algoliaAskAiAssistantId = process.env.DOCSEARCH_ASK_AI_ASSISTANT_ID;
+const algoliaAskAiSuggestedQuestions =
+	process.env.DOCSEARCH_ASK_AI_SUGGESTED_QUESTIONS === "true";
+
+const algolia =
+	algoliaAppId && algoliaApiKey && algoliaIndexName
+		? {
+				appId: algoliaAppId,
+				apiKey: algoliaApiKey,
+				indexName: algoliaIndexName,
+				contextualSearch: true,
+				searchPagePath: "search",
+				insights: false,
+				...(algoliaAskAiAssistantId
+					? {
+							askAi: {
+								assistantId: algoliaAskAiAssistantId,
+								indexName: algoliaIndexName,
+								apiKey: algoliaApiKey,
+								appId: algoliaAppId,
+								suggestedQuestions: algoliaAskAiSuggestedQuestions,
+							},
+						}
+					: {}),
+			}
+		: undefined;
 
 const config: Config = {
 	title: "Bisakerja Docs",
-	tagline:
-		"Central documentation hub for platform overview, service integration, and documentation standards",
+	tagline: "Internal documentation hub for Bisakerja Engineering",
 	favicon: "img/favicon.ico",
+	headTags: [
+		{
+			tagName: "meta",
+			attributes: {
+				name: "algolia-site-verification",
+				content: "BC8807116185890A",
+			},
+		},
+	],
 
 	future: {
 		v4: true,
@@ -57,12 +98,11 @@ const config: Config = {
 					type: "docSidebar",
 					sidebarId: "docsSidebar",
 					position: "left",
-					label: "Documentation",
+					label: "Docs",
 				},
 			],
 		},
 		footer: {
-			style: "dark",
 			links: [
 				{
 					title: "Docs",
@@ -102,6 +142,7 @@ const config: Config = {
 			theme: prismThemes.github,
 			darkTheme: prismThemes.dracula,
 		},
+		...(algolia ? { algolia } : {}),
 	} satisfies Preset.ThemeConfig,
 };
 

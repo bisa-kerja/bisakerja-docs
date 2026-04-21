@@ -36,9 +36,9 @@ Service docs change
 
 ### Use Case
 
-- daily documentation iteration
-- small service-specific corrections
-- keeping latest service docs fresh in the central hub
+- Daily documentation iteration
+- Small service-specific corrections
+- Keeping latest service docs fresh in the central hub
 
 ## Release Publish Workflow
 
@@ -53,9 +53,9 @@ Service release
 
 ### Use Case
 
-- stable release documentation
-- historical reference for incidents or audits
-- service contract changes tied to a release
+- Stable release documentation
+- Historical reference for incidents or audits
+- Service contract changes tied to a release
 
 ## Scheduled Reconciliation Workflow
 
@@ -69,28 +69,28 @@ Central scheduler
 
 ### Use Case
 
-- detect silent pipeline failures
-- verify that `synced/` docs still match expected latest source state
-- catch missing metadata or broken path assumptions over time
+- Detect silent pipeline failures
+- Verify that `synced/` docs still match expected latest source state
+- Catch missing metadata or broken path assumptions over time
 
 ## Publish Safeguards
 
 Before a publish is accepted, the central repository should require:
 
-- bundle manifest validation
-- service-path validation
-- metadata validation
-- asset reference validation
-- whole-site broken-link and production build validation
+- Bundle manifest validation
+- Service-path validation
+- Metadata validation
+- Asset reference validation
+- Whole-site broken-link and production build validation
 
 ## Failure Handling
 
 If a publish attempt fails:
 
-1. reject the incoming bundle
-2. keep the current central docs state unchanged
-3. expose the failure reason to the owning service team
-4. retry only after the source bundle or mapping rules are corrected
+1. Reject the incoming bundle
+2. Keep the current central docs state unchanged
+3. Expose the failure reason to the owning service team
+4. Retry only after the source bundle or mapping rules are corrected
 
 ## Operational Ownership
 
@@ -105,4 +105,4 @@ If a publish attempt fails:
 
 - [Service Documentation Integration](../standards/service-documentation-integration.mdx) defines what gets synchronized
 - [Documentation Sync and Versioning](../standards/documentation-sync-and-versioning.mdx) defines how synchronization and versioning should behave
-- this page defines how the publish process should run operationally
+- This page defines how the publish process should run operationally

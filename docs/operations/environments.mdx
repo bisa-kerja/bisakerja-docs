@@ -25,28 +25,28 @@ This page documents the intended environment topology for Bisakerja at the platf
 
 The local environment should support:
 
-- frontend development against a reachable backend
-- backend development with local or shared development database access
-- model API availability for integration testing when fit-scoring work is in scope
-- optional scraper execution or fixture-based data for local search behavior
+- Frontend development against a reachable backend
+- Backend development with local or shared development database access
+- Model API availability for integration testing when fit-scoring work is in scope
+- Optional scraper execution or fixture-based data for local search behavior
 
 ## Staging Environment
 
 The staging environment should exist to validate:
 
-- cross-service compatibility before release
-- frontend, backend, and model integration together
-- migration safety and configuration correctness
-- non-production operational behavior such as release candidate testing
+- Cross-service compatibility before release
+- Frontend, backend, and model integration together
+- Migration safety and configuration correctness
+- Non-production operational behavior such as release candidate testing
 
 ## Production Environment
 
 The production environment should prioritize:
 
-- availability of the Backend API and database path
-- reliability of model-serving for fit analysis
-- controlled scraping or ingestion freshness pipelines
-- secure handling of user account and tracker data
+- Availability of the Backend API and database path
+- Reliability of model-serving for fit analysis
+- Controlled scraping or ingestion freshness pipelines
+- Secure handling of user account and tracker data
 
 ## Environment Topology Assumption
 
@@ -75,7 +75,7 @@ Production:
 
 ## Open Questions For Later Service Docs
 
-- exact hosting targets for each service
-- deployment ordering and rollback rules
-- environment-specific secret management
-- scraper execution scheduling by environment
+- Exact hosting targets for each service
+- Deployment ordering and rollback rules
+- Environment-specific secret management
+- Scraper execution scheduling by environment

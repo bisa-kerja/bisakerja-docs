@@ -30,8 +30,8 @@ PostgreSQL -> Backend API: fresh data becomes available to search flows
 
 ### Why It Matters
 
-- users rely on the platform to surface current openings
-- search quality degrades if this workflow stalls
+- Users rely on the platform to surface current openings
+- Search quality degrades if this workflow stalls
 
 ## Workflow 2: Data Normalization And Enrichment
 
@@ -48,10 +48,10 @@ Database records -> backend filtering and model input preparation
 
 ### Typical Concerns
 
-- platform-specific field names
-- inconsistent salary formatting
-- missing location or skill data
-- duplicate or stale job entries
+- Platform-specific field names
+- Inconsistent salary formatting
+- Missing location or skill data
+- Duplicate or stale job entries
 
 ## Workflow 3: Model Artifact Usage
 
@@ -68,8 +68,8 @@ Inference result -> Backend API -> Frontend UI
 
 ### Notes
 
-- retraining is not treated as a user-facing runtime flow here
-- the central docs currently focus on inference-serving behavior rather than training pipelines
+- Retraining is not treated as a user-facing runtime flow here
+- The central docs currently focus on inference-serving behavior rather than training pipelines
 
 ## Workflow 4: Documentation Sync Readiness
 
@@ -87,8 +87,8 @@ Service repo docs update
 
 ### Notes
 
-- this workflow is documented here because stale documentation is also an operational risk
-- the full CI/CD design remains a subsequent-milestone concern
+- This workflow is documented here because stale documentation is also an operational risk
+- The full CI/CD design remains a subsequent-milestone concern
 
 ## Asynchronous Risk Areas
 

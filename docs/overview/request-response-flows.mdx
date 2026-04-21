@@ -30,8 +30,8 @@ Frontend UI -> User: render results
 
 ### Notes
 
-- this flow should work for both guest and authenticated users
-- this flow depends on scraper freshness indirectly, but not on live scraper availability
+- This flow should work for both guest and authenticated users
+- This flow depends on scraper freshness indirectly, but not on live scraper availability
 
 ## Flow 2: Job Detail
 
@@ -50,8 +50,8 @@ Frontend UI -> User: render structured detail page
 
 ### Notes
 
-- this flow should expose enough normalized data for fit analysis
-- frontend should not need to interpret source-platform-specific raw fields
+- This flow should expose enough normalized data for fit analysis
+- Frontend should not need to interpret source-platform-specific raw fields
 
 ## Flow 3: Fit Score Request
 
@@ -71,14 +71,14 @@ Frontend UI -> User: render score, rationale, and skill gap
 
 ### Notes
 
-- the backend should remain the only service assembling inference payloads
-- the frontend should receive product-friendly output, not raw model internals
+- The backend should remain the only service assembling inference payloads
+- The frontend should receive product-friendly output, not raw model internals
 
 ## Flow 4: Application Tracker Update
 
 ### Purpose
 
-Persist a user’s application state change for a role.
+Persist a userâ€™s application state change for a role.
 
 ```text
 User -> Frontend UI: mark job as applied or interviewed
@@ -91,11 +91,11 @@ Frontend UI -> User: show new application status
 
 ### Notes
 
-- this flow should be transactional and user-specific
-- even if fit scoring is unavailable, tracker updates should still work if backend and database are healthy
+- This flow should be transactional and user-specific
+- Even if fit scoring is unavailable, tracker updates should still work if backend and database are healthy
 
 ## Synchronous Flow Design Guidance
 
-- frontend calls should terminate at the backend, not at data or model services directly
-- backend responses should be shaped for product use, not internal-only debugging
-- failure states should distinguish between unavailable data, unavailable inference, and unavailable persistence
+- Frontend calls should terminate at the backend, not at data or model services directly
+- Backend responses should be shaped for product use, not internal-only debugging
+- Failure states should distinguish between unavailable data, unavailable inference, and unavailable persistence
