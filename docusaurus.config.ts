@@ -92,7 +92,7 @@ const config: Config = {
 			} satisfies Preset.Options,
 		],
 	],
-	plugins: ["@docsearch/docusaurus-adapter"],
+	plugins: [...(docsearch ? ["@docsearch/docusaurus-adapter"] : [])],
 
 	themeConfig: {
 		image: "img/docusaurus-social-card.jpg",

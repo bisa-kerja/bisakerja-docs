@@ -179,6 +179,8 @@ The search UI is enabled only when all three Algolia values are present in a loc
 
 If any of these values are missing, the site still builds normally and the search bar stays hidden.
 
+The DocSearch adapter plugin is registered only when these required values are available. This keeps CI and preview builds working even when search credentials are not injected.
+
 Algolia Agent Studio Ask AI is enabled on top of DocSearch when this optional value is also present:
 
 - `DOCSEARCH_ASK_AI_ASSISTANT_ID`
