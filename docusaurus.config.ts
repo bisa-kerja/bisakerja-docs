@@ -4,8 +4,7 @@ import type * as Preset from "@docusaurus/preset-classic";
 
 const config: Config = {
 	title: "Bisakerja Docs",
-	tagline:
-		"Central documentation hub for platform overview, service integration, and documentation standards",
+	tagline: "Internal documentation hub for Bisakerja Engineering",
 	favicon: "img/favicon.ico",
 
 	future: {
@@ -57,12 +56,11 @@ const config: Config = {
 					type: "docSidebar",
 					sidebarId: "docsSidebar",
 					position: "left",
-					label: "Documentation",
+					label: "Docs",
 				},
 			],
 		},
 		footer: {
-			style: "dark",
 			links: [
 				{
 					title: "Docs",
