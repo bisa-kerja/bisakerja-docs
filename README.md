@@ -167,7 +167,9 @@ node --version
 
 ## Search Configuration
 
-This site supports Docusaurus' official Algolia DocSearch integration.
+This site uses Algolia's recommended DocSearch Docusaurus adapter for search and Agent Studio-powered Ask AI.
+
+The adapter is registered through `@docsearch/docusaurus-adapter`, and search is configured under `themeConfig.docsearch` in `docusaurus.config.ts`. Do not add a separate `themeConfig.algolia` block because the adapter treats `docsearch` as the canonical key and rejects duplicate search config sources.
 
 The search UI is enabled only when all three Algolia values are present in a local `.env` file:
 
@@ -177,7 +179,9 @@ The search UI is enabled only when all three Algolia values are present in a loc
 
 If any of these values are missing, the site still builds normally and the search bar stays hidden.
 
-Algolia Ask AI is enabled on top of DocSearch when this optional value is also present:
+The DocSearch adapter plugin is registered only when these required values are available. This keeps CI and preview builds working even when search credentials are not injected.
+
+Algolia Agent Studio Ask AI is enabled on top of DocSearch when this optional value is also present:
 
 - `DOCSEARCH_ASK_AI_ASSISTANT_ID`
 
@@ -229,14 +233,14 @@ For Netlify, configure the same values as environment variables in the site dash
 
 ### Ask AI Setup
 
-Ask AI uses the same Algolia DocSearch index and appears inside the search modal when `DOCSEARCH_ASK_AI_ASSISTANT_ID` is configured.
+Ask AI uses Agent Studio and the same Algolia DocSearch index when `DOCSEARCH_ASK_AI_ASSISTANT_ID` is configured.
 
-The Docusaurus config passes the assistant ID, app ID, search API key, and index name through `themeConfig.algolia.askAi`. Algolia fills answers from the indexed documentation content, so Ask AI depends on a healthy DocSearch crawl and a configured Algolia Ask AI assistant.
+The Docusaurus config passes the assistant ID, app ID, search API key, and index name through `themeConfig.docsearch.askAi`. The config also sets `agentStudio: true` and enables the DocSearch side panel so chat requests use the Agent Studio backend instead of the legacy Ask AI backend.
 
 Before enabling it in production:
 
 1. Confirm the DocSearch index has been crawled successfully.
-2. Enable Ask AI for the index in Algolia.
+2. Create or connect an Agent Studio assistant for the index in Algolia.
 3. Store the assistant ID in `DOCSEARCH_ASK_AI_ASSISTANT_ID`.
 4. Trigger a fresh deployment.
 
@@ -262,14 +266,14 @@ To enable suggested questions safely:
 
 ### Ask AI Troubleshooting
 
-If Ask AI shows `AI-201 - Bad input`, the frontend request is reaching Algolia, but Algolia cannot match the request to a valid Ask AI resource.
+If Ask AI shows `AI-201 - Bad input`, the frontend request is reaching Algolia, but Algolia cannot match the request to a valid Agent Studio resource.
 
 Check these values as one set from the same Algolia application:
 
 1. `DOCSEARCH_APP_ID` matches the application that owns the DocSearch index.
 2. `DOCSEARCH_API_KEY` is the public search-only key for that application.
 3. `DOCSEARCH_INDEX_NAME` exactly matches the crawled documentation index.
-4. `DOCSEARCH_ASK_AI_ASSISTANT_ID` belongs to an assistant in the same application.
+4. `DOCSEARCH_ASK_AI_ASSISTANT_ID` belongs to an Agent Studio assistant in the same application.
 5. The assistant is configured to use the same index.
 6. The current domain is allowed in `Data Sources` -> `Ask AI` -> domains. For local testing, add `localhost` if Algolia allows it, or test from the deployed Netlify domain.
 7. The LLM provider API key and model configured inside Algolia are valid.
@@ -284,8 +288,8 @@ Use the public search-only key for `DOCSEARCH_API_KEY`. Do not use an Admin API 
 3. Find the application ID from the application selector or the `Applications` area, then set it as `DOCSEARCH_APP_ID`.
 4. Open the `Search` area and select the documentation index. Use that index name as `DOCSEARCH_INDEX_NAME`.
 5. Open `Settings` -> `API Keys`, copy the Search API key, and set it as `DOCSEARCH_API_KEY`.
-6. Open `Data Sources` -> `Ask AI`.
-7. Create an assistant, add the allowed production and preview domains, choose the LLM provider and model, then finish the setup.
+6. Open Agent Studio from the Algolia dashboard.
+7. Create an assistant, connect it to the documentation index, add the allowed production and preview domains, choose the LLM provider and model, then finish the setup.
 8. Copy the generated assistant ID and set it as `DOCSEARCH_ASK_AI_ASSISTANT_ID`.
 9. Keep `DOCSEARCH_ASK_AI_SUGGESTED_QUESTIONS=false` unless suggested questions have been configured for the assistant.
 10. Restart the local dev server or trigger a fresh Netlify deploy after changing these values.
@@ -294,6 +298,7 @@ Use the public search-only key for `DOCSEARCH_API_KEY`. Do not use an Admin API 
 
 - Apply to the Algolia DocSearch program if the site is eligible: <https://docsearch.algolia.com/docs/who-can-apply/>
 - Use the recommended Docusaurus v3 crawler template: <https://docsearch.algolia.com/docs/templates/#docusaurus-v3-template>
+- Use the recommended Docusaurus adapter for newer DocSearch and Agent Studio features: <https://docsearch.algolia.com/docs/docusaurus-adapter/>
 - Follow the Algolia Ask AI setup guide before setting `DOCSEARCH_ASK_AI_ASSISTANT_ID`: <https://docsearch.algolia.com/docs/v4/askai>
 - Enable suggested questions only after Algolia creates the managed suggested-questions index: <https://www.algolia.com/doc/guides/algolia-ai/askai/guides/suggested-questions>
 - Use the Ask AI error reference when troubleshooting `AI-201` or provider errors: <https://docsearch.algolia.com/docs/v4/askai-errors/>
