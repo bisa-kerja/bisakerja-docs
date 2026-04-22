@@ -76,7 +76,7 @@ The Model API should not decide whether a user is allowed to act. It should trus
 
 Later service repositories should provide:
 
-- Real authentication mechanism details
-- Session or token model specifics
-- Internal service credential handling
-- Audit or logging strategy for sensitive operations
+- Real authentication mechanism details. Backend API uses short-lived access JWTs plus hashed refresh tokens in `HttpOnly` cookies.
+- Session or token model specifics. Backend API requires refresh-token rotation and server-side invalidation on logout and password reset.
+- Internal service credential handling.
+- Audit or logging strategy for sensitive operations.
