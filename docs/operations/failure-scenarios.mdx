@@ -84,8 +84,8 @@ This page captures the common cross-service incidents that engineers are likely 
 
 ### First Checks
 
-1. Confirm backend health
-2. Confirm database health
+1. Confirm backend liveness with `GET /health/live`
+2. Confirm backend readiness and database health with `GET /health/ready`
 3. Confirm environment configuration and recent deploy changes
 
 ## Failure Prioritization Rule
