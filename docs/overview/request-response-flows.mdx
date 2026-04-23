@@ -75,6 +75,8 @@ Frontend UI -> User: render score, rationale, and skill gap
 
 - The backend should remain the only service assembling inference payloads
 - The frontend should receive product-friendly output, not raw model internals
+- Missing persisted profile or preference context should fail with a stable conflict response instead of calling the model service
+- A model-service failure should degrade only fit analysis, not job browsing or other database-backed workflows
 
 ## Flow 4: Current-User Profile and Onboarding Update
 
