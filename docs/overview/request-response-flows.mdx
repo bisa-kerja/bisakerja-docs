@@ -6,7 +6,7 @@ owner: platform-docs-maintainer
 reviewers:
   - engineering-lead
 doc_status: active
-last_reviewed: 2026-04-15
+last_reviewed: 2026-04-23
 ---
 
 # Request and Response Flows
@@ -116,6 +116,28 @@ Frontend UI -> User: show new application status
 
 - This flow should be transactional and user-specific
 - Even if fit scoring is unavailable, tracker updates should still work if backend and database are healthy
+
+## Flow 6: Saved Job Bookmark
+
+### Purpose
+
+Persist or remove a user-owned saved-job record for later review.
+
+```text
+User -> Frontend UI: save or remove job
+Frontend UI -> Backend API: submit bookmark request
+Backend API -> PostgreSQL: validate current user and normalized job relationship
+PostgreSQL -> Backend API: bookmark write or delete result
+Backend API -> Frontend UI: saved-job confirmation or no-content delete response
+Frontend UI -> User: update saved state
+```
+
+### Notes
+
+- Bookmark routes are authenticated and scoped to the current user.
+- Saving a job requires the normalized job listing to exist and be visible.
+- Duplicate saves return a stable conflict response instead of creating another row.
+- Saved job list responses use the same normalized job card shape as job search responses.
 
 ## Synchronous Flow Design Guidance
 
