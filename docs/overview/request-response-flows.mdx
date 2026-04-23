@@ -32,6 +32,7 @@ Frontend UI -> User: render results
 
 - This flow should work for both guest and authenticated users
 - This flow depends on scraper freshness indirectly, but not on live scraper availability
+- Responses include normalized job cards with pagination, accepted filters, actual sort metadata, and stale indicators when freshness data is available
 
 ## Flow 2: Job Detail
 
@@ -52,6 +53,7 @@ Frontend UI -> User: render structured detail page
 
 - This flow should expose enough normalized data for fit analysis
 - Frontend should not need to interpret source-platform-specific raw fields
+- Missing or hidden records return a stable not-found error instead of exposing source or scraper internals
 
 ## Flow 3: Fit Score Request
 
