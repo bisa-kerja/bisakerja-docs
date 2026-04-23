@@ -46,6 +46,10 @@ The product brief references these model-related components:
 - Versioned payload and response contracts should be validated in the backend before user-facing responses are returned
 - Timeout and availability failures should degrade only AI workflows, not unrelated search or tracker workflows
 
+### Backend Upload Boundary
+
+For CV analysis, the backend currently accepts a temporary PDF upload, stores only sanitized file metadata plus a private storage key, and forwards a backend-owned file reference to the model service. Raw CV text is not persisted by default. Temporary local files must be cleaned through a documented retention workflow rather than exposed through public URLs.
+
 ## Platform And Development Tooling
 
 The current brief references:
