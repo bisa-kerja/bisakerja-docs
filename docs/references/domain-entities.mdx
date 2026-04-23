@@ -26,6 +26,7 @@ This page defines the core domain entities that appear across the Bisakerja syst
 | Fit Score Result   | The computed result of a job-to-user matching request                                          | Model API for generation, Backend API for presentation |
 | Skill Gap Result   | The identified missing or weak skills for a target role                                        | Model API for generation, Backend API for presentation |
 | Application Record | A user-specific tracked state for a job application                                            | Backend API                                            |
+| Application Status History | An audit trail of status changes for a user-owned application record                    | Backend API                                            |
 | Source Platform    | An external provider of job listing data such as Glints or Jobstreet                           | Scraper API integration concern                        |
 
 ## Relationship Overview
@@ -35,6 +36,7 @@ This page defines the core domain entities that appear across the Bisakerja syst
 - One job listing can produce many fit-score evaluations across many users
 - One user can save many job listings as bookmarks, with one saved record per user and job
 - One user can create many application records linked to different jobs
+- One application record can have many status history entries
 - One job listing originates from one external source platform but may be refreshed many times
 
 ## Why This Matters

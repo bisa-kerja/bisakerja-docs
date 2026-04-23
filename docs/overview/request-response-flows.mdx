@@ -107,15 +107,17 @@ Persist a userâ€™s application state change for a role.
 User -> Frontend UI: mark job as applied or interviewed
 Frontend UI -> Backend API: submit tracker update
 Backend API -> PostgreSQL: validate and persist state change
-PostgreSQL -> Backend API: write confirmation
+PostgreSQL -> Backend API: write confirmation and status history
 Backend API -> Frontend UI: updated tracker state
 Frontend UI -> User: show new application status
 ```
 
 ### Notes
 
-- This flow should be transactional and user-specific
-- Even if fit scoring is unavailable, tracker updates should still work if backend and database are healthy
+- This flow is transactional and user-specific.
+- Tracker records are always scoped to the authenticated user.
+- Status changes append history without storing private notes in audit metadata.
+- Even if fit scoring is unavailable, tracker updates should still work if backend and database are healthy.
 
 ## Flow 6: Saved Job Bookmark
 
