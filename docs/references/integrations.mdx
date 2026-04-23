@@ -6,7 +6,7 @@ owner: platform-docs-maintainer
 reviewers:
   - engineering-lead
 doc_status: active
-last_reviewed: 2026-04-15
+last_reviewed: 2026-04-23
 ---
 
 # Integrations
@@ -43,6 +43,8 @@ The product brief references these model-related components:
 - Model artifact compatibility with serving runtime
 - Input schema drift between backend and model service
 - Explainability output consistency
+- Versioned payload and response contracts should be validated in the backend before user-facing responses are returned
+- Timeout and availability failures should degrade only AI workflows, not unrelated search or tracker workflows
 
 ## Platform And Development Tooling
 
