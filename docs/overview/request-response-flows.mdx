@@ -74,7 +74,28 @@ Frontend UI -> User: render score, rationale, and skill gap
 - The backend should remain the only service assembling inference payloads
 - The frontend should receive product-friendly output, not raw model internals
 
-## Flow 4: Application Tracker Update
+## Flow 4: Current-User Profile and Onboarding Update
+
+### Purpose
+
+Persist current-user profile changes and return onboarding context that can be reused by other backend workflows.
+
+```text
+User -> Frontend UI: update profile, photo metadata, skills, experience, or education
+Frontend UI -> Backend API: submit /api/v1/me update request
+Backend API -> PostgreSQL: validate ownership and replace/update records transactionally
+PostgreSQL -> Backend API: persisted profile state
+Backend API -> Frontend UI: updated profile with onboarding status
+Frontend UI -> User: render refreshed profile context
+```
+
+### Notes
+
+- The backend must scope all `/api/v1/me` mutations to authenticated user identity.
+- Nested lists such as skills, experience, and education use replacement semantics in MVP.
+- Onboarding status should be computed centrally from persisted account and preference context.
+
+## Flow 5: Application Tracker Update
 
 ### Purpose
 
