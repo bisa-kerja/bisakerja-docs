@@ -153,7 +153,13 @@ Required test environment behavior:
 
 The final `.env.test.example` should be created during scaffold work and kept in sync with `docs/environment.md` and `src/config/env.ts`.
 
-Test helpers must fail fast when integration tests are configured outside the test runtime. Database-backed tests should call the environment guard before connecting to PostgreSQL, reject database URLs that do not clearly point to an isolated local or test database, and skip with an explicit reason when the configured PostgreSQL port is unavailable.
+Test helpers must fail fast when integration tests are configured outside the test runtime. Database-backed tests should call the environment guard before connecting to PostgreSQL, reject database URLs that do not clearly point to an isolated local or test database, and skip with an explicit reason when the configured PostgreSQL target is unavailable.
+
+For database-backed verification, prefer explicit environment overrides so the active database target is obvious in terminal history. A managed test database is acceptable as long as it is isolated from development, staging, and production. Example:
+
+- `APP_ENV=test NODE_ENV=test DATABASE_URL=postgresql://app_user:password@ep-test-breeze-a1b2c3d4-pooler.ap-southeast-1.aws.neon.tech/bisakerja_api_test?sslmode=require&channel_binding=require DIRECT_DATABASE_URL=postgresql://app_user:password@ep-test-breeze-a1b2c3d4.ap-southeast-1.aws.neon.tech/bisakerja_api_test?sslmode=require&channel_binding=require RUN_DATABASE_TESTS=true bun test`
+
+The seeded route sweep mutates seeded auth and application state during execution. Always point it to an isolated test database, not to the normal local development database.
 
 Reserved commands:
 
@@ -179,7 +185,8 @@ The repository GitHub Actions CI workflow validates changes on:
 
 Current CI workflow structure:
 
-- `.github/workflows/ci.yml` contains three jobs: repository quality validation, PostgreSQL-backed migration or repository verification, and final docs synchronization for push events to `develop` or `main`.
+- `.github/workflows/ci.yml` contains repository quality validation, PostgreSQL-backed migration or repository verification, and final docs synchronization for push events to `develop` or `main`.
+- `.github/workflows/deploy.yml` is separate from CI and handles build-plus-deploy for the current rollout branch, which is `develop`.
 
 Current CI expectations:
 
@@ -198,9 +205,23 @@ Current CI expectations:
 - run `bun run prisma:verify:migrations` in a separate PostgreSQL-backed job
 - run docs sync only after both CI validation jobs succeed, and only for push events to `develop` or `main`
 
+Current deployment workflow expectations:
+
+- build and push `ghcr.io/bisa-kerja/bisakerja-api:<deploy-branch>`
+- also push a commit-specific `sha-<git-sha>` image tag
+- trigger automatically from `develop` and allow manual runs only for validated branches
+- use the GitHub environment `staging` while the rollout is still validating on the staging VPS
+- SSH into the target VPS with the configured VPS private key through one deploy action step
+- write the runtime `.env.production` file from GitHub environment secrets
+- reject rollout when the runtime env file does not declare `APP_ENV=staging` for the current staging target
+- authenticate the VPS to GHCR, pull the latest image, run `prisma migrate deploy`, and start the app through app-only `docker compose`
+- verify `GET /health/live` and `GET /health/ready` from the VPS after deployment
+
+When the staging rollout is considered stable, the deploy trigger can be moved from `develop` to `main` without introducing a second deployment topology.
+
 The route inventory and sync-readiness markdown files are still regenerated in CI and CD, but they are not used as a clean-working-tree gate because they intentionally embed runtime metadata such as generation timestamps and source references.
 
-This split keeps fast feedback for most checks while still proving that committed Prisma migrations and repository integration tests work against a real PostgreSQL service in CI.
+This split keeps fast feedback for most checks while still proving that committed Prisma migrations and repository integration tests work against a real PostgreSQL service in CI, while deployment-specific concerns stay in their own workflows.
 
 Workflow safety notes:
 
@@ -238,6 +259,13 @@ Common commands:
 | `bun run prisma:verify:migrations` | Prisma migration and repository verification before release    |
 
 If you only changed one area, run the smallest relevant subset first, then expand to the broader suite before considering the task done.
+
+For PostgreSQL-backed local verification, this staged sequence is the preferred order:
+
+1. `bun run typecheck`
+2. `APP_ENV=test NODE_ENV=test DATABASE_URL=postgresql://app_user:password@ep-test-breeze-a1b2c3d4-pooler.ap-southeast-1.aws.neon.tech/bisakerja_api_test?sslmode=require&channel_binding=require DIRECT_DATABASE_URL=postgresql://app_user:password@ep-test-breeze-a1b2c3d4.ap-southeast-1.aws.neon.tech/bisakerja_api_test?sslmode=require&channel_binding=require RUN_DATABASE_TESTS=true bun test tests/integration/repositories`
+3. `APP_ENV=test NODE_ENV=test DATABASE_URL=postgresql://app_user:password@ep-test-breeze-a1b2c3d4-pooler.ap-southeast-1.aws.neon.tech/bisakerja_api_test?sslmode=require&channel_binding=require DIRECT_DATABASE_URL=postgresql://app_user:password@ep-test-breeze-a1b2c3d4.ap-southeast-1.aws.neon.tech/bisakerja_api_test?sslmode=require&channel_binding=require RUN_DATABASE_TESTS=true bun test tests/integration/routes/seeded-prisma-sweep.test.ts`
+4. `APP_ENV=test NODE_ENV=test DATABASE_URL=postgresql://app_user:password@ep-test-breeze-a1b2c3d4-pooler.ap-southeast-1.aws.neon.tech/bisakerja_api_test?sslmode=require&channel_binding=require DIRECT_DATABASE_URL=postgresql://app_user:password@ep-test-breeze-a1b2c3d4.ap-southeast-1.aws.neon.tech/bisakerja_api_test?sslmode=require&channel_binding=require RUN_DATABASE_TESTS=true bun test`
 
 ## Writing A New Test
 
@@ -357,7 +385,7 @@ verify migrations -> generate Prisma client -> apply migrations to test database
 
 The reserved command name for this flow is `bun run prisma:verify:migrations`.
 
-The current migration verification command validates the Prisma schema, generates the client, applies committed migrations through Prisma Migrate deploy, and runs repository integration tests. It requires `APP_ENV=test` and an isolated PostgreSQL `DATABASE_URL`. Repository tests run database-backed assertions only when `RUN_DATABASE_TESTS=true`; ordinary full test runs keep this flag disabled and skip them with an explicit reason. Release verification should run against a real empty test database.
+The current migration verification command validates the Prisma schema, generates the client, applies committed migrations through Prisma Migrate deploy, and runs repository integration tests. It requires `APP_ENV=test` and an isolated PostgreSQL `DATABASE_URL`. Repository tests run database-backed assertions only when `RUN_DATABASE_TESTS=true`; ordinary full test runs keep this flag disabled and skip them with an explicit reason. Release verification should run against a real empty test database, whether that database is provisioned on localhost or on a managed PostgreSQL provider.
 
 Production deployment must use explicit migration execution, not implicit application startup mutation, unless a later approved deployment policy says otherwise.
 
