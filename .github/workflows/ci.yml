@@ -3,8 +3,12 @@ name: CI
 on:
   push:
     branches:
+      - develop
       - main
   pull_request:
+    branches:
+      - develop
+      - main
 
 jobs:
   validate:
@@ -22,6 +26,12 @@ jobs:
 
       - name: Install dependencies
         run: bun install --frozen-lockfile
+
+      - name: Normalize synced docs (.md -> .mdx)
+        run: bun run docs:normalize-synced
+
+      - name: Verify synced docs payload
+        run: bun run docs:verify-synced
 
       - name: Run lint
         run: bun run lint
