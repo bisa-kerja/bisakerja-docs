@@ -51,6 +51,8 @@ The central repository keeps stable paths even if repository internals evolve.
 - Service landing pages in this repository are never overwritten by sync jobs
 - `synced/` represents the current latest state for a service
 - `versioned/<release>/` stores immutable release snapshots when release sync is enabled
+- Source files may be authored as `.md` or `.mdx` in service repositories, but central published docs under `synced/` and `versioned/` must end as `.mdx`
+- Relative links that point to local markdown files must be normalized to `.mdx` targets during sync publish
 
 ## Artifact and Metadata Standard
 
@@ -116,6 +118,7 @@ Every sync pipeline should validate the bundle before the central repository acc
 - No landing page outside `synced/` or `versioned/` is overwritten
 - Asset references resolve correctly after mapping
 - No duplicate target paths are produced inside the same bundle
+- Markdown normalization succeeds (`.md` to `.mdx`, including internal relative link rewrite)
 - Central broken-link and build validation still pass after applying the bundle
 
 ## Conflict Handling
@@ -145,7 +148,7 @@ Documentation sync should behave like a controlled publish, not an uncontrolled 
 
 - Apply sync changes atomically in a dedicated commit or publish step
 - Keep the previous successful central state as the rollback target
-- If central validation fails, do not publish the new bundle
+- If central validation or markdown normalization fails, do not publish the new bundle
 - If a published sync is later found to be bad, revert the sync commit or restore the last known good bundle
 
 ### Last-Known-Good Principle
