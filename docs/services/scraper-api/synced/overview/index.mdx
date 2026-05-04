@@ -1,0 +1,57 @@
+---
+title: Overview
+description: Scraper documentation overview and reader paths for ingestion, normalization, and source-contract context.
+owner: data-ingestion-owner
+reviewers:
+  - platform-docs-maintainer
+  - backend-owner
+doc_status: draft
+last_reviewed: 2026-05-01
+---
+
+# Overview
+
+This section gives top-down context for the Bisakerja Scraper service.
+
+## Pages
+
+- [Start Here](./start-here.mdx)
+- [For Backend Engineers](./for-backend-engineers.mdx)
+- [For Platform Engineers](./for-platform-engineers.mdx)
+- [For Product Stakeholders](./for-product-stakeholders.mdx)
+- [Glossary](./glossary.mdx)
+- [System Landscape](./system-landscape.mdx)
+- [Service Interactions](./service-interactions.mdx)
+- [Authentication and Trust Boundaries](./authentication-and-trust-boundaries.mdx)
+- [Data Flow](./data-flow.mdx)
+- [Asynchronous Workflows](./asynchronous-workflows.mdx)
+- [API Reference](../api-reference.mdx)
+- [Scraper Modules](../modules/index.mdx)
+- [Environment Configuration](../environment.mdx)
+- [Security Operations](../operations/security.mdx)
+- [Observability](../operations/observability.mdx)
+- [Failure Scenarios](../operations/failure-scenarios.mdx)
+- [Testing Strategy](../operations/testing.mdx)
+- [Deployment](../operations/deployment.mdx)
+- [Documentation Sync](../operations/documentation-sync.mdx)
+- [Documentation Standards](../standards/index.mdx)
+- [Documentation Release Checklist](../operations/documentation-release-checklist.mdx)
+- [Future Docs Expansion](../roadmap/future-docs-expansion.mdx)
+
+## Core Flow
+
+```text
+external job platforms
+  -> Scraper API
+  -> raw payload storage
+  -> normalization
+  -> AI enrichment handoff
+  -> sync preparation
+  -> main Backend API database
+```
+
+Baseline daily pipeline:
+
+```text
+01:00 scrape -> 01:30 normalize -> 02:00 enrich -> 03:00 sync -> 05:00-06:00 notify
+```
