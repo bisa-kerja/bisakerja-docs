@@ -15,14 +15,14 @@ Scraper work runs as scheduled and retryable jobs. User-facing Backend API reque
 
 ## Workflow Inventory
 
-| Workflow | Trigger | Input | Output | Owner | Failure mode |
-| --- | --- | --- | --- | --- | --- |
-| Daily scrape | Cron/Celery Beat at 00:00 | Source list config | Raw captures | Scraper workers | Source unavailable, auth/header rejected |
-| Normalize batch | Scheduled after scrape at 02:00 | Raw captures | Staging jobs | Normalizer worker | Mapper mismatch, missing identity |
-| Enrichment batch | Scheduled at 04:00 | Safe staging text | Skills and structured requirements | Enrichment worker | Provider timeout, rate limit |
-| Sync batch | Scheduled at 06:00 | Valid staging rows | Main DB upserts | Sync worker | Constraint conflict, partial chunk failure |
-| Notification handoff | 08:00 | Fresh normalized jobs | Backend/product notification inputs | Backend/product worker | User preference mismatch, mail provider failure |
-| Retry quarantine | Event or manual task | Failed raw/staging rows | Reprocessed rows or rejected state | Scraper operator | Repeated malformed payload |
+| Workflow             | Trigger                         | Input                   | Output                              | Owner                  | Failure mode                                    |
+| -------------------- | ------------------------------- | ----------------------- | ----------------------------------- | ---------------------- | ----------------------------------------------- |
+| Daily scrape         | Cron/Celery Beat at 00:00       | Source list config      | Raw captures                        | Scraper workers        | Source unavailable, auth/header rejected        |
+| Normalize batch      | Scheduled after scrape at 02:00 | Raw captures            | Staging jobs                        | Normalizer worker      | Mapper mismatch, missing identity               |
+| Enrichment batch     | Scheduled at 04:00              | Safe staging text       | Skills and structured requirements  | Enrichment worker      | Provider timeout, rate limit                    |
+| Sync batch           | Scheduled at 06:00              | Valid staging rows      | Main DB upserts                     | Sync worker            | Constraint conflict, partial chunk failure      |
+| Notification handoff | 08:00                           | Fresh normalized jobs   | Backend/product notification inputs | Backend/product worker | User preference mismatch, mail provider failure |
+| Retry quarantine     | Event or manual task            | Failed raw/staging rows | Reprocessed rows or rejected state  | Scraper operator       | Repeated malformed payload                      |
 
 ## Run State
 
@@ -40,14 +40,14 @@ Each run should track:
 
 ## Retry Rules
 
-| Failure | Retry |
-| --- | --- |
-| Network timeout | Retry with exponential backoff and source-specific cap |
-| HTTP 429 or source throttle | Back off longer and mark source freshness degraded |
-| Auth/session rejected | Stop source run, refresh configured credential, do not retry with invalid token repeatedly |
-| Mapper error | Quarantine payload, keep raw capture, update source mapper |
-| Enrichment timeout | Retry batch; do not block base job visibility if required fields are valid |
-| Sync chunk failure | Retry chunk idempotently by source identity |
+| Failure                     | Retry                                                                                      |
+| --------------------------- | ------------------------------------------------------------------------------------------ |
+| Network timeout             | Retry with exponential backoff and source-specific cap                                     |
+| HTTP 429 or source throttle | Back off longer and mark source freshness degraded                                         |
+| Auth/session rejected       | Stop source run, refresh configured credential, do not retry with invalid token repeatedly |
+| Mapper error                | Quarantine payload, keep raw capture, update source mapper                                 |
+| Enrichment timeout          | Retry batch; do not block base job visibility if required fields are valid                 |
+| Sync chunk failure          | Retry chunk idempotently by source identity                                                |
 
 ## Concurrency Rules
 

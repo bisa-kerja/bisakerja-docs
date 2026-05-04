@@ -15,14 +15,14 @@ The Scraper API collects external job data and adapts it into the normalized Bis
 
 ## Responsibilities
 
-| Area | Scraper API owns |
-| --- | --- |
-| Source adapters | Dealls REST, Glints GraphQL, JobStreet GraphQL, Kalibrr Next.js data |
-| Raw capture | Store source payloads for debug, replay, and mapper validation |
-| Normalization | Map source fields to Backend API database-compatible job records |
-| Deduplication | Use `sourcePlatform + externalJobId/slug/id` as source-local identity |
-| Enrichment handoff | Prepare batches for skill extraction and requirement structuring |
-| Sync preparation | Upsert-ready records for main Backend API database |
+| Area               | Scraper API owns                                                      |
+| ------------------ | --------------------------------------------------------------------- |
+| Source adapters    | Dealls REST, Glints GraphQL, JobStreet GraphQL, Kalibrr Next.js data  |
+| Raw capture        | Store source payloads for debug, replay, and mapper validation        |
+| Normalization      | Map source fields to Backend API database-compatible job records      |
+| Deduplication      | Use `sourcePlatform + externalJobId/slug/id` as source-local identity |
+| Enrichment handoff | Prepare batches for skill extraction and requirement structuring      |
+| Sync preparation   | Upsert-ready records for main Backend API database                    |
 
 ## Core References
 
@@ -44,13 +44,13 @@ The Scraper API collects external job data and adapts it into the normalized Bis
 
 ## Non-Responsibilities
 
-| Area | Owner |
-| --- | --- |
-| User auth and sessions | Backend API |
-| Bookmarks and application tracker | Backend API |
-| Frontend rendering | Frontend UI |
-| Model training and inference internals | Model API |
-| Central documentation governance | Central docs repository |
+| Area                                   | Owner                   |
+| -------------------------------------- | ----------------------- |
+| User auth and sessions                 | Backend API             |
+| Bookmarks and application tracker      | Backend API             |
+| Frontend rendering                     | Frontend UI             |
+| Model training and inference internals | Model API               |
+| Central documentation governance       | Central docs repository |
 
 ## Implementation Shape
 
