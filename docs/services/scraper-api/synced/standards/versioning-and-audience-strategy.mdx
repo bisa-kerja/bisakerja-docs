@@ -15,11 +15,11 @@ Scraper docs use latest-by-default documentation. Versioned docs are created onl
 
 ## Latest Vs Versioned
 
-| Track                        | Use for                                                 | Target                                             |
-| ---------------------------- | ------------------------------------------------------- | -------------------------------------------------- |
-| Latest                       | Normal engineering and operations work                  | `docs/**` and central `synced/**`                  |
-| Versioned release            | Contract history, incident support, stakeholder handoff | Central `versioned/<release>/**`                   |
-| Generated reference snapshot | Route/schema evidence tied to a release                 | Central release snapshot or labeled generated path |
+| Track | Use for | Target |
+| --- | --- | --- |
+| Latest | Normal engineering and operations work | `docs/**` and central `synced/**` |
+| Versioned release | Contract history, incident support, stakeholder handoff | Central `versioned/<release>/**` |
+| Generated reference snapshot | Route/schema evidence tied to a release | Central release snapshot or labeled generated path |
 
 ## Versioning Decision
 
@@ -35,13 +35,13 @@ Do not version routine wording, typo fixes, or navigation-only changes.
 
 ## Audience Paths
 
-| Audience            | Primary docs                                                             |
-| ------------------- | ------------------------------------------------------------------------ |
-| Backend engineer    | API reference, database, sync contract, source field mapping             |
-| Data engineer       | Integrations, raw payload contract, parsing-normalization, deduplication |
-| Platform engineer   | Environment, deployment, observability, docs sync                        |
-| Product stakeholder | Start here, system landscape, data flow, future docs expansion           |
-| Operator            | Operations index, failure scenarios, release checklist                   |
+| Audience | Primary docs |
+| --- | --- |
+| Backend engineer | API reference, database, sync contract, source field mapping |
+| Data engineer | Integrations, raw payload contract, parsing-normalization, deduplication |
+| Platform engineer | Environment, deployment, observability, docs sync |
+| Product stakeholder | Start here, system landscape, data flow, future docs expansion |
+| Operator | Operations index, failure scenarios, release checklist |
 
 Audience pages should route readers to canonical docs. They should not fork technical truth.
 
@@ -64,3 +64,4 @@ Do not localize scraper docs by default. Add localization only when there is an 
 - [Documentation Sync and Versioning](./documentation-sync-and-versioning.mdx)
 - [Generated References](../generated/index.mdx)
 - [Future Docs Expansion](../roadmap/future-docs-expansion.mdx)
+
