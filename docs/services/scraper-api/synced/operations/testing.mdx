@@ -25,25 +25,25 @@ Scraper tests must prove that source adapters, mappers, deduplication, enrichmen
 
 ## Test Categories
 
-| Category | Scope | Required evidence |
-| --- | --- | --- |
-| Unit | Parsers, mappers, validators, dedup helpers | Deterministic input/output |
-| Source contract | Sanitized `raw-response-*.txt` shape and payload roots | Required fields and nullability are accepted |
-| Integration | Adapter to raw store, mapper to staging, sync writer to DB | Stage counts and safe failure handling |
-| Smoke | Startup, config validation, one fixture-backed pipeline path | Service can start and process safe fixture data |
-| Security | Redaction, no secret logging, internal-only endpoints | Sensitive strings absent from logs/docs/fixtures |
-| Regression | Known source drift or mapper bug | Reproduces prior failure and proves fix |
+| Category        | Scope                                                        | Required evidence                                |
+| --------------- | ------------------------------------------------------------ | ------------------------------------------------ |
+| Unit            | Parsers, mappers, validators, dedup helpers                  | Deterministic input/output                       |
+| Source contract | Sanitized `raw-response-*.txt` shape and payload roots       | Required fields and nullability are accepted     |
+| Integration     | Adapter to raw store, mapper to staging, sync writer to DB   | Stage counts and safe failure handling           |
+| Smoke           | Startup, config validation, one fixture-backed pipeline path | Service can start and process safe fixture data  |
+| Security        | Redaction, no secret logging, internal-only endpoints        | Sensitive strings absent from logs/docs/fixtures |
+| Regression      | Known source drift or mapper bug                             | Reproduces prior failure and proves fix          |
 
 ## Fixture Rules
 
 Fixture inputs should come from sanitized raw captures:
 
-| Fixture source | Use |
-| --- | --- |
-| `raw-response-dealls.txt` | REST list mapper and null salary behavior |
-| `raw-response-glints.txt` | GraphQL list mapper and missing detail fallback |
+| Fixture source               | Use                                                    |
+| ---------------------------- | ------------------------------------------------------ |
+| `raw-response-dealls.txt`    | REST list mapper and null salary behavior              |
+| `raw-response-glints.txt`    | GraphQL list mapper and missing detail fallback        |
 | `raw-response-jobstreet.txt` | GraphQL list/detail-ready fields and auth-free fixture |
-| `raw-response-kalibrr.txt` | Next.js data mapper and dynamic `buildId` assumptions |
+| `raw-response-kalibrr.txt`   | Next.js data mapper and dynamic `buildId` assumptions  |
 
 Rules:
 
@@ -54,17 +54,17 @@ Rules:
 
 ## Module Test Mapping
 
-| Module | Happy path | Critical failure path |
-| --- | --- | --- |
-| Ingestion | Fetch fixture pages and persist raw rows | Source timeout, auth failure, 429, schema root missing |
-| Parsing/normalization | Produce canonical job fields from each source | Missing identity, unsafe HTML, unsupported field type |
-| Deduplication | Upsert by `sourcePlatform + externalJobId` | Identity collision, repeated page overlap |
-| Persistence | Write staging rows and sync batches | DB constraint error, partial batch rollback |
-| Freshness | Mark seen jobs active and old jobs stale | Partial run must not expire source records |
-| Quarantine | Store malformed raw records with safe errors | Quarantined records must not sync |
-| Enrichment | Add skills/requirements from clean text | Model timeout or invalid output does not leak payload |
-| Stage queue | Claim and complete eligible stage jobs | Failed jobs retry then dead-letter with correlation id retained |
-| Documentation sync | Build deterministic bundle manifest | Missing metadata, bad link, path escape, secret pattern |
+| Module                | Happy path                                    | Critical failure path                                           |
+| --------------------- | --------------------------------------------- | --------------------------------------------------------------- |
+| Ingestion             | Fetch fixture pages and persist raw rows      | Source timeout, auth failure, 429, schema root missing          |
+| Parsing/normalization | Produce canonical job fields from each source | Missing identity, unsafe HTML, unsupported field type           |
+| Deduplication         | Upsert by `sourcePlatform + externalJobId`    | Identity collision, repeated page overlap                       |
+| Persistence           | Write staging rows and sync batches           | DB constraint error, partial batch rollback                     |
+| Freshness             | Mark seen jobs active and old jobs stale      | Partial run must not expire source records                      |
+| Quarantine            | Store malformed raw records with safe errors  | Quarantined records must not sync                               |
+| Enrichment            | Add skills/requirements from clean text       | Model timeout or invalid output does not leak payload           |
+| Stage queue           | Claim and complete eligible stage jobs        | Failed jobs retry then dead-letter with correlation id retained |
+| Documentation sync    | Build deterministic bundle manifest           | Missing metadata, bad link, path escape, secret pattern         |
 
 ## Contract Tests
 
@@ -101,14 +101,14 @@ Fixture coverage tests must also report, for every supported source:
 
 Minimum smoke checks:
 
-| Check | Expected result |
-| --- | --- |
-| Startup env validation | Missing required config fails fast |
-| Fixture pipeline | One fixture batch reaches normalized staging |
-| Source health | Adapter health reports safe status without credentials |
-| Sync dry-run | Sync validates shape without mutating production DB |
-| Redaction | Logs and artifacts contain no token/cookie/session strings |
-| Uvicorn local boot | ASGI app boots successfully from `src` module path |
+| Check                  | Expected result                                            |
+| ---------------------- | ---------------------------------------------------------- |
+| Startup env validation | Missing required config fails fast                         |
+| Fixture pipeline       | One fixture batch reaches normalized staging               |
+| Source health          | Adapter health reports safe status without credentials     |
+| Sync dry-run           | Sync validates shape without mutating production DB        |
+| Redaction              | Logs and artifacts contain no token/cookie/session strings |
+| Uvicorn local boot     | ASGI app boots successfully from `src` module path         |
 
 ## Local Verification Commands
 

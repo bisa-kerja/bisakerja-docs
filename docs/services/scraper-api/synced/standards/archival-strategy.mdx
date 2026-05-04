@@ -26,20 +26,20 @@ Archive or deprecate a page when:
 
 ## Archive States
 
-| State | Use when | Reader expectation |
-| --- | --- | --- |
-| `deprecated` | Page is still useful during migration | Use replacement for new work |
-| `archived` | Page is historical only | Do not use for implementation |
+| State        | Use when                              | Reader expectation            |
+| ------------ | ------------------------------------- | ----------------------------- |
+| `deprecated` | Page is still useful during migration | Use replacement for new work  |
+| `archived`   | Page is historical only               | Do not use for implementation |
 
 ## Placement
 
-| Content | Preferred placement |
-| --- | --- |
-| Current scraper docs | Existing `docs/**` path |
-| Deprecated scraper page | Existing path with deprecated status and replacement link |
-| Release snapshot | Central `versioned/<release>/**` during sync |
-| Old generated artifact | Release snapshot or clearly labeled generated archive |
-| Raw capture history | Keep root raw capture files private to repo workflow unless sanitized |
+| Content                 | Preferred placement                                                   |
+| ----------------------- | --------------------------------------------------------------------- |
+| Current scraper docs    | Existing `docs/**` path                                               |
+| Deprecated scraper page | Existing path with deprecated status and replacement link             |
+| Release snapshot        | Central `versioned/<release>/**` during sync                          |
+| Old generated artifact  | Release snapshot or clearly labeled generated archive                 |
+| Raw capture history     | Keep root raw capture files private to repo workflow unless sanitized |
 
 Do not create broad archive trees until volume requires it.
 
@@ -67,4 +67,3 @@ Do not silently archive:
 - [Freshness and Lifecycle](./freshness-and-lifecycle.mdx)
 - [Versioning and Audience Strategy](./versioning-and-audience-strategy.mdx)
 - [Documentation Sync and Versioning](./documentation-sync-and-versioning.mdx)
-

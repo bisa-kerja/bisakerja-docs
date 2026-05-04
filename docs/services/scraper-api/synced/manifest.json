@@ -1,10 +1,10 @@
 {
-  "service": "scraper-api",
-  "source_repo": "bisakerja-scraper",
-  "source_ref": "develop",
-  "source_sha": "605210e004c5021f0ac2959ef2e97aad389777c0",
-  "generated_at": "2026-05-04T08:57:32Z",
-  "sync_mode": "merge",
-  "doc_count": 73,
-  "asset_count": 0
+	"service": "scraper-api",
+	"source_repo": "bisakerja-scraper",
+	"source_ref": "develop",
+	"source_sha": "605210e004c5021f0ac2959ef2e97aad389777c0",
+	"generated_at": "2026-05-04T08:57:32Z",
+	"sync_mode": "merge",
+	"doc_count": 73,
+	"asset_count": 0
 }
