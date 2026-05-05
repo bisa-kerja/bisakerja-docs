@@ -15,13 +15,13 @@ Scraper HTTP interfaces, if exposed, use the same envelope shape expected across
 
 ## Envelope
 
-| Field | Type | Required | Rule |
-| --- | --- | --- | --- |
-| `success` | boolean | Yes | Request outcome |
-| `message` | string | Yes | Safe operational summary |
-| `data` | object, array, or null | Yes | Payload or `null` on error |
-| `meta` | object or null | Success only | Pagination, filters, sort, run context |
-| `error` | object or null | Error only | Stable machine-readable error |
+| Field     | Type                   | Required     | Rule                                   |
+| --------- | ---------------------- | ------------ | -------------------------------------- |
+| `success` | boolean                | Yes          | Request outcome                        |
+| `message` | string                 | Yes          | Safe operational summary               |
+| `data`    | object, array, or null | Yes          | Payload or `null` on error             |
+| `meta`    | object or null         | Success only | Pagination, filters, sort, run context |
+| `error`   | object or null         | Error only   | Stable machine-readable error          |
 
 Success responses omit `error`. Error responses set `data` to `null`.
 
@@ -29,15 +29,15 @@ Success responses omit `error`. Error responses set `data` to `null`.
 
 ```json
 {
-  "success": true,
-  "message": "Ingestion run accepted",
-  "data": {
-    "id": "run_20260501_010000",
-    "sourcePlatform": "all",
-    "stage": "full",
-    "status": "QUEUED"
-  },
-  "meta": null
+	"success": true,
+	"message": "Ingestion run accepted",
+	"data": {
+		"id": "run_20260501_010000",
+		"sourcePlatform": "all",
+		"stage": "full",
+		"status": "QUEUED"
+	},
+	"meta": null
 }
 ```
 
@@ -45,29 +45,29 @@ Success responses omit `error`. Error responses set `data` to `null`.
 
 ```json
 {
-  "success": true,
-  "message": "Ingestion runs retrieved",
-  "data": [
-    {
-      "id": "run_20260501_010000",
-      "sourcePlatform": "jobstreet",
-      "status": "PARTIAL"
-    }
-  ],
-  "meta": {
-    "pagination": {
-      "page": 1,
-      "limit": 20,
-      "total": 1,
-      "totalPages": 1,
-      "hasNextPage": false,
-      "hasPrevPage": false
-    },
-    "filters": {
-      "sourcePlatform": "jobstreet"
-    },
-    "sort": "created_desc"
-  }
+	"success": true,
+	"message": "Ingestion runs retrieved",
+	"data": [
+		{
+			"id": "run_20260501_010000",
+			"sourcePlatform": "jobstreet",
+			"status": "PARTIAL"
+		}
+	],
+	"meta": {
+		"pagination": {
+			"page": 1,
+			"limit": 20,
+			"total": 1,
+			"totalPages": 1,
+			"hasNextPage": false,
+			"hasPrevPage": false
+		},
+		"filters": {
+			"sourcePlatform": "jobstreet"
+		},
+		"sort": "created_desc"
+	}
 }
 ```
 
@@ -75,50 +75,50 @@ Success responses omit `error`. Error responses set `data` to `null`.
 
 ```json
 {
-  "success": false,
-  "message": "Validation failed",
-  "data": null,
-  "error": {
-    "code": "VALIDATION_ERROR",
-    "details": [
-      {
-        "path": "sourcePlatform",
-        "message": "Unsupported source platform",
-        "code": "invalid_enum"
-      }
-    ],
-    "requestId": "req_123"
-  }
+	"success": false,
+	"message": "Validation failed",
+	"data": null,
+	"error": {
+		"code": "VALIDATION_ERROR",
+		"details": [
+			{
+				"path": "sourcePlatform",
+				"message": "Unsupported source platform",
+				"code": "invalid_enum"
+			}
+		],
+		"requestId": "req_123"
+	}
 }
 ```
 
 ## Error Catalog
 
-| Code | Status | Use |
-| --- | --- | --- |
-| `VALIDATION_ERROR` | 422 | Invalid body, query, params, source slug, stage, pagination, sort |
-| `UNAUTHENTICATED` | 401 | Missing/invalid internal credential |
-| `FORBIDDEN` | 403 | Credential lacks operator permission |
-| `NOT_FOUND` | 404 | Run, source, or staging record not found |
-| `CONFLICT` | 409 | Run already active or duplicate unsafe operation |
-| `RATE_LIMITED` | 429 | Operator/source request limit hit |
-| `SOURCE_AUTH_FAILED` | 502 | Source credential rejected or expired |
-| `SOURCE_SCHEMA_DRIFT` | 502 | Source response no longer matches mapper contract |
-| `DOWNSTREAM_ERROR` | 502 | DB/enrichment/sync dependency returned invalid result |
-| `SERVICE_UNAVAILABLE` | 503 | Required DB, queue, source, or worker unavailable |
-| `INTERNAL_SERVER_ERROR` | 500 | Unexpected failure |
+| Code                    | Status | Use                                                               |
+| ----------------------- | ------ | ----------------------------------------------------------------- |
+| `VALIDATION_ERROR`      | 422    | Invalid body, query, params, source slug, stage, pagination, sort |
+| `UNAUTHENTICATED`       | 401    | Missing/invalid internal credential                               |
+| `FORBIDDEN`             | 403    | Credential lacks operator permission                              |
+| `NOT_FOUND`             | 404    | Run, source, or staging record not found                          |
+| `CONFLICT`              | 409    | Run already active or duplicate unsafe operation                  |
+| `RATE_LIMITED`          | 429    | Operator/source request limit hit                                 |
+| `SOURCE_AUTH_FAILED`    | 502    | Source credential rejected or expired                             |
+| `SOURCE_SCHEMA_DRIFT`   | 502    | Source response no longer matches mapper contract                 |
+| `DOWNSTREAM_ERROR`      | 502    | DB/enrichment/sync dependency returned invalid result             |
+| `SERVICE_UNAVAILABLE`   | 503    | Required DB, queue, source, or worker unavailable                 |
+| `INTERNAL_SERVER_ERROR` | 500    | Unexpected failure                                                |
 
 ## Pagination Metadata
 
 Use page pagination for internal list endpoints.
 
-| Field | Rule |
-| --- | --- |
-| `page` | Starts at `1` |
-| `limit` | Maximum `100` |
-| `total` | Total matching records when cheap and safe |
-| `totalPages` | Derived from `total` and `limit` |
-| `hasNextPage`, `hasPrevPage` | Required booleans |
+| Field                        | Rule                                       |
+| ---------------------------- | ------------------------------------------ |
+| `page`                       | Starts at `1`                              |
+| `limit`                      | Maximum `100`                              |
+| `total`                      | Total matching records when cheap and safe |
+| `totalPages`                 | Derived from `total` and `limit`           |
+| `hasNextPage`, `hasPrevPage` | Required booleans                          |
 
 ## Sanitization Rules
 
@@ -151,4 +151,3 @@ Allowed response data:
 - [API Reference](./api-reference.mdx)
 - [Payload Redaction Policy](./standards/payload-redaction-policy.mdx)
 - [Security](./operations/security.mdx)
-

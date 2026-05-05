@@ -13,13 +13,13 @@ last_reviewed: 2026-05-04
 
 ## Request
 
-| Item | Value |
-| --- | --- |
-| Base URL | `https://glints.com/api/v2-alc/graphql` |
-| Operation | `searchJobsV3` |
-| Method | `POST` |
-| Auth | No API key observed |
-| Required posture | Browser-like GraphQL request |
+| Item             | Value                                   |
+| ---------------- | --------------------------------------- |
+| Base URL         | `https://glints.com/api/v2-alc/graphql` |
+| Operation        | `searchJobsV3`                          |
+| Method           | `POST`                                  |
+| Auth             | No API key observed                     |
+| Required posture | Browser-like GraphQL request            |
 
 Sanitized headers:
 
@@ -35,12 +35,12 @@ Cookies are optional operational inputs and must not be published raw.
 
 ## Coverage
 
-| Capability | Status |
-| --- | --- |
-| List | Available through `jobsInPage` |
-| Detail | Not captured |
-| Pagination | `page`, `pageSize`, `hasMore` |
-| Primary identity | job `id` |
+| Capability       | Status                         |
+| ---------------- | ------------------------------ |
+| List             | Available through `jobsInPage` |
+| Detail           | Not captured                   |
+| Pagination       | `page`, `pageSize`, `hasMore`  |
+| Primary identity | job `id`                       |
 
 ## List Adapter Behavior
 
@@ -57,24 +57,24 @@ The parser reads jobs from `data.searchJobsV3.jobsInPage` and pagination continu
 
 ## Field Mapping
 
-| Source field | Normalized field | Rule |
-| --- | --- | --- |
-| `id` | `externalJobId` | Required |
-| `title` | `title` | Required |
-| `type` | `employmentType` | Map enum-like value |
-| `workArrangementOption` | `workType` | Map `ONSITE`, remote/hybrid variants |
-| `createdAt` | `postedAt` | Use source timestamp |
-| `updatedAt` | `sourceUpdatedAt` | Optional |
-| `company.name` | `company.name` | Required fallback text |
-| `company.logo` | `company.logoUrl` | Optional |
-| `company.industry.name` | `company.industry` | Optional |
-| `location.formattedName` | `location.display` | Preserve |
-| `location.parents[]` | `city/province/country` | Best-effort |
-| `salaries[].minAmount/maxAmount` | `salary.min/max` | Nullable |
-| `salaries[].CurrencyCode` | `salary.currency` | Preserve |
-| `salaries[].salaryMode` | `salary.period` | Preserve/mapped |
-| `skills[].skill.name` | `skills[]` | Preserve `mustHave` when useful |
-| `minYearsOfExperience`, `maxYearsOfExperience`, `hierarchicalJobCategory.name`, `skills[]` | `requirementSummary` | Build safe partial summary only from explicit list fields |
+| Source field                                                                               | Normalized field        | Rule                                                      |
+| ------------------------------------------------------------------------------------------ | ----------------------- | --------------------------------------------------------- |
+| `id`                                                                                       | `externalJobId`         | Required                                                  |
+| `title`                                                                                    | `title`                 | Required                                                  |
+| `type`                                                                                     | `employmentType`        | Map enum-like value                                       |
+| `workArrangementOption`                                                                    | `workType`              | Map `ONSITE`, remote/hybrid variants                      |
+| `createdAt`                                                                                | `postedAt`              | Use source timestamp                                      |
+| `updatedAt`                                                                                | `sourceUpdatedAt`       | Optional                                                  |
+| `company.name`                                                                             | `company.name`          | Required fallback text                                    |
+| `company.logo`                                                                             | `company.logoUrl`       | Optional                                                  |
+| `company.industry.name`                                                                    | `company.industry`      | Optional                                                  |
+| `location.formattedName`                                                                   | `location.display`      | Preserve                                                  |
+| `location.parents[]`                                                                       | `city/province/country` | Best-effort                                               |
+| `salaries[].minAmount/maxAmount`                                                           | `salary.min/max`        | Nullable                                                  |
+| `salaries[].CurrencyCode`                                                                  | `salary.currency`       | Preserve                                                  |
+| `salaries[].salaryMode`                                                                    | `salary.period`         | Preserve/mapped                                           |
+| `skills[].skill.name`                                                                      | `skills[]`              | Preserve `mustHave` when useful                           |
+| `minYearsOfExperience`, `maxYearsOfExperience`, `hierarchicalJobCategory.name`, `skills[]` | `requirementSummary`    | Build safe partial summary only from explicit list fields |
 
 ## Fallback
 
