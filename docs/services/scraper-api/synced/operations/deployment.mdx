@@ -15,15 +15,15 @@ This page defines deployment expectations for the scraper service. Exact hosting
 
 ## Runtime Topology
 
-| Component            | Responsibility                                            |
-| -------------------- | --------------------------------------------------------- |
-| Scraper app          | Source adapters, internal endpoints, run orchestration    |
-| Scheduler            | Daily pipeline trigger                                    |
-| Worker               | Batch normalization, enrichment, sync, and retries        |
-| Local scraper DB     | Raw captures, staging rows, run state, quarantine records |
-| Main backend DB      | Final Backend API-consumable job data                     |
-| Secret store         | Source credentials, service credentials, DB URLs          |
-| Logs/metrics backend | Structured run and stage evidence                         |
+| Component | Responsibility |
+| --- | --- |
+| Scraper app | Source adapters, internal endpoints, run orchestration |
+| Scheduler | Daily pipeline trigger |
+| Worker | Batch normalization, enrichment, sync, and retries |
+| Local scraper DB | Raw captures, staging rows, run state, quarantine records |
+| Main backend DB | Final Backend API-consumable job data |
+| Secret store | Source credentials, service credentials, DB URLs |
+| Logs/metrics backend | Structured run and stage evidence |
 
 Baseline daily flow:
 
@@ -99,32 +99,32 @@ The active deployment workflow lives at `.github/workflows/deploy.yml`. It deplo
 
 Workflow behavior:
 
-| Stage            | Expected result                                                                        |
-| ---------------- | -------------------------------------------------------------------------------------- |
-| Build image      | Docker image is built from committed source and `uv.lock`                              |
-| Publish image    | GHCR receives branch tag and immutable SHA tag                                         |
-| Validate secrets | Deployment stops before SSH if required secrets are missing                            |
-| Write env file   | VPS receives `.env.production` from GitHub environment secret                          |
-| Sync checkout    | Remote repository is reset to the exact build commit SHA only when clean               |
-| Pull image       | Compose pulls the immutable GHCR SHA tag from the same build run                       |
-| DB preflight     | Container verifies database env and lightweight connectivity with redacted output      |
-| Migrate          | `alembic upgrade head` runs before app startup                                         |
-| Start app        | Compose starts the `app` service and waits for health                                  |
-| Verify           | `/health/live` and `/health/ready` pass on localhost with bounded retry during startup |
-| Diagnose failure | Compose status and recent app logs are collected                                       |
+| Stage | Expected result |
+| --- | --- |
+| Build image | Docker image is built from committed source and `uv.lock` |
+| Publish image | GHCR receives branch tag and immutable SHA tag |
+| Validate secrets | Deployment stops before SSH if required secrets are missing |
+| Write env file | VPS receives `.env.production` from GitHub environment secret |
+| Sync checkout | Remote repository is reset to the exact build commit SHA only when clean |
+| Pull image | Compose pulls the immutable GHCR SHA tag from the same build run |
+| DB preflight | Container verifies database env and lightweight connectivity with redacted output |
+| Migrate | `alembic upgrade head` runs before app startup |
+| Start app | Compose starts the `app` service and waits for health |
+| Verify | `/health/live` and `/health/ready` pass on localhost with bounded retry during startup |
+| Diagnose failure | Compose status and recent app logs are collected |
 
 Required GitHub environment secrets:
 
-| Secret                     | Purpose                                               |
-| -------------------------- | ----------------------------------------------------- |
-| `DEPLOY_VPS_HOST`          | VPS host                                              |
-| `DEPLOY_VPS_PORT`          | SSH port                                              |
-| `DEPLOY_VPS_USERNAME`      | SSH user                                              |
-| `DEPLOY_VPS_KEY`           | Private SSH key                                       |
-| `DEPLOY_REMOTE_PATH`       | Existing remote repository path                       |
-| `DEPLOY_ENV_FILE`          | Full runtime env payload written to `.env.production` |
-| `GHCR_READ_PACKAGES_TOKEN` | Token used by the VPS to pull GHCR image              |
-| `GH_USERNAME`              | GHCR username for remote login                        |
+| Secret | Purpose |
+| --- | --- |
+| `DEPLOY_VPS_HOST` | VPS host |
+| `DEPLOY_VPS_PORT` | SSH port |
+| `DEPLOY_VPS_USERNAME` | SSH user |
+| `DEPLOY_VPS_KEY` | Private SSH key |
+| `DEPLOY_REMOTE_PATH` | Existing remote repository path |
+| `DEPLOY_ENV_FILE` | Full runtime env payload written to `.env.production` |
+| `GHCR_READ_PACKAGES_TOKEN` | Token used by the VPS to pull GHCR image |
+| `GH_USERNAME` | GHCR username for remote login |
 
 Remote prerequisites:
 
@@ -136,28 +136,28 @@ Remote prerequisites:
 
 ## Normal Deploy Runbook
 
-| Step                         | Expected result                                                       |
-| ---------------------------- | --------------------------------------------------------------------- |
-| 1. Validate config           | Required env is present and source credentials are not empty          |
-| 2. Run tests                 | Unit, source contract, docs check, and changed integration tests pass |
-| 3. Build artifact            | App, scheduler, and worker artifact is reproducible                   |
-| 4. Pause overlapping runs    | No active production run is interrupted silently                      |
-| 5. Apply DB migration if any | Local scraper DB schema is compatible                                 |
-| 6. Start app and workers     | Liveness and worker heartbeat are healthy                             |
-| 7. Run smoke checks          | Fixture-backed pipeline and source health pass                        |
-| 8. Resume scheduler          | Next scheduled run is enabled                                         |
-| 9. Watch first run           | Counts, failures, and sync latency are reviewed                       |
+| Step | Expected result |
+| --- | --- |
+| 1. Validate config | Required env is present and source credentials are not empty |
+| 2. Run tests | Unit, source contract, docs check, and changed integration tests pass |
+| 3. Build artifact | App, scheduler, and worker artifact is reproducible |
+| 4. Pause overlapping runs | No active production run is interrupted silently |
+| 5. Apply DB migration if any | Local scraper DB schema is compatible |
+| 6. Start app and workers | Liveness and worker heartbeat are healthy |
+| 7. Run smoke checks | Fixture-backed pipeline and source health pass |
+| 8. Resume scheduler | Next scheduled run is enabled |
+| 9. Watch first run | Counts, failures, and sync latency are reviewed |
 
 ## Rollback Runbook
 
-| Change type              | Rollback direction                                                  |
-| ------------------------ | ------------------------------------------------------------------- |
-| Code only                | Redeploy previous artifact and rerun smoke checks                   |
-| Config issue             | Restore previous environment values and restart                     |
-| Source adapter change    | Disable affected source or redeploy previous adapter                |
-| Additive DB migration    | Redeploy previous compatible artifact; clean up later               |
-| Destructive DB migration | Restore backup or execute documented forward fix                    |
-| Mapper regression        | Stop affected source sync, keep raw rows, deploy mapper fix, replay |
+| Change type | Rollback direction |
+| --- | --- |
+| Code only | Redeploy previous artifact and rerun smoke checks |
+| Config issue | Restore previous environment values and restart |
+| Source adapter change | Disable affected source or redeploy previous adapter |
+| Additive DB migration | Redeploy previous compatible artifact; clean up later |
+| Destructive DB migration | Restore backup or execute documented forward fix |
+| Mapper regression | Stop affected source sync, keep raw rows, deploy mapper fix, replay |
 
 Rollback must not delete raw captures or staging rows needed for replay.
 
@@ -175,17 +175,17 @@ Use hotfix only when production freshness or sync is materially degraded.
 
 ## Post-Deploy Checks
 
-| Check                | Expected result                                                           |
-| -------------------- | ------------------------------------------------------------------------- |
-| App liveness         | `/health/live` responds without requiring database connectivity           |
-| App readiness        | `/health/ready` confirms the scraper database accepts a lightweight query |
-| Scheduler state      | Next run time is visible                                                  |
-| Source health        | Each source reports safe status without exposing credentials              |
-| Fixture pipeline     | One sanitized fixture batch normalizes successfully                       |
-| DB connectivity      | Local scraper DB and sync target are reachable                            |
-| Log redaction        | No token/cookie/session strings appear                                    |
-| First production run | Counts are plausible and failures are isolated                            |
-| Freshness            | `lastSeenAt` and stale counts match policy                                |
+| Check | Expected result |
+| --- | --- |
+| App liveness | `/health/live` responds without requiring database connectivity |
+| App readiness | `/health/ready` confirms the scraper database accepts a lightweight query |
+| Scheduler state | Next run time is visible |
+| Source health | Each source reports safe status without exposing credentials |
+| Fixture pipeline | One sanitized fixture batch normalizes successfully |
+| DB connectivity | Local scraper DB and sync target are reachable |
+| Log redaction | No token/cookie/session strings appear |
+| First production run | Counts are plausible and failures are isolated |
+| Freshness | `lastSeenAt` and stale counts match policy |
 
 ## Recovery Rules
 

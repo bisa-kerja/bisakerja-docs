@@ -15,21 +15,21 @@ The persistence module stores raw, staging, and sync-ready records in scraper-ow
 
 ## Responsibility
 
-| Area             | Rule                                                   |
-| ---------------- | ------------------------------------------------------ |
-| Raw storage      | Store response bodies and safe metadata for replay     |
-| Staging storage  | Store canonical candidate records after validation     |
-| Sync preparation | Build idempotent upsert batches                        |
-| Transactions     | Keep related company/job/requirement writes consistent |
+| Area | Rule |
+| --- | --- |
+| Raw storage | Store response bodies and safe metadata for replay |
+| Staging storage | Store canonical candidate records after validation |
+| Sync preparation | Build idempotent upsert batches |
+| Transactions | Keep related company/job/requirement writes consistent |
 
 ## Write Boundaries
 
-| Store                | Writer                | Rule                                                       |
-| -------------------- | --------------------- | ---------------------------------------------------------- |
-| Local raw tables     | Ingestion             | Redact request metadata before persistence or sharing      |
-| Local staging tables | Normalizer/enrichment | Keep retryable and replayable                              |
-| Main job tables      | Sync service          | Upsert source platform, company, job, requirements, skills |
-| Backend user tables  | None                  | Scraper must not write                                     |
+| Store | Writer | Rule |
+| --- | --- | --- |
+| Local raw tables | Ingestion | Redact request metadata before persistence or sharing |
+| Local staging tables | Normalizer/enrichment | Keep retryable and replayable |
+| Main job tables | Sync service | Upsert source platform, company, job, requirements, skills |
+| Backend user tables | None | Scraper must not write |
 
 ## Repository Behavior
 
@@ -47,13 +47,13 @@ The writer accepts canonical job models only after mapper validation. Source-spe
 
 ## Failure Modes
 
-| Failure              | Handling                                                            |
-| -------------------- | ------------------------------------------------------------------- |
-| DB unavailable       | Mark run failed/partial; retry later                                |
-| Constraint conflict  | Resolve by source identity and retry chunk                          |
-| Partial sync chunk   | Retry idempotently                                                  |
+| Failure | Handling |
+| --- | --- |
+| DB unavailable | Mark run failed/partial; retry later |
+| Constraint conflict | Resolve by source identity and retry chunk |
+| Partial sync chunk | Retry idempotently |
 | Raw storage overflow | Apply retention policy; never drop unsynced critical state silently |
-| Sensitive metadata   | Redact or reject write                                              |
+| Sensitive metadata | Redact or reject write |
 
 ## Observability
 
@@ -68,13 +68,13 @@ Track:
 
 ## Tests
 
-| Test                     | Purpose                                   |
-| ------------------------ | ----------------------------------------- |
-| Repository insert/upsert | Confirms idempotent writes                |
-| Transaction rollback     | Confirms partial related writes roll back |
-| Chunk retry              | Confirms no duplicate rows after retry    |
-| Redacted metadata        | Confirms headers/cookies are absent       |
-| Backend boundary         | Confirms no user-owned tables are written |
+| Test | Purpose |
+| --- | --- |
+| Repository insert/upsert | Confirms idempotent writes |
+| Transaction rollback | Confirms partial related writes roll back |
+| Chunk retry | Confirms no duplicate rows after retry |
+| Redacted metadata | Confirms headers/cookies are absent |
+| Backend boundary | Confirms no user-owned tables are written |
 
 ## Related Docs
 
