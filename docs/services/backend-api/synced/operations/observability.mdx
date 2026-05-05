@@ -61,16 +61,16 @@ Example:
 
 ```json
 {
-	"level": "info",
-	"service": "bisakerja-api",
-	"env": "staging",
-	"requestId": "req_123",
-	"method": "GET",
-	"path": "/api/v1/jobs",
-	"statusCode": 200,
-	"durationMs": 42,
-	"userId": null,
-	"errorCode": null
+  "level": "info",
+  "service": "bisakerja-api",
+  "env": "staging",
+  "requestId": "req_123",
+  "method": "GET",
+  "path": "/api/v1/jobs",
+  "statusCode": 200,
+  "durationMs": 42,
+  "userId": null,
+  "errorCode": null
 }
 ```
 
@@ -130,19 +130,19 @@ Example readiness response:
 
 ```json
 {
-	"success": true,
-	"message": "Service is ready",
-	"data": {
-		"service": "bisakerja-api",
-		"status": "ready",
-		"env": "staging",
-		"dependencies": {
-			"postgresql": "healthy"
-		}
-	},
-	"meta": {
-		"requestId": "req_123"
-	}
+  "success": true,
+  "message": "Service is ready",
+  "data": {
+    "service": "bisakerja-api",
+    "status": "ready",
+    "env": "staging",
+    "dependencies": {
+      "postgresql": "healthy"
+    }
+  },
+  "meta": {
+    "requestId": "req_123"
+  }
 }
 ```
 

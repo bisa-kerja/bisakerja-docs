@@ -43,12 +43,12 @@ Use this shape for single resource reads, mutations, and action responses that r
 
 ```json
 {
-	"success": true,
-	"message": "Request completed successfully",
-	"data": {
-		"id": "11111111-1111-4111-8111-111111111111"
-	},
-	"meta": null
+  "success": true,
+  "message": "Request completed successfully",
+  "data": {
+    "id": "11111111-1111-4111-8111-111111111111"
+  },
+  "meta": null
 }
 ```
 
@@ -58,13 +58,13 @@ Use HTTP `201` when a resource is created.
 
 ```json
 {
-	"success": true,
-	"message": "Application record created successfully",
-	"data": {
-		"id": "app_123",
-		"status": "APPLIED"
-	},
-	"meta": null
+  "success": true,
+  "message": "Application record created successfully",
+  "data": {
+    "id": "app_123",
+    "status": "APPLIED"
+  },
+  "meta": null
 }
 ```
 
@@ -80,30 +80,30 @@ Use this shape for paginated collection endpoints.
 
 ```json
 {
-	"success": true,
-	"message": "Jobs retrieved successfully",
-	"data": [
-		{
-			"id": "11111111-1111-4111-8111-111111111111",
-			"title": "Backend Developer"
-		}
-	],
-	"meta": {
-		"pagination": {
-			"page": 1,
-			"limit": 20,
-			"total": 100,
-			"totalPages": 5,
-			"hasNextPage": true,
-			"hasPrevPage": false
-		},
-		"filters": {
-			"keyword": "backend",
-			"location": "Jakarta",
-			"workType": "REMOTE"
-		},
-		"sort": "relevance"
-	}
+  "success": true,
+  "message": "Jobs retrieved successfully",
+  "data": [
+    {
+      "id": "11111111-1111-4111-8111-111111111111",
+      "title": "Backend Developer"
+    }
+  ],
+  "meta": {
+    "pagination": {
+      "page": 1,
+      "limit": 20,
+      "total": 100,
+      "totalPages": 5,
+      "hasNextPage": true,
+      "hasPrevPage": false
+    },
+    "filters": {
+      "keyword": "backend",
+      "location": "Jakarta",
+      "workType": "REMOTE"
+    },
+    "sort": "relevance"
+  }
 }
 ```
 
@@ -183,20 +183,20 @@ All error responses must use this shape.
 
 ```json
 {
-	"success": false,
-	"message": "Validation failed",
-	"data": null,
-	"error": {
-		"code": "VALIDATION_ERROR",
-		"details": [
-			{
-				"path": "email",
-				"message": "Invalid email address",
-				"code": "invalid_string"
-			}
-		],
-		"requestId": "req_123"
-	}
+  "success": false,
+  "message": "Validation failed",
+  "data": null,
+  "error": {
+    "code": "VALIDATION_ERROR",
+    "details": [
+      {
+        "path": "email",
+        "message": "Invalid email address",
+        "code": "invalid_string"
+      }
+    ],
+    "requestId": "req_123"
+  }
 }
 ```
 
@@ -221,20 +221,20 @@ Zod validation errors should use this detail shape:
 
 ```json
 {
-	"success": false,
-	"message": "Validation failed",
-	"data": null,
-	"error": {
-		"code": "VALIDATION_ERROR",
-		"details": [
-			{
-				"path": "preferences.salaryMin",
-				"message": "Expected number, received string",
-				"code": "invalid_type"
-			}
-		],
-		"requestId": "req_456"
-	}
+  "success": false,
+  "message": "Validation failed",
+  "data": null,
+  "error": {
+    "code": "VALIDATION_ERROR",
+    "details": [
+      {
+        "path": "preferences.salaryMin",
+        "message": "Expected number, received string",
+        "code": "invalid_type"
+      }
+    ],
+    "requestId": "req_456"
+  }
 }
 ```
 
@@ -300,14 +300,14 @@ Authentication errors:
 
 ```json
 {
-	"success": false,
-	"message": "Authentication required",
-	"data": null,
-	"error": {
-		"code": "UNAUTHENTICATED",
-		"details": null,
-		"requestId": "req_auth_123"
-	}
+  "success": false,
+  "message": "Authentication required",
+  "data": null,
+  "error": {
+    "code": "UNAUTHENTICATED",
+    "details": null,
+    "requestId": "req_auth_123"
+  }
 }
 ```
 
@@ -315,14 +315,14 @@ Authorization errors:
 
 ```json
 {
-	"success": false,
-	"message": "You are not allowed to access this resource",
-	"data": null,
-	"error": {
-		"code": "FORBIDDEN",
-		"details": null,
-		"requestId": "req_auth_456"
-	}
+  "success": false,
+  "message": "You are not allowed to access this resource",
+  "data": null,
+  "error": {
+    "code": "FORBIDDEN",
+    "details": null,
+    "requestId": "req_auth_456"
+  }
 }
 ```
 
@@ -334,16 +334,16 @@ Model API unavailable:
 
 ```json
 {
-	"success": false,
-	"message": "AI analysis service is temporarily unavailable",
-	"data": null,
-	"error": {
-		"code": "SERVICE_UNAVAILABLE",
-		"details": {
-			"dependency": "model-api"
-		},
-		"requestId": "req_model_123"
-	}
+  "success": false,
+  "message": "AI analysis service is temporarily unavailable",
+  "data": null,
+  "error": {
+    "code": "SERVICE_UNAVAILABLE",
+    "details": {
+      "dependency": "model-api"
+    },
+    "requestId": "req_model_123"
+  }
 }
 ```
 
@@ -351,16 +351,16 @@ Model API invalid response:
 
 ```json
 {
-	"success": false,
-	"message": "AI analysis result could not be processed",
-	"data": null,
-	"error": {
-		"code": "DOWNSTREAM_ERROR",
-		"details": {
-			"dependency": "model-api"
-		},
-		"requestId": "req_model_456"
-	}
+  "success": false,
+  "message": "AI analysis result could not be processed",
+  "data": null,
+  "error": {
+    "code": "DOWNSTREAM_ERROR",
+    "details": {
+      "dependency": "model-api"
+    },
+    "requestId": "req_model_456"
+  }
 }
 ```
 

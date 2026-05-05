@@ -172,17 +172,17 @@ Successful readiness response:
 
 ```json
 {
-	"success": true,
-	"message": "Service is ready",
-	"data": {
-		"service": "bisakerja-api",
-		"status": "ready",
-		"env": "staging",
-		"dependencies": {
-			"postgresql": "healthy"
-		}
-	},
-	"meta": null
+  "success": true,
+  "message": "Service is ready",
+  "data": {
+    "service": "bisakerja-api",
+    "status": "ready",
+    "env": "staging",
+    "dependencies": {
+      "postgresql": "healthy"
+    }
+  },
+  "meta": null
 }
 ```
 
@@ -190,18 +190,18 @@ Readiness failure response:
 
 ```json
 {
-	"success": false,
-	"message": "Service is not ready",
-	"data": null,
-	"error": {
-		"code": "SERVICE_UNAVAILABLE",
-		"details": {
-			"dependencies": {
-				"postgresql": "unhealthy"
-			}
-		},
-		"requestId": "req_123"
-	}
+  "success": false,
+  "message": "Service is not ready",
+  "data": null,
+  "error": {
+    "code": "SERVICE_UNAVAILABLE",
+    "details": {
+      "dependencies": {
+        "postgresql": "unhealthy"
+      }
+    },
+    "requestId": "req_123"
+  }
 }
 ```
 

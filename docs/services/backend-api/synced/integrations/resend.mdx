@@ -69,12 +69,12 @@ import { createEmailService } from "@/shared/email";
 const emailService = createEmailService(env);
 
 await emailService.send({
-	to: "user@example.com",
-	subject: "Welcome to Bisakerja",
-	html: "<p>Your account is ready.</p>",
-	text: "Your account is ready.",
-	tags: [{ name: "category", value: "welcome" }],
-	idempotencyKey: "welcome-user/12345",
+  to: "user@example.com",
+  subject: "Welcome to Bisakerja",
+  html: "<p>Your account is ready.</p>",
+  text: "Your account is ready.",
+  tags: [{ name: "category", value: "welcome" }],
+  idempotencyKey: "welcome-user/12345"
 });
 ```
 
