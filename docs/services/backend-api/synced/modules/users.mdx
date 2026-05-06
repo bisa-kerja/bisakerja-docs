@@ -76,9 +76,9 @@ The route set uses replacement semantics for nested profile lists in MVP. Partia
 
 ```json
 {
-  "username": "salman",
-  "phoneNumber": "+6281234567890",
-  "displayName": "Salman Abdurrahman"
+	"username": "salman",
+	"phoneNumber": "+6281234567890",
+	"displayName": "Salman Abdurrahman"
 }
 ```
 
@@ -96,10 +96,10 @@ Email update is not part of MVP unless email re-verification is documented.
 
 ```json
 {
-  "storageKey": "profile-photos/user_123/avatar.jpg",
-  "url": "https://cdn.example.com/profile-photos/user_123/avatar.jpg",
-  "mimeType": "image/jpeg",
-  "sizeBytes": 512000
+	"storageKey": "profile-photos/user_123/avatar.jpg",
+	"url": "https://cdn.example.com/profile-photos/user_123/avatar.jpg",
+	"mimeType": "image/jpeg",
+	"sizeBytes": 512000
 }
 ```
 
@@ -118,16 +118,16 @@ The Users module stores metadata only. Actual upload transport can be implemente
 
 ```json
 {
-  "skills": [
-    {
-      "name": "TypeScript",
-      "level": "INTERMEDIATE"
-    },
-    {
-      "name": "PostgreSQL",
-      "level": "BASIC"
-    }
-  ]
+	"skills": [
+		{
+			"name": "TypeScript",
+			"level": "INTERMEDIATE"
+		},
+		{
+			"name": "PostgreSQL",
+			"level": "BASIC"
+		}
+	]
 }
 ```
 
@@ -145,17 +145,17 @@ Duplicate skill names are rejected after normalization.
 
 ```json
 {
-  "experience": [
-    {
-      "title": "Backend Developer Intern",
-      "company": "Example Tech",
-      "employmentType": "INTERNSHIP",
-      "startDate": "2025-01-01",
-      "endDate": "2025-06-30",
-      "isCurrent": false,
-      "description": "Built REST APIs with TypeScript."
-    }
-  ]
+	"experience": [
+		{
+			"title": "Backend Developer Intern",
+			"company": "Example Tech",
+			"employmentType": "INTERNSHIP",
+			"startDate": "2025-01-01",
+			"endDate": "2025-06-30",
+			"isCurrent": false,
+			"description": "Built REST APIs with TypeScript."
+		}
+	]
 }
 ```
 
@@ -177,15 +177,15 @@ When `isCurrent` is `true`, `endDate` must be empty.
 
 ```json
 {
-  "education": [
-    {
-      "institution": "Universitas Contoh",
-      "degree": "Bachelor",
-      "fieldOfStudy": "Informatics",
-      "startYear": 2021,
-      "endYear": 2025
-    }
-  ]
+	"education": [
+		{
+			"institution": "Universitas Contoh",
+			"degree": "Bachelor",
+			"fieldOfStudy": "Informatics",
+			"startYear": 2021,
+			"endYear": 2025
+		}
+	]
 }
 ```
 
@@ -205,39 +205,39 @@ Validation:
 
 ```json
 {
-  "success": true,
-  "message": "Profile retrieved successfully",
-  "data": {
-    "id": "user_123",
-    "username": "salman",
-    "email": "salman@example.com",
-    "emailVerified": true,
-    "phoneNumber": "+6281234567890",
-    "displayName": "Salman Abdurrahman",
-    "profilePhoto": {
-      "url": "https://cdn.example.com/profile-photos/user_123/avatar.jpg",
-      "mimeType": "image/jpeg",
-      "sizeBytes": 512000
-    },
-    "onboardingStatus": "IN_PROGRESS",
-    "profile": {
-      "careerStatus": "FRESH_GRADUATE",
-      "latestRole": "Backend Developer",
-      "summary": "Early-career backend developer focused on TypeScript APIs."
-    },
-    "skills": [
-      {
-        "id": "skill_123",
-        "name": "TypeScript",
-        "level": "INTERMEDIATE"
-      }
-    ],
-    "experience": [],
-    "education": [],
-    "createdAt": "2026-04-22T00:00:00.000Z",
-    "updatedAt": "2026-04-22T00:00:00.000Z"
-  },
-  "meta": null
+	"success": true,
+	"message": "Profile retrieved successfully",
+	"data": {
+		"id": "user_123",
+		"username": "salman",
+		"email": "salman@example.com",
+		"emailVerified": true,
+		"phoneNumber": "+6281234567890",
+		"displayName": "Salman Abdurrahman",
+		"profilePhoto": {
+			"url": "https://cdn.example.com/profile-photos/user_123/avatar.jpg",
+			"mimeType": "image/jpeg",
+			"sizeBytes": 512000
+		},
+		"onboardingStatus": "IN_PROGRESS",
+		"profile": {
+			"careerStatus": "FRESH_GRADUATE",
+			"latestRole": "Backend Developer",
+			"summary": "Early-career backend developer focused on TypeScript APIs."
+		},
+		"skills": [
+			{
+				"id": "skill_123",
+				"name": "TypeScript",
+				"level": "INTERMEDIATE"
+			}
+		],
+		"experience": [],
+		"education": [],
+		"createdAt": "2026-04-22T00:00:00.000Z",
+		"updatedAt": "2026-04-22T00:00:00.000Z"
+	},
+	"meta": null
 }
 ```
 
