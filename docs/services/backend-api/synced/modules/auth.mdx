@@ -77,11 +77,11 @@ The placeholder route returns `501 GOOGLE_SSO_NOT_CONFIGURED` and must not start
 
 ```json
 {
-	"username": "salman",
-	"email": "salman@example.com",
-	"phoneNumber": "+6281234567890",
-	"password": "StrongPassword123!",
-	"confirmPassword": "StrongPassword123!"
+  "username": "salman",
+  "email": "salman@example.com",
+  "phoneNumber": "+6281234567890",
+  "password": "StrongPassword123!",
+  "confirmPassword": "StrongPassword123!"
 }
 ```
 
@@ -99,8 +99,8 @@ Validation:
 
 ```json
 {
-	"identifier": "salman@example.com",
-	"password": "StrongPassword123!"
+  "identifier": "salman@example.com",
+  "password": "StrongPassword123!"
 }
 ```
 
@@ -119,7 +119,7 @@ The refresh credential comes from the `HttpOnly` refresh cookie. The request bod
 
 ```json
 {
-	"email": "salman@example.com"
+  "email": "salman@example.com"
 }
 ```
 
@@ -129,9 +129,9 @@ Security rule: response must be identical whether the email exists or not.
 
 ```json
 {
-	"token": "reset_token_or_otp",
-	"password": "NewStrongPassword123!",
-	"confirmPassword": "NewStrongPassword123!"
+  "token": "reset_token_or_otp",
+  "password": "NewStrongPassword123!",
+  "confirmPassword": "NewStrongPassword123!"
 }
 ```
 
@@ -139,8 +139,8 @@ Security rule: response must be identical whether the email exists or not.
 
 ```json
 {
-	"email": "salman@example.com",
-	"otp": "123456"
+  "email": "salman@example.com",
+  "otp": "123456"
 }
 ```
 
@@ -152,12 +152,12 @@ Email verification uses OTP for MVP.
 
 ```json
 {
-	"id": "user_123",
-	"username": "salman",
-	"email": "salman@example.com",
-	"emailVerified": false,
-	"onboardingStatus": "PENDING",
-	"createdAt": "2026-04-22T00:00:00.000Z"
+  "id": "user_123",
+  "username": "salman",
+  "email": "salman@example.com",
+  "emailVerified": false,
+  "onboardingStatus": "PENDING",
+  "createdAt": "2026-04-22T00:00:00.000Z"
 }
 ```
 
@@ -165,9 +165,9 @@ Email verification uses OTP for MVP.
 
 ```json
 {
-	"accessToken": "access_token_value",
-	"expiresIn": 900,
-	"tokenType": "Bearer"
+  "accessToken": "access_token_value",
+  "expiresIn": 900,
+  "tokenType": "Bearer"
 }
 ```
 
@@ -178,19 +178,19 @@ Refresh cookies use the configured `AUTH_REFRESH_COOKIE_NAME`, `HttpOnly`, expli
 
 ```json
 {
-	"success": true,
-	"message": "Account registered successfully. Please verify your email.",
-	"data": {
-		"user": {
-			"id": "user_123",
-			"username": "salman",
-			"email": "salman@example.com",
-			"emailVerified": false,
-			"onboardingStatus": "PENDING",
-			"createdAt": "2026-04-22T00:00:00.000Z"
-		}
-	},
-	"meta": null
+  "success": true,
+  "message": "Account registered successfully. Please verify your email.",
+  "data": {
+    "user": {
+      "id": "user_123",
+      "username": "salman",
+      "email": "salman@example.com",
+      "emailVerified": false,
+      "onboardingStatus": "PENDING",
+      "createdAt": "2026-04-22T00:00:00.000Z"
+    }
+  },
+  "meta": null
 }
 ```
 
@@ -198,24 +198,24 @@ Refresh cookies use the configured `AUTH_REFRESH_COOKIE_NAME`, `HttpOnly`, expli
 
 ```json
 {
-	"success": true,
-	"message": "Login successful",
-	"data": {
-		"user": {
-			"id": "user_123",
-			"username": "salman",
-			"email": "salman@example.com",
-			"emailVerified": true,
-			"onboardingStatus": "COMPLETED",
-			"createdAt": "2026-04-22T00:00:00.000Z"
-		},
-		"session": {
-			"accessToken": "access_token_value",
-			"expiresIn": 900,
-			"tokenType": "Bearer"
-		}
-	},
-	"meta": null
+  "success": true,
+  "message": "Login successful",
+  "data": {
+    "user": {
+      "id": "user_123",
+      "username": "salman",
+      "email": "salman@example.com",
+      "emailVerified": true,
+      "onboardingStatus": "COMPLETED",
+      "createdAt": "2026-04-22T00:00:00.000Z"
+    },
+    "session": {
+      "accessToken": "access_token_value",
+      "expiresIn": 900,
+      "tokenType": "Bearer"
+    }
+  },
+  "meta": null
 }
 ```
 
