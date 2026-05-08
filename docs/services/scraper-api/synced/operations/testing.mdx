@@ -25,25 +25,25 @@ Scraper tests must prove that source adapters, mappers, deduplication, enrichmen
 
 ## Test Categories
 
-| Category        | Scope                                                        | Required evidence                                |
-| --------------- | ------------------------------------------------------------ | ------------------------------------------------ |
-| Unit            | Parsers, mappers, validators, dedup helpers                  | Deterministic input/output                       |
-| Source contract | Sanitized `raw-response-*.txt` shape and payload roots       | Required fields and nullability are accepted     |
-| Integration     | Adapter to raw store, mapper to staging, sync writer to DB   | Stage counts and safe failure handling           |
-| Smoke           | Startup, config validation, one fixture-backed pipeline path | Service can start and process safe fixture data  |
-| Security        | Redaction, no secret logging, internal-only endpoints        | Sensitive strings absent from logs/docs/fixtures |
-| Regression      | Known source drift or mapper bug                             | Reproduces prior failure and proves fix          |
+| Category | Scope | Required evidence |
+| --- | --- | --- |
+| Unit | Parsers, mappers, validators, dedup helpers | Deterministic input/output |
+| Source contract | Sanitized `raw-response-*.txt` shape and payload roots | Required fields and nullability are accepted |
+| Integration | Adapter to raw store, mapper to staging, sync writer to DB | Stage counts and safe failure handling |
+| Smoke | Startup, config validation, one fixture-backed pipeline path | Service can start and process safe fixture data |
+| Security | Redaction, no secret logging, internal-only endpoints | Sensitive strings absent from logs/docs/fixtures |
+| Regression | Known source drift or mapper bug | Reproduces prior failure and proves fix |
 
 ## Fixture Rules
 
 Fixture inputs should come from sanitized raw captures:
 
-| Fixture source               | Use                                                    |
-| ---------------------------- | ------------------------------------------------------ |
-| `raw-response-dealls.txt`    | REST list mapper and null salary behavior              |
-| `raw-response-glints.txt`    | GraphQL list mapper and missing detail fallback        |
+| Fixture source | Use |
+| --- | --- |
+| `raw-response-dealls.txt` | REST list mapper and null salary behavior |
+| `raw-response-glints.txt` | GraphQL list mapper and missing detail fallback |
 | `raw-response-jobstreet.txt` | GraphQL list/detail-ready fields and auth-free fixture |
-| `raw-response-kalibrr.txt`   | Next.js data mapper and dynamic `buildId` assumptions  |
+| `raw-response-kalibrr.txt` | Next.js data mapper and dynamic `buildId` assumptions |
 
 Rules:
 
@@ -54,17 +54,17 @@ Rules:
 
 ## Module Test Mapping
 
-| Module                | Happy path                                    | Critical failure path                                           |
-| --------------------- | --------------------------------------------- | --------------------------------------------------------------- |
-| Ingestion             | Fetch fixture pages and persist raw rows      | Source timeout, auth failure, 429, schema root missing          |
-| Parsing/normalization | Produce canonical job fields from each source | Missing identity, unsafe HTML, unsupported field type           |
-| Deduplication         | Upsert by `sourcePlatform + externalJobId`    | Identity collision, repeated page overlap                       |
-| Persistence           | Write staging rows and sync batches           | DB constraint error, partial batch rollback                     |
-| Freshness             | Mark seen jobs active and old jobs stale      | Partial run must not expire source records                      |
-| Quarantine            | Store malformed raw records with safe errors  | Quarantined records must not sync                               |
-| Enrichment            | Add skills/requirements from clean text       | Model timeout or invalid output does not leak payload           |
-| Stage queue           | Claim and complete eligible stage jobs        | Failed jobs retry then dead-letter with correlation id retained |
-| Documentation sync    | Build deterministic bundle manifest           | Missing metadata, bad link, path escape, secret pattern         |
+| Module | Happy path | Critical failure path |
+| --- | --- | --- |
+| Ingestion | Fetch fixture pages and persist raw rows | Source timeout, auth failure, 429, schema root missing |
+| Parsing/normalization | Produce canonical job fields from each source | Missing identity, unsafe HTML, unsupported field type |
+| Deduplication | Upsert by `sourcePlatform + externalJobId` | Identity collision, repeated page overlap |
+| Persistence | Write staging rows and sync batches | DB constraint error, partial batch rollback |
+| Freshness | Mark seen jobs active and old jobs stale | Partial run must not expire source records |
+| Quarantine | Store malformed raw records with safe errors | Quarantined records must not sync |
+| Enrichment | Add skills/requirements from clean text | Model timeout or invalid output does not leak payload |
+| Stage queue | Claim and complete eligible stage jobs | Failed jobs retry then dead-letter with correlation id retained |
+| Documentation sync | Build deterministic bundle manifest | Missing metadata, bad link, path escape, secret pattern |
 
 ## Contract Tests
 
@@ -101,14 +101,17 @@ Fixture coverage tests must also report, for every supported source:
 
 Minimum smoke checks:
 
-| Check                  | Expected result                                            |
-| ---------------------- | ---------------------------------------------------------- |
-| Startup env validation | Missing required config fails fast                         |
-| Fixture pipeline       | One fixture batch reaches normalized staging               |
-| Source health          | Adapter health reports safe status without credentials     |
-| Sync dry-run           | Sync validates shape without mutating production DB        |
-| Redaction              | Logs and artifacts contain no token/cookie/session strings |
-| Uvicorn local boot     | ASGI app boots successfully from `src` module path         |
+| Check | Expected result |
+| --- | --- |
+| Startup env validation | Missing required config fails fast |
+| Fixture pipeline | One fixture batch reaches normalized staging |
+| Operator wizard | Interactive dry-run works with scripted input and non-TTY safe dry-run uses `--yes` |
+| Verify invariants | `verify` reports strict invariant checks and fails when stage rows are missing or failure evidence is incomplete |
+| Staging zero-sent diagnostics | `staging-report` includes explicit `zeroSentReason` for sync and notify-handoff when completed with zero sent rows |
+| Source health | Adapter health reports safe status without credentials |
+| Sync dry-run | Sync validates shape without mutating production DB |
+| Redaction | Logs and artifacts contain no token/cookie/session strings |
+| Uvicorn local boot | ASGI app boots successfully from `src` module path |
 
 ## Local Verification Commands
 
@@ -141,7 +144,13 @@ Smoke checks are available through the scraper CLI and do not require external n
 PYTHONPATH=src uv run python -m cli.smoke config --env-file .env.example
 PYTHONPATH=src uv run python -m cli.smoke health --env-file .env.example
 PYTHONPATH=src uv run python -m cli.smoke dry-run --source dealls
+PYTHONPATH=src uv run python -m cli.smoke dry-run --source glints
+PYTHONPATH=src uv run python -m cli.smoke dry-run --source jobstreet
+PYTHONPATH=src uv run python -m cli.smoke dry-run --source kalibrr
 PYTHONPATH=src uv run python -m cli.smoke dry-run --source dealls --stage scrape
+PYTHONPATH=src uv run python -m cli.pipeline preflight --stage full --source all --dry-run --env-file .env.example
+PYTHONPATH=src uv run python -m cli.pipeline wizard --dry-run --source dealls --stage scrape --limit 1 --env-file .env.example --yes
+PYTHONPATH=src uv run python -m cli.pipeline quick-dry-run --source all --stage full --env-file .env.example
 PYTHONPATH=src uv run python -m cli.pipeline run --stage full --source all --limit 1 --dry-run --env-file .env.example
 PYTHONPATH=src uv run python -m cli.pipeline run --stage scrape --source dealls --limit 1 --dry-run --env-file .env.example
 PYTHONPATH=src uv run python -m cli.pipeline run --stage scrape --source dealls --keywords developer,intern,ui/ux --limit 1 --latest --recency-days 7 --dry-run --env-file .env.example
@@ -153,7 +162,7 @@ uv run pytest tests/smoke
 Uvicorn local boot verification:
 
 ```bash
-PYTHONPATH=src uv run uvicorn api.app:create_app --factory --host 127.0.0.1 --port 8000
+PYTHONPATH=src uv run uvicorn api.app:create_app --factory --host 127.0.0.1 --port 3003
 ```
 
 The automated smoke suite includes a runtime boot regression check:
@@ -162,9 +171,9 @@ The automated smoke suite includes a runtime boot regression check:
 uv run pytest tests/smoke/test_runtime_boot.py
 ```
 
-The smoke dry-run command reads the sanitized Dealls fixture, parses the list payload, maps one job into the canonical schema, and prints a compact JSON result.
+The smoke dry-run command reads sanitized fixtures per source, parses list payloads, maps one job into the canonical schema, and prints a compact JSON result.
 
-The pipeline command requires explicit mode selection (`--dry-run` or `--execute`). Dry-run mode uses sanitized fixtures and in-memory storage. It exercises scrape, normalize, enrichment staging, backend sync handoff preparation, and notification handoff preparation without external network access or production database mutation.
+The wizard command is the primary operator entrypoint. It keeps output machine-readable while adding interactive selections and risk confirmation. In non-TTY contexts, wizard dry-run requires `--yes` and must reject risky configurations. The run command remains available for explicit scripted flows with mode selection (`--dry-run` or `--execute`). Dry-run mode uses sanitized fixtures and in-memory storage. It exercises scrape, normalize, enrichment staging, backend sync handoff preparation, and notification handoff preparation without external network access or production database mutation.
 
 For controlled local end-to-end validation, run execute mode with a fixed run id after migration:
 
@@ -181,12 +190,16 @@ Execute sync semantics:
 
 - `BACKEND_SYNC_ENABLED=false`: sync and handoff use recording clients only.
 - `BACKEND_SYNC_ENABLED=true`: sync and handoff call backend internal endpoints using configured base URL and token.
+- Contract paths are `POST /api/v1/internal/scraper/jobs` and `POST /api/v1/internal/notification-events`; backend token source is `SCRAPER_API_SERVICE_TOKEN`.
 - Reuse of the same execute run id causes stage-row primary-key collisions; use a unique run id per run.
 
 The verify output must show zero duplicate raw and normalized identities. It must summarize source, keyword, sync, handoff, recency mode, recency days, requested limit, newest source timestamp, and oldest source timestamp without raw payload bodies or secrets.
+It must also include strict invariant checks and set overall status to fail when invariants fail.
+When AI enrichment logs exist, verify output must include per-model request summary (`requests`, `successes`, `rate_limited`, `failed`) without exposing API key, base URL path, or raw prompt payload.
 
 The staging-report output must include stage counts, latency percentiles, retry totals, quarantine summary, duplicate identity checks, backend relation consistency checks, and backend list/detail read checks without exposing secrets.
 It must also include partial-data metrics per source and the Glints partial-rate gate result.
+It must also include stage status summaries, strict invariant checks, explicit sync/notify zero-sent reasons, and per-model AI request summary when AI logs exist.
 
 ## CI Verification
 
@@ -222,9 +235,10 @@ The scraper test suite covers:
 - Internal jobs API reads against a migrated isolated database.
 - Backend sync client request contract using in-memory HTTP transport.
 - OpenAI-compatible client boundary, custom base URL usage, structured output parsing, and classified provider errors.
-- AI normalization prompt contract, schema gate, and format-only repair policy against golden fixtures.
+- AI normalization prompt contract, batch array output gate, item-order identity checks, and format-only repair policy against golden fixtures.
 - AI request audit logging stores request hashes and safe summaries without prompts, raw payloads, or secrets.
 - Enrichment staging upsert behavior for skills and requirements.
+- Enrichment service invalid-input handling remains per-item failed and must not crash full enrichment stage.
 - DB-backed stage queue retry, completion, and dead-letter behavior.
 - CLI smoke checks for config, health, and fixture-backed dry-run behavior.
 - Manual pipeline CLI dry-run, source/stage validation, status lookup, and output redaction.

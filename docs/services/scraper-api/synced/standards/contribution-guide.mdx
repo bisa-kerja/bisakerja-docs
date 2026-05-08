@@ -15,12 +15,12 @@ Scraper documentation changes must preserve service ownership. This repository o
 
 ## Contribution Paths
 
-| Path                        | Use for                                                 | Owner                                                | Review gate                            |
-| --------------------------- | ------------------------------------------------------- | ---------------------------------------------------- | -------------------------------------- |
-| Direct edit                 | Scraper-owned docs under `docs/**`                      | `data-ingestion-owner`                               | Required reviewers by change type      |
-| Generated reference refresh | Machine-derived routes, schemas, sync readiness reports | `data-ingestion-owner`                               | Regeneration evidence and validation   |
-| Central sync publish        | Publishing scraper docs into central docs               | `platform-docs-maintainer` with scraper source owner | Sync validation and central path check |
-| Source reference update     | Changes to root source-contract docs or raw captures    | `data-ingestion-owner`                               | Sanitization and scope review          |
+| Path | Use for | Owner | Review gate |
+| --- | --- | --- | --- |
+| Direct edit | Scraper-owned docs under `docs/**` | `data-ingestion-owner` | Required reviewers by change type |
+| Generated reference refresh | Machine-derived routes, schemas, sync readiness reports | `data-ingestion-owner` | Regeneration evidence and validation |
+| Central sync publish | Publishing scraper docs into central docs | `platform-docs-maintainer` with scraper source owner | Sync validation and central path check |
+| Source reference update | Changes to root source-contract docs or raw captures | `data-ingestion-owner` | Sanitization and scope review |
 
 Do not edit central synced output manually. Update the scraper-owned source page, then publish through the sync path.
 
@@ -37,11 +37,11 @@ Do not edit central synced output manually. Update the scraper-owned source page
 
 Generated pages must be reproducible from source code or validation scripts.
 
-| Artifact        | Placement                          | Required evidence                            |
-| --------------- | ---------------------------------- | -------------------------------------------- |
-| Route inventory | `docs/generated/routes.md`         | Command or script used to generate it        |
-| OpenAPI schema  | `docs/generated/openapi.json`      | Scraper app version or source SHA            |
-| Sync readiness  | `docs/generated/sync-readiness.md` | Metadata, link, path, and secret scan result |
+| Artifact | Placement | Required evidence |
+| --- | --- | --- |
+| Route inventory | `docs/generated/routes.md` | Command or script used to generate it |
+| OpenAPI schema | `docs/generated/openapi.json` | Scraper app version or source SHA |
+| Sync readiness | `docs/generated/sync-readiness.md` | Metadata, link, path, and secret scan result |
 
 Generated references must not replace hand-authored contracts.
 
@@ -60,13 +60,13 @@ Required checks before sync:
 
 ## Scope Rules
 
-| Content                                       | Correct location        |
-| --------------------------------------------- | ----------------------- |
-| Scraper source adapter detail                 | This repository         |
-| Raw payload contract and field mapping        | This repository         |
-| Backend user workflow and public API behavior | Backend API repository  |
-| Cross-service platform summary                | Central docs repository |
-| Documentation governance source standard      | Central docs repository |
+| Content | Correct location |
+| --- | --- |
+| Scraper source adapter detail | This repository |
+| Raw payload contract and field mapping | This repository |
+| Backend user workflow and public API behavior | Backend API repository |
+| Cross-service platform summary | Central docs repository |
+| Documentation governance source standard | Central docs repository |
 
 ## Related Docs
 
@@ -74,3 +74,4 @@ Required checks before sync:
 - [Structural Change Policy](./structural-change-policy.mdx)
 - [Documentation Sync and Versioning](./documentation-sync-and-versioning.mdx)
 - [Metadata Standard](./metadata-standard.mdx)
+
