@@ -50,13 +50,13 @@ The Auth module does not own:
 
 | Method | Path                           | Auth                     | Purpose                                                |
 | ------ | ------------------------------ | ------------------------ | ------------------------------------------------------ |
-| `POST` | `/api/v1/auth/register`        | Public                   | Create a user account and start email verification     |
+| `POST` | `/api/v1/auth/register`        | Public                   | Create account and return onboarding access session    |
 | `POST` | `/api/v1/auth/login`           | Public                   | Authenticate using email or username and password      |
 | `POST` | `/api/v1/auth/logout`          | Authenticated            | Invalidate current session or refresh credential       |
 | `POST` | `/api/v1/auth/refresh`         | Refresh credential       | Issue a new access credential                          |
 | `POST` | `/api/v1/auth/forgot-password` | Public                   | Send password reset email or OTP                       |
 | `POST` | `/api/v1/auth/reset-password`  | Public with token or OTP | Set a new password                                     |
-| `POST` | `/api/v1/auth/verify-email`    | Public with token or OTP | Verify email ownership                                 |
+| `POST` | `/api/v1/auth/verify-email`    | Public with token or OTP | Verify email ownership and auto-login                  |
 | `POST` | `/api/v1/auth/google`          | Placeholder              | Reserved for Google SSO after OAuth config is approved |
 
 Google SSO must stay a placeholder until OAuth client id, callback URL, token verification, account-linking rules, and redirect behavior are documented.
@@ -77,11 +77,11 @@ The placeholder route returns `501 GOOGLE_SSO_NOT_CONFIGURED` and must not start
 
 ```json
 {
-	"username": "salman",
-	"email": "salman@example.com",
-	"phoneNumber": "+6281234567890",
-	"password": "StrongPassword123!",
-	"confirmPassword": "StrongPassword123!"
+  "username": "salman",
+  "email": "salman@example.com",
+  "phoneNumber": "+6281234567890",
+  "password": "StrongPassword123!",
+  "confirmPassword": "StrongPassword123!"
 }
 ```
 
@@ -99,8 +99,8 @@ Validation:
 
 ```json
 {
-	"identifier": "salman@example.com",
-	"password": "StrongPassword123!"
+  "identifier": "salman@example.com",
+  "password": "StrongPassword123!"
 }
 ```
 
@@ -119,7 +119,7 @@ The refresh credential comes from the `HttpOnly` refresh cookie. The request bod
 
 ```json
 {
-	"email": "salman@example.com"
+  "email": "salman@example.com"
 }
 ```
 
@@ -129,9 +129,9 @@ Security rule: response must be identical whether the email exists or not.
 
 ```json
 {
-	"token": "reset_token_or_otp",
-	"password": "NewStrongPassword123!",
-	"confirmPassword": "NewStrongPassword123!"
+  "token": "reset_token_or_otp",
+  "password": "NewStrongPassword123!",
+  "confirmPassword": "NewStrongPassword123!"
 }
 ```
 
@@ -139,8 +139,8 @@ Security rule: response must be identical whether the email exists or not.
 
 ```json
 {
-	"email": "salman@example.com",
-	"otp": "123456"
+  "email": "salman@example.com",
+  "otp": "123456"
 }
 ```
 
@@ -152,12 +152,12 @@ Email verification uses OTP for MVP.
 
 ```json
 {
-	"id": "user_123",
-	"username": "salman",
-	"email": "salman@example.com",
-	"emailVerified": false,
-	"onboardingStatus": "PENDING",
-	"createdAt": "2026-04-22T00:00:00.000Z"
+  "id": "user_123",
+  "username": "salman",
+  "email": "salman@example.com",
+  "emailVerified": false,
+  "onboardingStatus": "PENDING",
+  "createdAt": "2026-04-22T00:00:00.000Z"
 }
 ```
 
@@ -165,9 +165,9 @@ Email verification uses OTP for MVP.
 
 ```json
 {
-	"accessToken": "access_token_value",
-	"expiresIn": 900,
-	"tokenType": "Bearer"
+  "accessToken": "access_token_value",
+  "expiresIn": 900,
+  "tokenType": "Bearer"
 }
 ```
 
@@ -178,46 +178,80 @@ Refresh cookies use the configured `AUTH_REFRESH_COOKIE_NAME`, `HttpOnly`, expli
 
 ```json
 {
-	"success": true,
-	"message": "Account registered successfully. Please verify your email.",
-	"data": {
-		"user": {
-			"id": "user_123",
-			"username": "salman",
-			"email": "salman@example.com",
-			"emailVerified": false,
-			"onboardingStatus": "PENDING",
-			"createdAt": "2026-04-22T00:00:00.000Z"
-		}
-	},
-	"meta": null
+  "success": true,
+  "message": "Account registered successfully. Please verify your email.",
+  "data": {
+    "user": {
+      "id": "user_123",
+      "username": "salman",
+      "email": "salman@example.com",
+      "emailVerified": false,
+      "onboardingStatus": "PENDING",
+      "createdAt": "2026-04-22T00:00:00.000Z"
+    },
+    "session": {
+      "accessToken": "access_token_value",
+      "expiresIn": 900,
+      "tokenType": "Bearer"
+    }
+  },
+  "meta": null
 }
 ```
+
+The register session is access-token only. It does not set a refresh cookie and is intended for first-run onboarding, including `PUT /api/v1/me/preferences`, before email OTP verification.
 
 ### Login Response
 
 ```json
 {
-	"success": true,
-	"message": "Login successful",
-	"data": {
-		"user": {
-			"id": "user_123",
-			"username": "salman",
-			"email": "salman@example.com",
-			"emailVerified": true,
-			"onboardingStatus": "COMPLETED",
-			"createdAt": "2026-04-22T00:00:00.000Z"
-		},
-		"session": {
-			"accessToken": "access_token_value",
-			"expiresIn": 900,
-			"tokenType": "Bearer"
-		}
-	},
-	"meta": null
+  "success": true,
+  "message": "Login successful",
+  "data": {
+    "user": {
+      "id": "user_123",
+      "username": "salman",
+      "email": "salman@example.com",
+      "emailVerified": true,
+      "onboardingStatus": "COMPLETED",
+      "createdAt": "2026-04-22T00:00:00.000Z"
+    },
+    "session": {
+      "accessToken": "access_token_value",
+      "expiresIn": 900,
+      "tokenType": "Bearer"
+    }
+  },
+  "meta": null
 }
 ```
+
+### Email Verification Response
+
+```json
+{
+  "success": true,
+  "message": "Email verified successfully",
+  "data": {
+    "user": {
+      "id": "user_123",
+      "username": "salman",
+      "email": "salman@example.com",
+      "emailVerified": true,
+      "onboardingStatus": "IN_PROGRESS",
+      "createdAt": "2026-04-22T00:00:00.000Z"
+    },
+    "session": {
+      "accessToken": "access_token_value",
+      "expiresIn": 900,
+      "tokenType": "Bearer"
+    }
+  },
+  "meta": null
+}
+```
+
+Email verification sets the refresh cookie and auto-logs in the user.
 
 ## Service Logic
 
@@ -230,10 +264,11 @@ Refresh cookies use the configured `AUTH_REFRESH_COOKIE_NAME`, `HttpOnly`, expli
 5. Create `User` and `AuthCredential` in one transaction.
 6. Create email verification token or OTP.
 7. Send verification email.
-8. Return user-safe account summary.
+8. Return user-safe account summary plus onboarding access session.
 9. Emit audit event `auth.registered`.
 
-MVP registration does not issue a full authenticated session before email verification.
+MVP registration does not issue a refresh cookie before email verification.
+The current first-run flow is `register -> onboarding -> OTP -> auto login`.
 Local and test environments use a fake email provider. The provider records or logs only safe delivery metadata; raw OTP and reset token values are used for delivery and must not appear in API responses or ordinary logs.
 
 ### Login Flow
@@ -342,6 +377,7 @@ Use generic messages for login and password reset discovery paths to avoid accou
 - Use secure refresh cookies.
 - Rotate refresh tokens on every refresh.
 - Invalidate refresh tokens after password reset.
+- Register and forgot-password flows should commit domain state plus async email outbox atomically, then let the worker deliver email outside the request path.
 
 ## Observability
 
