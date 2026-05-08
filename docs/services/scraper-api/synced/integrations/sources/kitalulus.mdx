@@ -15,43 +15,43 @@ Kitalulus is a supported GraphQL source based on captured list and detail respon
 
 ## Endpoint
 
-| Purpose | Method | URL | Operation | Root |
-| --- | --- | --- | --- | --- |
-| List | `POST` | `https://gql.kitalulus.com/graphql` | `Vacancies` | `data.vacanciesV4.list[]` |
-| Detail | `POST` | `https://gql.kitalulus.com/graphql` | `VacancyBySlug` | `data.vacancyBySlug` |
+| Purpose | Method | URL                                 | Operation       | Root                      |
+| ------- | ------ | ----------------------------------- | --------------- | ------------------------- |
+| List    | `POST` | `https://gql.kitalulus.com/graphql` | `Vacancies`     | `data.vacanciesV4.list[]` |
+| Detail  | `POST` | `https://gql.kitalulus.com/graphql` | `VacancyBySlug` | `data.vacancyBySlug`      |
 
 ## Request Requirements
 
-| Requirement | Rule |
-| --- | --- |
-| Headers | Browser-like headers, `accept-language: id`, `origin: https://www.kitalulus.com`, `referer: https://www.kitalulus.com/`, `x-channel: web` |
-| Auth | No bearer token or cookie captured for baseline list/detail |
-| List variables | `keyword`, `pagination.page`, `pagination.limit`, and filters including `sortBy=updatedAt` |
-| Detail variables | `slug` from list record |
-| Pagination | Use `hasNextPage`, `page`, and configured limit |
-| Enablement | Live execute requires `KITALULUS_ENABLED=true`; dry-run fixture validation remains available when disabled |
+| Requirement      | Rule                                                                                                                                      |
+| ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| Headers          | Browser-like headers, `accept-language: id`, `origin: https://www.kitalulus.com`, `referer: https://www.kitalulus.com/`, `x-channel: web` |
+| Auth             | No bearer token or cookie captured for baseline list/detail                                                                               |
+| List variables   | `keyword`, `pagination.page`, `pagination.limit`, and filters including `sortBy=updatedAt`                                                |
+| Detail variables | `slug` from list record                                                                                                                   |
+| Pagination       | Use `hasNextPage`, `page`, and configured limit                                                                                           |
+| Enablement       | Live execute requires `KITALULUS_ENABLED=true`; dry-run fixture validation remains available when disabled                                |
 
 ## Field Mapping
 
-| Source field | Normalized field | Rule |
-| --- | --- | --- |
-| `id` | `externalJobId` | Required |
-| `slug` | `sourceSlug`, source URL component | Preserve |
-| `positionName` | `title` | Required |
-| `company.name` | `company.name` | Required fallback |
-| `company.id`, `company.code` | `company.sourceCompanyId` | Prefer `id` when detail exists |
-| `company.slug` | `company.sourceSlug` | Detail only |
-| `company.logoUrl` | `company.logoUrl` | Strip or avoid logging signed query values |
-| `company.companyIndustry.name` | `company.industry` | Detail only |
-| `province.name`, `city.name` | `location.region`, `location.city`, `location.display` | Join safely |
-| `typeStr`, `googleType` | `employmentType` | Map Indonesian/source labels to canonical enum |
-| `locationSiteStr` | `workType` | Map WFO/WFH/hybrid labels |
-| `salaryLowerBound`, `salaryUpperBound` | `salary.min`, `salary.max` | Treat `0` as unknown/null |
-| `updatedAt` | `postedAt`/`sourceUpdatedAt` | Prefer numeric timestamp from detail |
-| `updatedAtStr` | `presentation.posted_label` | Display-only unless parsed with capture time |
-| `description`, `formattedDescription` | `description`, `requirements` | Sanitize HTML; preserve requirement/responsibility split |
-| `skillTags[]` | `skills[]` | Deduplicate case-insensitively |
-| `benefits[].copy` | Benefit metadata only | Must not become `requirements` |
+| Source field                           | Normalized field                                       | Rule                                                     |
+| -------------------------------------- | ------------------------------------------------------ | -------------------------------------------------------- |
+| `id`                                   | `externalJobId`                                        | Required                                                 |
+| `slug`                                 | `sourceSlug`, source URL component                     | Preserve                                                 |
+| `positionName`                         | `title`                                                | Required                                                 |
+| `company.name`                         | `company.name`                                         | Required fallback                                        |
+| `company.id`, `company.code`           | `company.sourceCompanyId`                              | Prefer `id` when detail exists                           |
+| `company.slug`                         | `company.sourceSlug`                                   | Detail only                                              |
+| `company.logoUrl`                      | `company.logoUrl`                                      | Strip or avoid logging signed query values               |
+| `company.companyIndustry.name`         | `company.industry`                                     | Detail only                                              |
+| `province.name`, `city.name`           | `location.region`, `location.city`, `location.display` | Join safely                                              |
+| `typeStr`, `googleType`                | `employmentType`                                       | Map Indonesian/source labels to canonical enum           |
+| `locationSiteStr`                      | `workType`                                             | Map WFO/WFH/hybrid labels                                |
+| `salaryLowerBound`, `salaryUpperBound` | `salary.min`, `salary.max`                             | Treat `0` as unknown/null                                |
+| `updatedAt`                            | `postedAt`/`sourceUpdatedAt`                           | Prefer numeric timestamp from detail                     |
+| `updatedAtStr`                         | `presentation.posted_label`                            | Display-only unless parsed with capture time             |
+| `description`, `formattedDescription`  | `description`, `requirements`                          | Sanitize HTML; preserve requirement/responsibility split |
+| `skillTags[]`                          | `skills[]`                                             | Deduplicate case-insensitively                           |
+| `benefits[].copy`                      | Benefit metadata only                                  | Must not become `requirements`                           |
 
 ## Detail Handling
 

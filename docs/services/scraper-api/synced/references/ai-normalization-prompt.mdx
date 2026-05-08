@@ -76,12 +76,12 @@ The normalization system prompt enforces:
 
 Expected content structure is explicit so output stays consistent across sources.
 
-| Field | Target shape | Minimum expectation |
-| --- | --- | --- |
-| `description` | Safe display HTML (`<p>`, `<ul>/<ol>`, `<li>`, `<strong>`, `<em>`, `<br>`) | Menyebut fokus peran/tanggung jawab utama dan konteks eksekusi kerja bila evidence tersedia |
-| `requirement_summary` | Ringkasan singkat safe display HTML, gaya profesional Bahasa Indonesia | Tidak boleh diawali label tetap seperti `Kualifikasi utama:`; pertahankan poin pengalaman + kompetensi inti |
-| `requirements` | Teks requirement plain text untuk ekstraksi lanjutan | Factual, tanpa HTML mentah, tanpa duplikasi kalimat, tidak mengada-ada |
-| `skills` | Daftar skill spesifik berbasis evidence | Dedupe case-insensitive, utamakan teknologi/domain eksplisit, pecah skill komposit jadi item atomic, hindari skill terlalu abstrak tanpa evidence |
+| Field                 | Target shape                                                               | Minimum expectation                                                                                                                               |
+| --------------------- | -------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `description`         | Safe display HTML (`<p>`, `<ul>/<ol>`, `<li>`, `<strong>`, `<em>`, `<br>`) | Menyebut fokus peran/tanggung jawab utama dan konteks eksekusi kerja bila evidence tersedia                                                       |
+| `requirement_summary` | Ringkasan singkat safe display HTML, gaya profesional Bahasa Indonesia     | Tidak boleh diawali label tetap seperti `Kualifikasi utama:`; pertahankan poin pengalaman + kompetensi inti                                       |
+| `requirements`        | Teks requirement plain text untuk ekstraksi lanjutan                       | Factual, tanpa HTML mentah, tanpa duplikasi kalimat, tidak mengada-ada                                                                            |
+| `skills`              | Daftar skill spesifik berbasis evidence                                    | Dedupe case-insensitive, utamakan teknologi/domain eksplisit, pecah skill komposit jadi item atomic, hindari skill terlalu abstrak tanpa evidence |
 
 All four fields must avoid emoji, decorative icons, and noisy visual symbols.
 

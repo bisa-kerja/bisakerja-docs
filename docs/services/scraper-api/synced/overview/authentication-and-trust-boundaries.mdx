@@ -15,25 +15,25 @@ The scraper crosses two major trust boundaries: external job platforms into Bisa
 
 ## Boundary Matrix
 
-| Boundary | Risk | Owner | Rule |
-| --- | --- | --- | --- |
-| External source to Scraper API | Untrusted payloads, source drift, blocked requests | Scraper API | Validate and normalize before publishing |
-| Scraper API to Local Scraper DB | Raw payloads may include noisy or sensitive headers | Scraper API | Store only sanitized captures in docs/artifacts |
-| Local Scraper DB to Main Backend DB | Malformed normalized records can affect product reads | Scraper API | Enforce required fields, identity, and sync checks |
-| Main Backend DB to Backend API | User-facing API must remain stable | Backend API | Read normalized records; never expose raw source payloads |
-| Backend API to Frontend UI | User auth and ownership | Backend API | Backend owns auth, authorization, and response shaping |
+| Boundary                            | Risk                                                  | Owner       | Rule                                                      |
+| ----------------------------------- | ----------------------------------------------------- | ----------- | --------------------------------------------------------- |
+| External source to Scraper API      | Untrusted payloads, source drift, blocked requests    | Scraper API | Validate and normalize before publishing                  |
+| Scraper API to Local Scraper DB     | Raw payloads may include noisy or sensitive headers   | Scraper API | Store only sanitized captures in docs/artifacts           |
+| Local Scraper DB to Main Backend DB | Malformed normalized records can affect product reads | Scraper API | Enforce required fields, identity, and sync checks        |
+| Main Backend DB to Backend API      | User-facing API must remain stable                    | Backend API | Read normalized records; never expose raw source payloads |
+| Backend API to Frontend UI          | User auth and ownership                               | Backend API | Backend owns auth, authorization, and response shaping    |
 
 ## Authentication Model
 
-| Actor | Authentication expectation |
-| --- | --- |
-| End user | Authenticated by Backend API only |
-| Frontend UI | Sends session/token state to Backend API only |
-| Scraper API internal jobs | Use scheduler/worker trust plus internal service credentials if endpoints are exposed |
-| Scraper API operators | Use internal service credentials and restricted network/operator permissions |
-| External sources | Use source-specific public, semi-public, or configured credentials |
-| JobStreet | Requires configured authorization and session-derived request material; never hardcode in docs |
-| Glints, Kalibrr, Dealls | Browser-like headers may be required; cookies remain optional/sensitive and must be redacted |
+| Actor                     | Authentication expectation                                                                     |
+| ------------------------- | ---------------------------------------------------------------------------------------------- |
+| End user                  | Authenticated by Backend API only                                                              |
+| Frontend UI               | Sends session/token state to Backend API only                                                  |
+| Scraper API internal jobs | Use scheduler/worker trust plus internal service credentials if endpoints are exposed          |
+| Scraper API operators     | Use internal service credentials and restricted network/operator permissions                   |
+| External sources          | Use source-specific public, semi-public, or configured credentials                             |
+| JobStreet                 | Requires configured authorization and session-derived request material; never hardcode in docs |
+| Glints, Kalibrr, Dealls   | Browser-like headers may be required; cookies remain optional/sensitive and must be redacted   |
 
 ## Authorization Ownership
 

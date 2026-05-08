@@ -15,13 +15,13 @@ The scraper handles untrusted external payloads and sensitive source request mat
 
 ## Trust Boundary Summary
 
-| Boundary | Rule |
-| --- | --- |
-| External source to scraper | Treat all payloads as untrusted |
-| Scraper HTTP interface | Internal callers only |
-| Scraper raw store | Internal replay/debug only |
-| Scraper normalized data to main DB | Validate before sync |
-| Backend API to Frontend UI | Backend owns auth, authorization, and frontend-safe response shaping |
+| Boundary                           | Rule                                                                 |
+| ---------------------------------- | -------------------------------------------------------------------- |
+| External source to scraper         | Treat all payloads as untrusted                                      |
+| Scraper HTTP interface             | Internal callers only                                                |
+| Scraper raw store                  | Internal replay/debug only                                           |
+| Scraper normalized data to main DB | Validate before sync                                                 |
+| Backend API to Frontend UI         | Backend owns auth, authorization, and frontend-safe response shaping |
 
 ## Authentication And Authorization
 
@@ -50,25 +50,25 @@ Documentation may show header names and placeholders only.
 
 Validate:
 
-| Input | Required validation |
-| --- | --- |
-| Trigger body | Source slug, stage enum, limit bounds, force flag |
-| Query params | Pagination, status enum, source slug, sort allowlist |
-| Source response | Expected payload root, required identity, field type |
-| HTML text | Sanitization before staging/display/enrichment |
-| Sync payload | Required source identity, title, company, source/apply URL |
+| Input           | Required validation                                        |
+| --------------- | ---------------------------------------------------------- |
+| Trigger body    | Source slug, stage enum, limit bounds, force flag          |
+| Query params    | Pagination, status enum, source slug, sort allowlist       |
+| Source response | Expected payload root, required identity, field type       |
+| HTML text       | Sanitization before staging/display/enrichment             |
+| Sync payload    | Required source identity, title, company, source/apply URL |
 
 Validation failures use the standard response envelope.
 
 ## Rate Limits
 
-| Surface | Rule |
-| --- | --- |
-| Internal HTTP endpoints | Rate limit by caller/token/network |
-| Source requests | Per-source limits with bounded retry |
-| JobStreet auth failures | Stop source until credential refresh |
-| Kalibrr buildId failures | Refresh build id, then bounded retry |
-| Enrichment | Batch and throttle to protect downstream providers |
+| Surface                  | Rule                                               |
+| ------------------------ | -------------------------------------------------- |
+| Internal HTTP endpoints  | Rate limit by caller/token/network                 |
+| Source requests          | Per-source limits with bounded retry               |
+| JobStreet auth failures  | Stop source until credential refresh               |
+| Kalibrr buildId failures | Refresh build id, then bounded retry               |
+| Enrichment               | Batch and throttle to protect downstream providers |
 
 ## Log Redaction
 
