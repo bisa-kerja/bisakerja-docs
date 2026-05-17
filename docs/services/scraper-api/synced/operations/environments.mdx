@@ -15,12 +15,12 @@ Scraper environments differ by data safety, source credential policy, schedule b
 
 ## Matrix
 
-| Environment | Purpose | Data rule | Source access | Sync rule |
-| --- | --- | --- | --- | --- |
-| Local | Developer iteration | Disposable local data | Prefer fixtures; real source only with redacted secrets | Disabled or local-only |
-| Test | Automated validation | Isolated fixture data | Fixture/mocked only | Disabled or test DB |
-| Staging | Release validation | Non-production production-like data | Controlled real-source config | Staging main DB only |
-| Production | Daily ingestion | Production scraper/main DB | Managed secrets and rate limits | Production main DB |
+| Environment | Purpose              | Data rule                           | Source access                                           | Sync rule              |
+| ----------- | -------------------- | ----------------------------------- | ------------------------------------------------------- | ---------------------- |
+| Local       | Developer iteration  | Disposable local data               | Prefer fixtures; real source only with redacted secrets | Disabled or local-only |
+| Test        | Automated validation | Isolated fixture data               | Fixture/mocked only                                     | Disabled or test DB    |
+| Staging     | Release validation   | Non-production production-like data | Controlled real-source config                           | Staging main DB only   |
+| Production  | Daily ingestion      | Production scraper/main DB          | Managed secrets and rate limits                         | Production main DB     |
 
 ## Local
 
