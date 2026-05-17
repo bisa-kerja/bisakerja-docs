@@ -15,25 +15,25 @@ Scraper docs must show whether they are current enough for implementation and op
 
 ## Lifecycle States
 
-| State        | Meaning                                                          | Allowed use                                    |
-| ------------ | ---------------------------------------------------------------- | ---------------------------------------------- |
-| `draft`      | Written from references, not yet implementation-verified         | Planning, early implementation, pending review |
-| `active`     | Current and reviewed against implementation or accepted contract | Normal contributor and operator guidance       |
-| `deprecated` | Still available, but replaced for new work                       | Migration window or backward reference         |
-| `archived`   | Kept only for historical reference                               | Incident evidence or superseded release docs   |
+| State | Meaning | Allowed use |
+| --- | --- | --- |
+| `draft` | Written from references, not yet implementation-verified | Planning, early implementation, pending review |
+| `active` | Current and reviewed against implementation or accepted contract | Normal contributor and operator guidance |
+| `deprecated` | Still available, but replaced for new work | Migration window or backward reference |
+| `archived` | Kept only for historical reference | Incident evidence or superseded release docs |
 
 The local metadata standard currently requires `draft`, `active`, or `deprecated`. Use `archived` only when the archival page or sync target explicitly supports it.
 
 ## Review Cadence
 
-| Page type                     | Cadence                     | Trigger for immediate review                         |
-| ----------------------------- | --------------------------- | ---------------------------------------------------- |
-| Source contracts              | Every 60 days               | Source API drift, auth/header change, mapper failure |
-| Raw payload and field mapping | Every 60 days               | New raw fixture, normalized schema change            |
-| Operations runbooks           | Every 60 days               | Incident, deploy change, monitoring change           |
-| Standards and governance      | Every 90 days               | Policy or sync process change                        |
-| Architecture and data flow    | Every 90 days               | Pipeline, DB, queue, or service boundary change      |
-| Generated references          | On generation source change | Route, schema, or sync-readiness change              |
+| Page type | Cadence | Trigger for immediate review |
+| --- | --- | --- |
+| Source contracts | Every 60 days | Source API drift, auth/header change, mapper failure |
+| Raw payload and field mapping | Every 60 days | New raw fixture, normalized schema change |
+| Operations runbooks | Every 60 days | Incident, deploy change, monitoring change |
+| Standards and governance | Every 90 days | Policy or sync process change |
+| Architecture and data flow | Every 90 days | Pipeline, DB, queue, or service boundary change |
+| Generated references | On generation source change | Route, schema, or sync-readiness change |
 
 ## Freshness Rules
 
@@ -46,16 +46,17 @@ The local metadata standard currently requires `draft`, `active`, or `deprecated
 
 ## Escalation
 
-| Problem                 | First action                     | Escalation                                     |
-| ----------------------- | -------------------------------- | ---------------------------------------------- |
-| Stale source contract   | Notify `data-ingestion-owner`    | `engineering-lead` if source risk affects sync |
-| Ownerless page          | Assign owner or mark deprecated  | `platform-docs-maintainer`                     |
-| Broken incident runbook | Patch immediately                | `engineering-lead`                             |
-| Failed sync health      | Retry or rollback sync           | `platform-docs-maintainer`                     |
-| Possible secret leak    | Block publish and rotate if real | `engineering-lead`                             |
+| Problem | First action | Escalation |
+| --- | --- | --- |
+| Stale source contract | Notify `data-ingestion-owner` | `engineering-lead` if source risk affects sync |
+| Ownerless page | Assign owner or mark deprecated | `platform-docs-maintainer` |
+| Broken incident runbook | Patch immediately | `engineering-lead` |
+| Failed sync health | Retry or rollback sync | `platform-docs-maintainer` |
+| Possible secret leak | Block publish and rotate if real | `engineering-lead` |
 
 ## Related Docs
 
 - [Documentation Health Metrics](./documentation-health-metrics.mdx)
 - [Archival Strategy](./archival-strategy.mdx)
 - [Documentation Release Checklist](../operations/documentation-release-checklist.mdx)
+
