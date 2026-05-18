@@ -37,6 +37,7 @@ The Preferences module does not own:
 - Job listing filters persisted outside the user's active preference set.
 - Notification delivery infrastructure.
 - Mentoring preferences.
+- Uploaded CV files, CV metadata, or active CV selection.
 
 ## Route Prefix
 
@@ -102,23 +103,23 @@ If the frontend uses Indonesian labels, the API must still use canonical enum va
 
 ```json
 {
-	"careerStatus": "FRESH_GRADUATE",
-	"jobSeekingStatus": "IMMEDIATE",
-	"targetRoles": ["Backend Developer", "Full Stack Developer"],
-	"locations": [
-		{
-			"province": "DKI Jakarta",
-			"city": "Jakarta Selatan"
-		}
-	],
-	"workTypes": ["REMOTE", "HYBRID"],
-	"salaryExpectation": {
-		"min": 5000000,
-		"max": 10000000,
-		"currency": "IDR",
-		"period": "MONTHLY"
-	},
-	"emailNotificationsEnabled": true
+  "careerStatus": "FRESH_GRADUATE",
+  "jobSeekingStatus": "IMMEDIATE",
+  "targetRoles": ["Backend Developer", "Full Stack Developer"],
+  "locations": [
+    {
+      "province": "DKI Jakarta",
+      "city": "Jakarta Selatan"
+    }
+  ],
+  "workTypes": ["REMOTE", "HYBRID"],
+  "salaryExpectation": {
+    "min": 5000000,
+    "max": 10000000,
+    "currency": "IDR",
+    "period": "MONTHLY"
+  },
+  "emailNotificationsEnabled": true
 }
 ```
 
@@ -143,31 +144,31 @@ Validation:
 
 ```json
 {
-	"success": true,
-	"message": "Preferensi berhasil diambil",
-	"data": {
-		"id": "pref_123",
-		"careerStatus": "FRESH_GRADUATE",
-		"jobSeekingStatus": "IMMEDIATE",
-		"targetRoles": ["Backend Developer", "Full Stack Developer"],
-		"locations": [
-			{
-				"province": "DKI Jakarta",
-				"city": "Jakarta Selatan"
-			}
-		],
-		"workTypes": ["REMOTE", "HYBRID"],
-		"salaryExpectation": {
-			"min": 5000000,
-			"max": 10000000,
-			"currency": "IDR",
-			"period": "MONTHLY"
-		},
-		"emailNotificationsEnabled": true,
-		"createdAt": "2026-04-22T00:00:00.000Z",
-		"updatedAt": "2026-04-22T00:00:00.000Z"
-	},
-	"meta": null
+  "success": true,
+  "message": "Preferensi berhasil diambil",
+  "data": {
+    "id": "pref_123",
+    "careerStatus": "FRESH_GRADUATE",
+    "jobSeekingStatus": "IMMEDIATE",
+    "targetRoles": ["Backend Developer", "Full Stack Developer"],
+    "locations": [
+      {
+        "province": "DKI Jakarta",
+        "city": "Jakarta Selatan"
+      }
+    ],
+    "workTypes": ["REMOTE", "HYBRID"],
+    "salaryExpectation": {
+      "min": 5000000,
+      "max": 10000000,
+      "currency": "IDR",
+      "period": "MONTHLY"
+    },
+    "emailNotificationsEnabled": true,
+    "createdAt": "2026-04-22T00:00:00.000Z",
+    "updatedAt": "2026-04-22T00:00:00.000Z"
+  },
+  "meta": null
 }
 ```
 
@@ -243,8 +244,12 @@ Consumers must read persisted preferences from Backend API persistence, not trus
 | Preferences not found                               | 404    | `PREFERENCES_NOT_FOUND` |
 | Invalid enum value                                  | 422    | `VALIDATION_ERROR`      |
 | Empty target role list during onboarding completion | 422    | `VALIDATION_ERROR`      |
-| Invalid salary range                                | 422    | `INVALID_SALARY_RANGE`  |
+| Invalid salary range                                | 422    | `VALIDATION_ERROR`      |
 | Empty patch body                                    | 400    | `BAD_REQUEST`           |
+
+Validation detail example for salary range:
+
+- `salaryExpectation.max`: `Ekspektasi gaji maksimum harus lebih besar atau sama dengan minimum`
 
 ## Observability
 
