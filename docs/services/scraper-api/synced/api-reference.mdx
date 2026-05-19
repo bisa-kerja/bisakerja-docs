@@ -15,12 +15,12 @@ This page defines scraper-owned interfaces. They are internal operations surface
 
 ## Interface Boundary
 
-| Consumer | Allowed use | Not allowed |
-| --- | --- | --- |
-| Scheduler/worker | Trigger configured ingestion stages | Send user identity or frontend tokens |
-| Scraper operator | Check run status and source health | Read raw secrets or unsanitized request headers |
-| Backend API | Consume normalized job records and optional freshness summary | Read raw source payloads or source credentials |
-| Frontend UI | None in MVP | Direct Scraper API calls |
+| Consumer         | Allowed use                                                   | Not allowed                                     |
+| ---------------- | ------------------------------------------------------------- | ----------------------------------------------- |
+| Scheduler/worker | Trigger configured ingestion stages                           | Send user identity or frontend tokens           |
+| Scraper operator | Check run status and source health                            | Read raw secrets or unsanitized request headers |
+| Backend API      | Consume normalized job records and optional freshness summary | Read raw source payloads or source credentials  |
+| Frontend UI      | None in MVP                                                   | Direct Scraper API calls                        |
 
 ## Base Path And Versioning
 
@@ -39,17 +39,17 @@ Rules:
 
 ## Endpoint Inventory
 
-| Method | Path | Auth class | Purpose | Status |
-| --- | --- | --- | --- | --- |
-| `GET` | `/health/live` | Infrastructure/public | Process liveness | Available |
-| `GET` | `/health/ready` | Infrastructure-restricted | DB/config readiness | Available |
-| `POST` | `/api/v1/runs` | Internal service credential | Trigger an ingestion run | Planned |
-| `GET` | `/api/v1/runs` | Internal service credential | List ingestion runs | Planned |
-| `GET` | `/api/v1/runs/:runId` | Internal service credential | Inspect one run | Planned |
-| `GET` | `/api/v1/sources` | Internal service credential | Source freshness/config summary | Planned |
-| `GET` | `/api/v1/jobs` | Internal service credential | List normalized local job records | Available |
-| `GET` | `/api/v1/jobs/:jobId` | Internal service credential | Inspect one normalized local job record | Available |
-| `GET` | `/api/v1/jobs/staging` | Internal service credential | Debug normalized staging records | Optional |
+| Method | Path                   | Auth class                  | Purpose                                 | Status    |
+| ------ | ---------------------- | --------------------------- | --------------------------------------- | --------- |
+| `GET`  | `/health/live`         | Infrastructure/public       | Process liveness                        | Available |
+| `GET`  | `/health/ready`        | Infrastructure-restricted   | DB/config readiness                     | Available |
+| `POST` | `/api/v1/runs`         | Internal service credential | Trigger an ingestion run                | Planned   |
+| `GET`  | `/api/v1/runs`         | Internal service credential | List ingestion runs                     | Planned   |
+| `GET`  | `/api/v1/runs/:runId`  | Internal service credential | Inspect one run                         | Planned   |
+| `GET`  | `/api/v1/sources`      | Internal service credential | Source freshness/config summary         | Planned   |
+| `GET`  | `/api/v1/jobs`         | Internal service credential | List normalized local job records       | Available |
+| `GET`  | `/api/v1/jobs/:jobId`  | Internal service credential | Inspect one normalized local job record | Available |
+| `GET`  | `/api/v1/jobs/staging` | Internal service credential | Debug normalized staging records        | Optional  |
 
 The stable product job search API remains owned by Backend API.
 
@@ -68,55 +68,55 @@ The CLI output is safe operational JSON. It does not expose service tokens, bear
 
 Supported query fields:
 
-| Query | Default | Constraint |
-| --- | --- | --- |
-| `page` | `1` | Minimum `1` |
-| `limit` | `20` | Minimum `1`, maximum `100` |
-| `sourcePlatform` | none | `dealls`, `glints`, `jobstreet`, or `kalibrr` |
-| `freshness` | none | `active`, `inactive`, `expired`, or `unknown` |
-| `location` | none | Case-insensitive local payload search |
-| `keyword` | none | Case-insensitive title, company, and local payload search |
+| Query            | Default | Constraint                                                |
+| ---------------- | ------- | --------------------------------------------------------- |
+| `page`           | `1`     | Minimum `1`                                               |
+| `limit`          | `20`    | Minimum `1`, maximum `100`                                |
+| `sourcePlatform` | none    | `dealls`, `glints`, `jobstreet`, or `kalibrr`             |
+| `freshness`      | none    | `active`, `inactive`, `expired`, or `unknown`             |
+| `location`       | none    | Case-insensitive local payload search                     |
+| `keyword`        | none    | Case-insensitive title, company, and local payload search |
 
 Successful list response:
 
 ```json
 {
-  "success": true,
-  "message": "Jobs retrieved",
-  "data": [
-    {
-      "id": "job_123",
-      "sourcePlatform": "dealls",
-      "externalJobId": "123",
-      "title": "Backend Engineer",
-      "companyName": "Example Company",
-      "sourceUrl": "https://example.com/jobs/123",
-      "applyUrl": "https://example.com/jobs/123/apply",
-      "status": "active",
-      "lastSeenAt": "2026-05-02T03:00:00+00:00",
-      "postedAt": null,
-      "payload": {
-        "title": "Backend Engineer"
-      }
-    }
-  ],
-  "meta": {
-    "pagination": {
-      "page": 1,
-      "limit": 20,
-      "total": 1,
-      "totalPages": 1,
-      "hasNextPage": false,
-      "hasPrevPage": false
-    },
-    "filters": {
-      "sourcePlatform": "dealls",
-      "freshness": "active",
-      "location": null,
-      "keyword": null
-    },
-    "sort": "last_seen_desc"
-  }
+	"success": true,
+	"message": "Jobs retrieved",
+	"data": [
+		{
+			"id": "job_123",
+			"sourcePlatform": "dealls",
+			"externalJobId": "123",
+			"title": "Backend Engineer",
+			"companyName": "Example Company",
+			"sourceUrl": "https://example.com/jobs/123",
+			"applyUrl": "https://example.com/jobs/123/apply",
+			"status": "active",
+			"lastSeenAt": "2026-05-02T03:00:00+00:00",
+			"postedAt": null,
+			"payload": {
+				"title": "Backend Engineer"
+			}
+		}
+	],
+	"meta": {
+		"pagination": {
+			"page": 1,
+			"limit": 20,
+			"total": 1,
+			"totalPages": 1,
+			"hasNextPage": false,
+			"hasPrevPage": false
+		},
+		"filters": {
+			"sourcePlatform": "dealls",
+			"freshness": "active",
+			"location": null,
+			"keyword": null
+		},
+		"sort": "last_seen_desc"
+	}
 }
 ```
 
@@ -130,12 +130,12 @@ Successful response:
 
 ```json
 {
-  "success": true,
-  "message": "Service is live",
-  "data": {
-    "status": "live"
-  },
-  "meta": null
+	"success": true,
+	"message": "Service is live",
+	"data": {
+		"status": "live"
+	},
+	"meta": null
 }
 ```
 
@@ -145,12 +145,12 @@ Successful response:
 
 ```json
 {
-  "success": true,
-  "message": "Service is ready",
-  "data": {
-    "status": "ready"
-  },
-  "meta": null
+	"success": true,
+	"message": "Service is ready",
+	"data": {
+		"status": "ready"
+	},
+	"meta": null
 }
 ```
 
@@ -158,16 +158,16 @@ Unavailable dependency response:
 
 ```json
 {
-  "success": false,
-  "message": "Service dependency is unavailable",
-  "data": null,
-  "error": {
-    "code": "SERVICE_UNAVAILABLE",
-    "details": {
-      "dependency": "scraper-db"
-    },
-    "requestId": "req_123"
-  }
+	"success": false,
+	"message": "Service dependency is unavailable",
+	"data": null,
+	"error": {
+		"code": "SERVICE_UNAVAILABLE",
+		"details": {
+			"dependency": "scraper-db"
+		},
+		"requestId": "req_123"
+	}
 }
 ```
 
@@ -181,12 +181,12 @@ Implementation status: planned only. The current app exposes health and internal
 
 Allowed body fields:
 
-| Field | Type | Required | Rule |
-| --- | --- | --- | --- |
-| `sourcePlatform` | string | No | One of `dealls`, `glints`, `jobstreet`, `kalibrr`; omitted means all configured sources |
-| `stage` | string | No | `scrape`, `normalize`, `enrich`, `sync`, or `full`; default should be explicit in config |
-| `limit` | number | No | Bounded positive integer for controlled manual runs |
-| `force` | boolean | No | Requires operator permission; never default true |
+| Field            | Type    | Required | Rule                                                                                     |
+| ---------------- | ------- | -------- | ---------------------------------------------------------------------------------------- |
+| `sourcePlatform` | string  | No       | One of `dealls`, `glints`, `jobstreet`, `kalibrr`; omitted means all configured sources  |
+| `stage`          | string  | No       | `scrape`, `normalize`, `enrich`, `sync`, or `full`; default should be explicit in config |
+| `limit`          | number  | No       | Bounded positive integer for controlled manual runs                                      |
+| `force`          | boolean | No       | Requires operator permission; never default true                                         |
 
 Success returns an ingestion run id and accepted stage plan.
 
@@ -194,49 +194,49 @@ Success returns an ingestion run id and accepted stage plan.
 
 Run status responses should expose safe operational state only.
 
-| Field | Meaning |
-| --- | --- |
-| `id` | Internal ingestion run id |
-| `sourcePlatform` | Source slug or `all` |
-| `stage` | Current stage |
-| `status` | `QUEUED`, `RUNNING`, `SUCCEEDED`, `PARTIAL`, `FAILED`, `CANCELLED` |
-| `counts` | Safe totals such as fetched, normalized, quarantined, synced |
-| `startedAt`, `finishedAt` | ISO timestamps |
-| `errorSummary` | Sanitized error class/message, no raw payload |
+| Field                     | Meaning                                                            |
+| ------------------------- | ------------------------------------------------------------------ |
+| `id`                      | Internal ingestion run id                                          |
+| `sourcePlatform`          | Source slug or `all`                                               |
+| `stage`                   | Current stage                                                      |
+| `status`                  | `QUEUED`, `RUNNING`, `SUCCEEDED`, `PARTIAL`, `FAILED`, `CANCELLED` |
+| `counts`                  | Safe totals such as fetched, normalized, quarantined, synced       |
+| `startedAt`, `finishedAt` | ISO timestamps                                                     |
+| `errorSummary`            | Sanitized error class/message, no raw payload                      |
 
 ## Query Semantics
 
 List endpoints use page pagination.
 
-| Query | Default | Constraint |
-| --- | --- | --- |
-| `page` | `1` | Minimum `1` |
-| `limit` | `20` | Minimum `1`, maximum `100` |
-| `sourcePlatform` | none | Source slug allowlist |
-| `status` | none | Endpoint-specific enum allowlist |
-| `sort` | `created_desc` | Stable documented values only |
+| Query            | Default        | Constraint                       |
+| ---------------- | -------------- | -------------------------------- |
+| `page`           | `1`            | Minimum `1`                      |
+| `limit`          | `20`           | Minimum `1`, maximum `100`       |
+| `sourcePlatform` | none           | Source slug allowlist            |
+| `status`         | none           | Endpoint-specific enum allowlist |
+| `sort`           | `created_desc` | Stable documented values only    |
 
 Unsupported filters or sort values return `422 VALIDATION_ERROR`.
 
 ## Field Policy
 
-| Field class | Rule |
-| --- | --- |
-| Canonical fields | Prefer structured fields such as `salaryMin`, `salaryMax`, `postedAt`, `lastSeenAt`, `employmentType` |
-| UI labels | Keep `salaryLabel`, relative posted labels, and source tags as derived/display-only fields |
-| Raw source content | Internal only; never expose through public responses |
-| HTML content | Store raw only internally; expose sanitized text or explicitly allowed safe HTML |
-| Noise fields | Drop tracking, experiment, UI state, session, and account-specific fields |
+| Field class        | Rule                                                                                                  |
+| ------------------ | ----------------------------------------------------------------------------------------------------- |
+| Canonical fields   | Prefer structured fields such as `salaryMin`, `salaryMax`, `postedAt`, `lastSeenAt`, `employmentType` |
+| UI labels          | Keep `salaryLabel`, relative posted labels, and source tags as derived/display-only fields            |
+| Raw source content | Internal only; never expose through public responses                                                  |
+| HTML content       | Store raw only internally; expose sanitized text or explicitly allowed safe HTML                      |
+| Noise fields       | Drop tracking, experiment, UI state, session, and account-specific fields                             |
 
 ## Generated Reference Strategy
 
 Generated artifacts should live under `docs/generated/`.
 
-| Artifact | Purpose | Rule |
-| --- | --- | --- |
-| `docs/generated/index.md` | Human-readable generated reference entry | Always present |
-| `docs/generated/routes.md` | Route inventory from FastAPI app when implementation exists | Generated, not hand-maintained |
-| `docs/generated/openapi.json` | Machine-readable OpenAPI when implementation exists | Generated from app source |
+| Artifact                      | Purpose                                                     | Rule                           |
+| ----------------------------- | ----------------------------------------------------------- | ------------------------------ |
+| `docs/generated/index.md`     | Human-readable generated reference entry                    | Always present                 |
+| `docs/generated/routes.md`    | Route inventory from FastAPI app when implementation exists | Generated, not hand-maintained |
+| `docs/generated/openapi.json` | Machine-readable OpenAPI when implementation exists         | Generated from app source      |
 
 Generated files must be labeled as generated and regenerated after route/schema changes.
 
