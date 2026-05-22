@@ -215,7 +215,8 @@ Compose-only variables:
 - `APP_IMAGE` overrides the image tag or digest to pull
 - `APP_BIND_ADDRESS` controls the host bind address for the backend port
 - `APP_PORT` overrides the published backend port
-- `PORT` controls the HTTP port inside the app container and must match the internal Compose target and healthcheck
+- `PORT` controls the HTTP port inside the app container and must match the internal Compose target and app HTTP healthcheck
+- the worker uses a process healthcheck and must not reuse the app HTTP endpoint healthcheck because the worker does not serve HTTP traffic
 
 The current rollout still targets staging first, but it intentionally uses the same production-style Compose topology that will later be reused when the deployment branch changes to `main`.
 
@@ -316,7 +317,7 @@ Recovery behavior:
 
 Operational checks:
 
-- `docker compose ps worker` should show a running worker service.
+- `docker compose ps worker` should show a running and healthy worker service.
 - Worker logs should include `Async worker started` and periodic recovery summaries.
 - `async_job_outbox` should not contain old `PENDING`, `QUEUED`, or `PROCESSING` rows beyond the configured recovery and stale thresholds.
 - `DEAD_LETTER` rows for auth email jobs require operator review of `last_error_code` and `last_error_message`.
