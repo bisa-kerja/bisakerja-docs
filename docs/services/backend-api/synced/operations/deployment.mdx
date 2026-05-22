@@ -216,7 +216,7 @@ Compose-only variables:
 - `APP_BIND_ADDRESS` controls the host bind address for the backend port
 - `APP_PORT` overrides the published backend port
 - `PORT` controls the HTTP port inside the app container and must match the internal Compose target and app HTTP healthcheck
-- the worker uses a process healthcheck and must not reuse the app HTTP endpoint healthcheck because the worker does not serve HTTP traffic
+- the worker uses a process healthcheck based on the running Bun worker command and must not reuse the app HTTP endpoint healthcheck because the worker does not serve HTTP traffic
 
 The current rollout still targets staging first, but it intentionally uses the same production-style Compose topology that will later be reused when the deployment branch changes to `main`.
 
