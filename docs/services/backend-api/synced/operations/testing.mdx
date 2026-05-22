@@ -223,8 +223,8 @@ Current deployment workflow expectations:
 - SSH into the target VPS with the configured VPS private key through one deploy action step
 - write the runtime `.env.production` file from GitHub environment secrets
 - reject rollout when the runtime env file does not declare `APP_ENV=staging` for the current staging target
-- authenticate the VPS to GHCR, pull the latest image, run `prisma migrate deploy`, and start the app through app-only `docker compose`
-- verify `GET /health/live` and `GET /health/ready` from the VPS after deployment
+- authenticate the VPS to GHCR, pull the runtime service images, run `prisma migrate deploy`, and start `redis`, `app`, and `worker` through `docker compose`
+- verify `GET /health/live` and `GET /health/ready` from the VPS after deployment, then confirm `worker` is running and logs `Async worker started`
 
 When the staging rollout is considered stable, the deploy trigger can be moved from `develop` to `main` without introducing a second deployment topology.
 
@@ -299,23 +299,23 @@ import { testConfig } from "../../helpers/config";
 import { injectRoute } from "../../helpers/route";
 
 describe("health routes", () => {
-	test("returns liveness envelope", async () => {
-		const response = await injectRoute(createApp(testConfig()), {
-			url: "/health/live",
-		});
+  test("returns liveness envelope", async () => {
+    const response = await injectRoute(createApp(testConfig()), {
+      url: "/health/live"
+    });
 
-		expect(response.status).toBe(200);
-		expect(response.body).toEqual({
-			success: true,
-			message: "Layanan aktif",
-			data: {
-				service: "bisakerja-api",
-				status: "live",
-				env: "test",
-			},
-			meta: null,
-		});
-	});
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({
+      success: true,
+      message: "Layanan aktif",
+      data: {
+        service: "bisakerja-api",
+        status: "live",
+        env: "test"
+      },
+      meta: null
+    });
+  });
 });
 ```
 
@@ -327,17 +327,17 @@ import { describe, expect, test } from "bun:test";
 import { registerSchema } from "@/modules/auth/auth.schema";
 
 describe("register schema", () => {
-	test("rejects mismatched password confirmation", () => {
-		const result = registerSchema.safeParse({
-			username: "salman",
-			email: "salman@example.com",
-			phoneNumber: "+6281234567890",
-			password: "StrongPassword123!",
-			confirmPassword: "DifferentPassword123!",
-		});
+  test("rejects mismatched password confirmation", () => {
+    const result = registerSchema.safeParse({
+      username: "salman",
+      email: "salman@example.com",
+      phoneNumber: "+6281234567890",
+      password: "StrongPassword123!",
+      confirmPassword: "DifferentPassword123!"
+    });
 
-		expect(result.success).toBe(false);
-	});
+    expect(result.success).toBe(false);
+  });
 });
 ```
 
