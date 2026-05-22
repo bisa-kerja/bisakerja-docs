@@ -8,7 +8,7 @@ reviewers:
 doc_status: draft
 source_repo: backend-api
 source_path: docs/modules/preferences.md
-last_reviewed: 2026-05-12
+last_reviewed: 2026-05-22
 ---
 
 # Preferences Module
@@ -103,23 +103,23 @@ If the frontend uses Indonesian labels, the API must still use canonical enum va
 
 ```json
 {
-	"careerStatus": "FRESH_GRADUATE",
-	"jobSeekingStatus": "IMMEDIATE",
-	"targetRoles": ["Backend Developer", "Full Stack Developer"],
-	"locations": [
-		{
-			"province": "DKI Jakarta",
-			"city": "Jakarta Selatan"
-		}
-	],
-	"workTypes": ["REMOTE", "HYBRID"],
-	"salaryExpectation": {
-		"min": 5000000,
-		"max": 10000000,
-		"currency": "IDR",
-		"period": "MONTHLY"
-	},
-	"emailNotificationsEnabled": true
+  "careerStatus": "FRESH_GRADUATE",
+  "jobSeekingStatus": "IMMEDIATE",
+  "targetRoles": ["Backend Developer", "Full Stack Developer"],
+  "locations": [
+    {
+      "province": "DKI Jakarta",
+      "city": "Jakarta Selatan"
+    }
+  ],
+  "workTypes": ["REMOTE", "HYBRID"],
+  "salaryExpectation": {
+    "min": 5000000,
+    "max": 10000000,
+    "currency": "IDR",
+    "period": "MONTHLY"
+  },
+  "emailNotificationsEnabled": true
 }
 ```
 
@@ -142,33 +142,37 @@ Validation:
 
 ## Response Schema
 
+`GET /api/v1/me/preferences` returns message `Preferensi berhasil diambil`.
+`PUT /api/v1/me/preferences` returns message `Preferensi berhasil disimpan`.
+`PATCH /api/v1/me/preferences` returns message `Preferensi berhasil diperbarui`.
+
 ```json
 {
-	"success": true,
-	"message": "Preferensi berhasil diambil",
-	"data": {
-		"id": "pref_123",
-		"careerStatus": "FRESH_GRADUATE",
-		"jobSeekingStatus": "IMMEDIATE",
-		"targetRoles": ["Backend Developer", "Full Stack Developer"],
-		"locations": [
-			{
-				"province": "DKI Jakarta",
-				"city": "Jakarta Selatan"
-			}
-		],
-		"workTypes": ["REMOTE", "HYBRID"],
-		"salaryExpectation": {
-			"min": 5000000,
-			"max": 10000000,
-			"currency": "IDR",
-			"period": "MONTHLY"
-		},
-		"emailNotificationsEnabled": true,
-		"createdAt": "2026-04-22T00:00:00.000Z",
-		"updatedAt": "2026-04-22T00:00:00.000Z"
-	},
-	"meta": null
+  "success": true,
+  "message": "Preferensi berhasil diambil",
+  "data": {
+    "id": "pref_123",
+    "careerStatus": "FRESH_GRADUATE",
+    "jobSeekingStatus": "IMMEDIATE",
+    "targetRoles": ["Backend Developer", "Full Stack Developer"],
+    "locations": [
+      {
+        "province": "DKI Jakarta",
+        "city": "Jakarta Selatan"
+      }
+    ],
+    "workTypes": ["REMOTE", "HYBRID"],
+    "salaryExpectation": {
+      "min": 5000000,
+      "max": 10000000,
+      "currency": "IDR",
+      "period": "MONTHLY"
+    },
+    "emailNotificationsEnabled": true,
+    "createdAt": "2026-04-22T00:00:00.000Z",
+    "updatedAt": "2026-04-22T00:00:00.000Z"
+  },
+  "meta": null
 }
 ```
 
