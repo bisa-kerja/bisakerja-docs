@@ -19,23 +19,23 @@ The first queue backend is the scraper database table `stage_jobs`. This avoids 
 
 ## Job Types
 
-| Job type         | Purpose                                                              |
-| ---------------- | -------------------------------------------------------------------- |
-| `scrape-source`  | Fetch source records for one platform or source window               |
-| `normalize-raw`  | Transform stored raw records into normalized jobs                    |
-| `enrich-batch`   | Enrich a batch of normalized jobs with skills and requirements       |
-| `sync-batch`     | Send a chunk of eligible records to the Backend API handoff path     |
+| Job type | Purpose |
+| --- | --- |
+| `scrape-source` | Fetch source records for one platform or source window |
+| `normalize-raw` | Transform stored raw records into normalized jobs |
+| `enrich-batch` | Enrich a batch of normalized jobs with skills and requirements |
+| `sync-batch` | Send a chunk of eligible records to the Backend API handoff path |
 | `notify-handoff` | Prepare backend-owned recommendation or notification follow-up input |
 
 ## State Model
 
-| Status        | Meaning                                            | Next state                              |
-| ------------- | -------------------------------------------------- | --------------------------------------- |
-| `pending`     | Available for claim when `available_at` is reached | `running`                               |
-| `running`     | Claimed by a worker                                | `completed`, `failed`, or `dead-letter` |
-| `completed`   | Handler completed successfully                     | Terminal                                |
-| `failed`      | Handler failed but attempts remain                 | `running` after `available_at`          |
-| `dead-letter` | Attempts are exhausted                             | Manual review                           |
+| Status | Meaning | Next state |
+| --- | --- | --- |
+| `pending` | Available for claim when `available_at` is reached | `running` |
+| `running` | Claimed by a worker | `completed`, `failed`, or `dead-letter` |
+| `completed` | Handler completed successfully | Terminal |
+| `failed` | Handler failed but attempts remain | `running` after `available_at` |
+| `dead-letter` | Attempts are exhausted | Manual review |
 
 ## Retry Policy
 
