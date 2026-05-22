@@ -175,18 +175,18 @@ Successful readiness response:
 
 ```json
 {
-  "success": true,
-  "message": "Layanan siap",
-  "data": {
-    "service": "bisakerja-api",
-    "status": "ready",
-    "env": "staging",
-    "dependencies": {
-      "postgresql": "healthy",
-      "redis": "healthy"
-    }
-  },
-  "meta": null
+	"success": true,
+	"message": "Layanan siap",
+	"data": {
+		"service": "bisakerja-api",
+		"status": "ready",
+		"env": "staging",
+		"dependencies": {
+			"postgresql": "healthy",
+			"redis": "healthy"
+		}
+	},
+	"meta": null
 }
 ```
 
@@ -194,19 +194,19 @@ Readiness failure response:
 
 ```json
 {
-  "success": false,
-  "message": "Layanan belum siap",
-  "data": null,
-  "error": {
-    "code": "SERVICE_UNAVAILABLE",
-    "details": {
-      "dependencies": {
-        "postgresql": "unhealthy",
-        "redis": "healthy"
-      }
-    },
-    "requestId": "req_123"
-  }
+	"success": false,
+	"message": "Layanan belum siap",
+	"data": null,
+	"error": {
+		"code": "SERVICE_UNAVAILABLE",
+		"details": {
+			"dependencies": {
+				"postgresql": "unhealthy",
+				"redis": "healthy"
+			}
+		},
+		"requestId": "req_123"
+	}
 }
 ```
 
