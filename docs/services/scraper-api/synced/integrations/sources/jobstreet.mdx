@@ -13,12 +13,12 @@ last_reviewed: 2026-05-01
 
 ## Request
 
-| Item | Value |
-| --- | --- |
-| Endpoint | `https://id.jobstreet.com/graphql` |
-| Operation | `JobSearchV6` |
-| Method | `POST` |
-| Auth | Bearer token required |
+| Item             | Value                                            |
+| ---------------- | ------------------------------------------------ |
+| Endpoint         | `https://id.jobstreet.com/graphql`               |
+| Operation        | `JobSearchV6`                                    |
+| Method           | `POST`                                           |
+| Auth             | Bearer token required                            |
 | Required posture | Configured bearer auth plus browser-like headers |
 
 Sanitized headers:
@@ -35,31 +35,31 @@ Session cookies and SEEK session/visitor ids are sensitive and must be redacted.
 
 ## Coverage
 
-| Capability | Status |
-| --- | --- |
-| List | Available through `jobSearchV6.data` |
-| Detail | Available through `jobDetails.job` |
-| Pagination | `page`, `pageSize`, `totalCount` |
-| Primary identity | job `id` |
+| Capability       | Status                               |
+| ---------------- | ------------------------------------ |
+| List             | Available through `jobSearchV6.data` |
+| Detail           | Available through `jobDetails.job`   |
+| Pagination       | `page`, `pageSize`, `totalCount`     |
+| Primary identity | job `id`                             |
 
 ## Field Mapping
 
-| Source field | Normalized field | Rule |
-| --- | --- | --- |
-| `id` | `externalJobId` | Required |
-| `title` | `title` | Required |
-| `teaser` | `description` candidate | Sanitize |
-| `companyName` | `company.name` | Required fallback text |
-| `branding.serpLogoUrl` | `company.logoUrl` | Optional |
-| `locations[].label` | `location.display` | Preserve |
-| `salaryLabel` | `salary.display` | Empty string becomes `null`; parse numeric only when reliable |
-| `listingDate.dateTimeUtc` | `postedAt` | Prefer over relative label |
-| `listingDate.label` | `postedLabel` | Display-only |
-| `classifications[]` | `category` | Optional |
-| `workTypes[]` | `employmentType` | Map text |
-| `workArrangements.displayText` | `workType` | Nullable |
-| `bulletPoints[]` | `requirements` candidate | Sanitize |
-| `tags[]` | optional display metadata | Do not treat as canonical status |
+| Source field                   | Normalized field          | Rule                                                          |
+| ------------------------------ | ------------------------- | ------------------------------------------------------------- |
+| `id`                           | `externalJobId`           | Required                                                      |
+| `title`                        | `title`                   | Required                                                      |
+| `teaser`                       | `description` candidate   | Sanitize                                                      |
+| `companyName`                  | `company.name`            | Required fallback text                                        |
+| `branding.serpLogoUrl`         | `company.logoUrl`         | Optional                                                      |
+| `locations[].label`            | `location.display`        | Preserve                                                      |
+| `salaryLabel`                  | `salary.display`          | Empty string becomes `null`; parse numeric only when reliable |
+| `listingDate.dateTimeUtc`      | `postedAt`                | Prefer over relative label                                    |
+| `listingDate.label`            | `postedLabel`             | Display-only                                                  |
+| `classifications[]`            | `category`                | Optional                                                      |
+| `workTypes[]`                  | `employmentType`          | Map text                                                      |
+| `workArrangements.displayText` | `workType`                | Nullable                                                      |
+| `bulletPoints[]`               | `requirements` candidate  | Sanitize                                                      |
+| `tags[]`                       | optional display metadata | Do not treat as canonical status                              |
 
 ## Detail Handling
 

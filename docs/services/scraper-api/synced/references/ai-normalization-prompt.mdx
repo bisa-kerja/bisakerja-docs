@@ -79,12 +79,12 @@ The normalization system prompt enforces:
 
 Expected content structure is explicit so output stays consistent across sources.
 
-| Field                 | Target shape                                                               | Minimum expectation                                                                                                                               |
-| --------------------- | -------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `description`         | Safe display HTML (`<p>`, `<ul>/<ol>`, `<li>`, `<strong>`, `<em>`, `<br>`) | Mentions role focus/main responsibilities and execution context when evidence exists, using `AI_OUTPUT_LANGUAGE`                                  |
-| `requirement_summary` | Short safe-display summary in professional style                           | Must not start with fixed labels such as `Kualifikasi utama:` or `Requirements:`; keep experience and core competency points in `AI_OUTPUT_LANGUAGE`                 |
-| `requirements`        | Plain text requirement body for downstream extraction                      | Factual, no raw HTML, no duplicate sentences, no unsupported claims, generated in `AI_OUTPUT_LANGUAGE`                                            |
-| `skills`              | Evidence-based specific skill list                                         | Dedupe case-insensitive, keep technology/tool names source-faithful, split composite skills into atomic items, avoid abstract low-evidence skills |
+| Field                 | Target shape                                                               | Minimum expectation                                                                                                                                  |
+| --------------------- | -------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `description`         | Safe display HTML (`<p>`, `<ul>/<ol>`, `<li>`, `<strong>`, `<em>`, `<br>`) | Mentions role focus/main responsibilities and execution context when evidence exists, using `AI_OUTPUT_LANGUAGE`                                     |
+| `requirement_summary` | Short safe-display summary in professional style                           | Must not start with fixed labels such as `Kualifikasi utama:` or `Requirements:`; keep experience and core competency points in `AI_OUTPUT_LANGUAGE` |
+| `requirements`        | Plain text requirement body for downstream extraction                      | Factual, no raw HTML, no duplicate sentences, no unsupported claims, generated in `AI_OUTPUT_LANGUAGE`                                               |
+| `skills`              | Evidence-based specific skill list                                         | Dedupe case-insensitive, keep technology/tool names source-faithful, split composite skills into atomic items, avoid abstract low-evidence skills    |
 
 All four fields must avoid emoji, decorative icons, and noisy visual symbols.
 
@@ -100,14 +100,16 @@ AI output is accepted only when:
 4. Default normalization pass succeeds:
    - `external_apply_url` fallback is resolved.
    - salary values are normalized using shared salary parser.
-  - `description` is converted to sanitized semantic display HTML.
-  - `requirements` stays plain text for structured requirement extraction.
-   - work type defaults to `onsite` when unknown.
-   - employment type defaults to `full_time` when unknown.
-   - experience level uses deterministic inference and safe fallback.
-   - location display/city/region use open-world resolver policy (no static city whitelist).
-   - province/city finalization is AI-led from source evidence and geographic reasoning with uncertainty fallback to `null`.
-   - when salary numeric evidence exists, salary display is finalized as non-placeholder presentation text for downstream sync.
+
+- `description` is converted to sanitized semantic display HTML.
+- `requirements` stays plain text for structured requirement extraction.
+- work type defaults to `onsite` when unknown.
+- employment type defaults to `full_time` when unknown.
+- experience level uses deterministic inference and safe fallback.
+- location display/city/region use open-world resolver policy (no static city whitelist).
+- province/city finalization is AI-led from source evidence and geographic reasoning with uncertainty fallback to `null`.
+- when salary numeric evidence exists, salary display is finalized as non-placeholder presentation text for downstream sync.
+
 5. Source policy checks pass:
    - Glints list payloads without detail evidence must produce transparent source-limited description summary.
 
