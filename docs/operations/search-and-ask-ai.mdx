@@ -1,0 +1,153 @@
+---
+title: Search and Ask AI
+sidebar_position: 5
+description: Algolia DocSearch and Agent Studio Ask AI setup, local configuration, Netlify deployment steps, and troubleshooting for Bisakerja Docs.
+owner: platform-docs-maintainer
+reviewers:
+  - engineering-lead
+doc_status: active
+last_reviewed: 2026-05-22
+---
+
+# Search and Ask AI
+
+This page defines how search is wired in Bisakerja Docs through Algolia DocSearch and Agent Studio Ask AI.
+
+## Implementation Summary
+
+This repository uses Algolia's recommended DocSearch Docusaurus adapter for search and Agent Studio-powered Ask AI.
+
+The adapter is registered through `@docsearch/docusaurus-adapter`, and search is configured under `themeConfig.docsearch` in `docusaurus.config.ts`. Do not add a separate `themeConfig.algolia` block because the adapter treats `docsearch` as the canonical key and rejects duplicate search config sources.
+
+The search UI is enabled only when all three required values exist in `.env`:
+
+- `DOCSEARCH_APP_ID`
+- `DOCSEARCH_API_KEY`
+- `DOCSEARCH_INDEX_NAME`
+
+If any required value is missing, the site still builds normally and the search bar stays hidden.
+
+The DocSearch adapter plugin is registered only when these values are present. This keeps CI and preview builds working even when search credentials are not injected.
+
+Ask AI is enabled on top of DocSearch when this optional value is also present:
+
+- `DOCSEARCH_ASK_AI_ASSISTANT_ID`
+
+Suggested questions stay disabled by default. Enable them only after Algolia has created the managed suggested-questions index:
+
+- `DOCSEARCH_ASK_AI_SUGGESTED_QUESTIONS=true`
+
+## Local Setup
+
+Copy env example:
+
+```bash
+cp .env.example .env
+```
+
+Use this shape in `.env`:
+
+```dotenv
+DOCSEARCH_APP_ID=YOUR_APP_ID
+DOCSEARCH_API_KEY=YOUR_SEARCH_API_KEY
+DOCSEARCH_INDEX_NAME=YOUR_INDEX_NAME
+DOCSEARCH_ASK_AI_ASSISTANT_ID=YOUR_ALGOLIA_ASK_AI_ASSISTANT_ID
+DOCSEARCH_ASK_AI_SUGGESTED_QUESTIONS=false
+```
+
+Start dev server:
+
+```bash
+bun run start
+```
+
+Build production output:
+
+```bash
+bun run build
+```
+
+## Netlify Setup
+
+Local development reads values from `.env`.
+
+For Netlify, configure same values in site dashboard:
+
+1. Open site dashboard.
+2. Go to `Site configuration` -> `Environment variables`.
+3. Add `DOCSEARCH_APP_ID`, `DOCSEARCH_API_KEY`, `DOCSEARCH_INDEX_NAME`.
+4. Add `DOCSEARCH_ASK_AI_ASSISTANT_ID` if Ask AI enabled.
+5. Trigger fresh deploy.
+
+## Ask AI Setup
+
+Ask AI uses Agent Studio and same DocSearch index when `DOCSEARCH_ASK_AI_ASSISTANT_ID` is configured.
+
+`docusaurus.config.ts` passes assistant ID, app ID, search API key, and index name through `themeConfig.docsearch.askAi`. Config also sets `agentStudio: true` and enables DocSearch side panel so chat requests use Agent Studio backend instead of legacy Ask AI backend.
+
+Before enabling in production:
+
+1. Confirm DocSearch index has crawled successfully.
+2. Create or connect Agent Studio assistant for that index in Algolia.
+3. Store assistant ID in `DOCSEARCH_ASK_AI_ASSISTANT_ID`.
+4. Trigger fresh deployment.
+
+## Ask AI Suggested Questions
+
+Keep `DOCSEARCH_ASK_AI_SUGGESTED_QUESTIONS=false` until suggested questions exist in Algolia.
+
+When enabled too early, browser can show:
+
+```text
+Index algolia_ask_ai_suggested_questions does not exist
+```
+
+Enable safely:
+
+1. Open Algolia dashboard.
+2. Go to `Data Sources` -> `Ask AI`.
+3. Open assistant used by this site.
+4. Add suggested questions during setup or from assistant analytics.
+5. Confirm `algolia_ask_ai_suggested_questions` index exists.
+6. Set `DOCSEARCH_ASK_AI_SUGGESTED_QUESTIONS=true`.
+7. Restart dev server or trigger fresh Netlify deploy.
+
+## Ask AI Troubleshooting
+
+If Ask AI shows `AI-201 - Bad input`, frontend request reached Algolia, but Algolia could not match request to valid Agent Studio resource.
+
+Check these values as one set from same Algolia application:
+
+1. `DOCSEARCH_APP_ID` matches application that owns DocSearch index.
+2. `DOCSEARCH_API_KEY` is public search-only key for that application.
+3. `DOCSEARCH_INDEX_NAME` exactly matches crawled documentation index.
+4. `DOCSEARCH_ASK_AI_ASSISTANT_ID` belongs to Agent Studio assistant in same application.
+5. Assistant uses same index.
+6. Current domain is allowed in `Data Sources` -> `Ask AI` -> domains. For local testing, add `localhost` if Algolia allows it, or test from deployed Netlify domain.
+7. LLM provider API key and model configured inside Algolia are valid.
+8. Restart dev server after changing `.env`.
+
+## Getting Algolia Values
+
+Use public search-only key for `DOCSEARCH_API_KEY`. Never use Admin API key in browser-facing config.
+
+1. Apply for Algolia DocSearch or open Algolia application created for this site.
+2. Find application ID, set as `DOCSEARCH_APP_ID`.
+3. Open `Search`, select documentation index, use that name as `DOCSEARCH_INDEX_NAME`.
+4. Open `Settings` -> `API Keys`, copy Search API key, set as `DOCSEARCH_API_KEY`.
+5. Open Agent Studio.
+6. Create assistant, connect it to documentation index, add allowed domains, choose LLM provider and model.
+7. Copy generated assistant ID, set as `DOCSEARCH_ASK_AI_ASSISTANT_ID`.
+8. Keep `DOCSEARCH_ASK_AI_SUGGESTED_QUESTIONS=false` unless suggested questions already configured.
+9. Restart dev server or trigger fresh Netlify deploy after changes.
+
+## Operational Notes
+
+- Apply to Algolia DocSearch if site is eligible: [Who can apply](https://docsearch.algolia.com/docs/who-can-apply/)
+- Use Docusaurus v3 crawler template: [Docusaurus v3 template](https://docsearch.algolia.com/docs/templates/#docusaurus-v3-template)
+- Use recommended Docusaurus adapter: [Docusaurus adapter](https://docsearch.algolia.com/docs/docusaurus-adapter/)
+- Follow Ask AI setup guide before setting assistant ID: [Ask AI setup](https://docsearch.algolia.com/docs/v4/askai)
+- Enable suggested questions only after Algolia creates managed suggested-questions index: [Suggested questions guide](https://www.algolia.com/doc/guides/algolia-ai/askai/guides/suggested-questions)
+- Use Ask AI error reference for `AI-201` or provider issues: [Ask AI errors](https://docsearch.algolia.com/docs/v4/askai-errors/)
+- Search results may stay incomplete until Algolia approves setup and finishes first crawl.
+- If content changes significantly and results look stale, trigger new crawl from Algolia dashboard.

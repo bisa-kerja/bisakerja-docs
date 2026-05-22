@@ -48,6 +48,7 @@ const sidebars: SidebarsConfig = {
 				"operations/deployment-overview",
 				"operations/environments",
 				"operations/failure-scenarios",
+				"operations/search-and-ask-ai",
 				"operations/documentation-platform-operations",
 			],
 		},
