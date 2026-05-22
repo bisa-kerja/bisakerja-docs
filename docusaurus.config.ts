@@ -84,6 +84,7 @@ const config: Config = {
 			{
 				docs: {
 					sidebarPath: "./sidebars.ts",
+					include: ["**/*.{md,mdx}"],
 				},
 				blog: false,
 				theme: {

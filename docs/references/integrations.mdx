@@ -6,7 +6,7 @@ owner: platform-docs-maintainer
 reviewers:
   - engineering-lead
 doc_status: active
-last_reviewed: 2026-04-15
+last_reviewed: 2026-04-23
 ---
 
 # Integrations
@@ -28,6 +28,7 @@ The project brief names these primary job data sources:
 - Throttling and anti-bot protections
 - Inconsistent salary, location, or requirement fields
 - Duplicate listings across sources
+- Public backend responses must use normalized source platform metadata and product-safe job fields, not raw provider payloads
 
 ## Model and AI Stack
 
@@ -42,6 +43,12 @@ The product brief references these model-related components:
 - Model artifact compatibility with serving runtime
 - Input schema drift between backend and model service
 - Explainability output consistency
+- Versioned payload and response contracts should be validated in the backend before user-facing responses are returned
+- Timeout and availability failures should degrade only AI workflows, not unrelated search or tracker workflows
+
+### Backend Upload Boundary
+
+For CV analysis, the backend currently accepts a temporary PDF upload, stores only sanitized file metadata plus a private storage key, and forwards a backend-owned file reference to the model service. Raw CV text is not persisted by default. Temporary local files must be cleaned through a documented retention workflow rather than exposed through public URLs.
 
 ## Platform And Development Tooling
 

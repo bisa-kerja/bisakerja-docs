@@ -6,7 +6,7 @@ owner: backend-owner
 reviewers:
   - platform-docs-maintainer
 doc_status: active
-last_reviewed: 2026-04-15
+last_reviewed: 2026-04-23
 ---
 
 # Backend API
@@ -22,7 +22,7 @@ The Backend API is the primary application backend for Bisakerja. It owns authen
 ## Platform Responsibilities
 
 - Authenticate and authorize users
-- Expose search, profile, preference, and application-tracker workflows
+- Expose search, profile, preference, bookmark, and application-tracker workflows
 - Orchestrate fit-scoring and explanation requests to the Model API
 - Read and persist normalized jobs and user state in PostgreSQL
 
@@ -47,20 +47,34 @@ The Backend API is the primary application backend for Bisakerja. It owns authen
 - Backend service overview
 - Authentication and authorization design
 - API endpoint or contract reference
+- Generated route inventory and sync-readiness evidence
 - Database access patterns and persistence notes
 - Integration notes for Model API and scraper-fed job data
+- Prisma schema, generated-client path, migration verification, and deterministic seed behavior
+- Testing strategy, route harness behavior, fixture safety, and release verification commands
 - Deployment, configuration, and operational constraints
+- Health endpoints, readiness dependency behavior, request summary logging, and audit event logging
 
-## Pre-Sync Documentation Gap Assessment
+## Sync Status
 
-The central repository does not yet contain synchronized Backend API content. Before synchronization starts, the source repository should provide or confirm:
+The central repository already contains synchronized Backend API content under `docs/services/backend-api/synced/**`.
 
-- [ ] Service overview page
-- [ ] Auth and security documentation
-- [ ] API reference or route map
-- [ ] Persistence and database notes
-- [ ] Deployment and runtime configuration notes
-- [ ] Known constraints and failure considerations
+Current navigation behavior:
+
+- Synced docs now appear under dedicated sidebar section
+- Service landing page stays as central entry point
+- Detailed implementation docs stay grouped inside synced subtree
+
+## Documentation Coverage Check
+
+The source repository now provides initial backend foundation decisions. Current synchronized set should provide or confirm:
+
+- [x] Service overview page
+- [x] Auth and security documentation
+- [x] API reference or route map
+- [x] Persistence and database notes
+- [x] Deployment and runtime configuration notes
+- [x] Known constraints and failure considerations
 
 ## Related Docs
 

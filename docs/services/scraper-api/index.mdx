@@ -51,16 +51,26 @@ The Scraper API is the ingestion service responsible for collecting job data fro
 - Failure handling for source instability, throttling, or parsing issues
 - Operational notes for running scraping jobs safely
 
-## Pre-Sync Documentation Gap Assessment
+## Sync Status
 
-The central repository does not yet contain synchronized Scraper API content. Before synchronization starts, the source repository should provide or confirm:
+The central repository already contains synchronized Scraper API content under `docs/services/scraper-api/synced/**`.
 
-- [ ] Service overview page
-- [ ] Supported source list and connector notes
-- [ ] Normalization and data-shaping documentation
-- [ ] Scheduling and refresh strategy
-- [ ] Failure and retry behavior notes
-- [ ] Runtime and operational constraints
+Current navigation behavior:
+
+- Synced docs now appear under dedicated sidebar section
+- Service landing page stays as central entry point
+- Detailed implementation docs stay grouped inside synced subtree
+
+## Documentation Coverage Check
+
+Current synchronized set should provide or confirm:
+
+- [x] Service overview page
+- [x] Supported source list and connector notes
+- [x] Normalization and data-shaping documentation
+- [x] Scheduling and refresh strategy
+- [x] Failure and retry behavior notes
+- [x] Runtime and operational constraints
 
 ## Related Docs
 

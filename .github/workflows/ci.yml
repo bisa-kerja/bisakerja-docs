@@ -3,8 +3,15 @@ name: CI
 on:
   push:
     branches:
+      - develop
       - main
   pull_request:
+    branches:
+      - develop
+      - main
+
+permissions:
+  contents: write
 
 jobs:
   validate:
@@ -14,6 +21,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'pull_request' && github.head_ref || github.ref_name }}
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
@@ -23,11 +32,39 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
+      - name: Normalize synced docs (.md -> .mdx)
+        run: bun run docs:normalize-synced
+
+      - name: Verify synced docs payload
+        run: bun run docs:verify-synced
+
       - name: Run lint
         run: bun run lint
 
       - name: Run typecheck
         run: bun run typecheck
+
+      - name: Auto format
+        run: bun run format
+
+      - name: Auto commit formatted changes
+        if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository)
+        run: |
+          if git diff --quiet; then
+            echo "No formatting changes to commit."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "chore(ci): auto-format via bun run format"
+
+          if git push; then
+            echo "Formatting commit pushed."
+          else
+            echo "::warning::Formatting changes created but push failed (permissions/protection)."
+          fi
 
       - name: Check formatting
         run: bun run format:check

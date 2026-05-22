@@ -64,10 +64,12 @@ The Model API should not be treated as the system of record for transactional da
 - Normalized job records should be stable enough for frontend display and backend filtering
 - User state should remain transactional and auditable
 - Derived AI output should be stored only when it improves the user workflow or historical analysis
+- Backend API schema implementation should keep user-owned data, normalized job records, tracker records, and persisted AI snapshots in explicit relational tables with documented ownership and retention rules
+- Seed data should be deterministic, synthetic, and normalized; raw source payloads, secrets, raw CV content, and raw model payloads should not be seeded
 
 ## Documentation Gap To Fill Later
 
-The central docs currently define ownership and data domains, but service repos should later provide:
+The central docs define ownership and data domains. Service repositories should provide and synchronize:
 
 - Concrete schema documentation
 - Table-level relationships

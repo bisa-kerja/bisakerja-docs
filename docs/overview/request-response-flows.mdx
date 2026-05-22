@@ -6,7 +6,7 @@ owner: platform-docs-maintainer
 reviewers:
   - engineering-lead
 doc_status: active
-last_reviewed: 2026-04-15
+last_reviewed: 2026-04-23
 ---
 
 # Request and Response Flows
@@ -32,6 +32,7 @@ Frontend UI -> User: render results
 
 - This flow should work for both guest and authenticated users
 - This flow depends on scraper freshness indirectly, but not on live scraper availability
+- Responses include normalized job cards with pagination, accepted filters, actual sort metadata, and stale indicators when freshness data is available
 
 ## Flow 2: Job Detail
 
@@ -52,6 +53,7 @@ Frontend UI -> User: render structured detail page
 
 - This flow should expose enough normalized data for fit analysis
 - Frontend should not need to interpret source-platform-specific raw fields
+- Missing or hidden records return a stable not-found error instead of exposing source or scraper internals
 
 ## Flow 3: Fit Score Request
 
@@ -73,8 +75,31 @@ Frontend UI -> User: render score, rationale, and skill gap
 
 - The backend should remain the only service assembling inference payloads
 - The frontend should receive product-friendly output, not raw model internals
+- Missing persisted profile or preference context should fail with a stable conflict response instead of calling the model service
+- A model-service failure should degrade only fit analysis, not job browsing or other database-backed workflows
 
-## Flow 4: Application Tracker Update
+## Flow 4: Current-User Profile and Onboarding Update
+
+### Purpose
+
+Persist current-user profile changes and return onboarding context that can be reused by other backend workflows.
+
+```text
+User -> Frontend UI: update profile, photo metadata, skills, experience, or education
+Frontend UI -> Backend API: submit /api/v1/me update request
+Backend API -> PostgreSQL: validate ownership and replace/update records transactionally
+PostgreSQL -> Backend API: persisted profile state
+Backend API -> Frontend UI: updated profile with onboarding status
+Frontend UI -> User: render refreshed profile context
+```
+
+### Notes
+
+- The backend must scope all `/api/v1/me` mutations to authenticated user identity.
+- Nested lists such as skills, experience, and education use replacement semantics in MVP.
+- Onboarding status should be computed centrally from persisted account and preference context.
+
+## Flow 5: Application Tracker Update
 
 ### Purpose
 
@@ -84,15 +109,39 @@ Persist a userâ€™s application state change for a role.
 User -> Frontend UI: mark job as applied or interviewed
 Frontend UI -> Backend API: submit tracker update
 Backend API -> PostgreSQL: validate and persist state change
-PostgreSQL -> Backend API: write confirmation
+PostgreSQL -> Backend API: write confirmation and status history
 Backend API -> Frontend UI: updated tracker state
 Frontend UI -> User: show new application status
 ```
 
 ### Notes
 
-- This flow should be transactional and user-specific
-- Even if fit scoring is unavailable, tracker updates should still work if backend and database are healthy
+- This flow is transactional and user-specific.
+- Tracker records are always scoped to the authenticated user.
+- Status changes append history without storing private notes in audit metadata.
+- Even if fit scoring is unavailable, tracker updates should still work if backend and database are healthy.
+
+## Flow 6: Saved Job Bookmark
+
+### Purpose
+
+Persist or remove a user-owned saved-job record for later review.
+
+```text
+User -> Frontend UI: save or remove job
+Frontend UI -> Backend API: submit bookmark request
+Backend API -> PostgreSQL: validate current user and normalized job relationship
+PostgreSQL -> Backend API: bookmark write or delete result
+Backend API -> Frontend UI: saved-job confirmation or no-content delete response
+Frontend UI -> User: update saved state
+```
+
+### Notes
+
+- Bookmark routes are authenticated and scoped to the current user.
+- Saving a job requires the normalized job listing to exist and be visible.
+- Duplicate saves return a stable conflict response instead of creating another row.
+- Saved job list responses use the same normalized job card shape as job search responses.
 
 ## Synchronous Flow Design Guidance
 

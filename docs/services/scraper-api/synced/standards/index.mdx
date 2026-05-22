@@ -1,0 +1,39 @@
+---
+title: Standards
+description: Scraper documentation standards for metadata, naming, review, lifecycle, sync, and source payload safety.
+owner: data-ingestion-owner
+reviewers:
+  - platform-docs-maintainer
+  - backend-owner
+doc_status: draft
+last_reviewed: 2026-05-01
+---
+
+# Standards
+
+Scraper docs follow the central docs standards, scoped to this repository.
+
+## Pages
+
+- [Metadata Standard](./metadata-standard.mdx)
+- [Naming Conventions](./naming-conventions.mdx)
+- [Payload Redaction Policy](./payload-redaction-policy.mdx)
+- [Contribution Guide](./contribution-guide.mdx)
+- [Review Process](./review-process.mdx)
+- [Structural Change Policy](./structural-change-policy.mdx)
+- [Freshness and Lifecycle](./freshness-and-lifecycle.mdx)
+- [Documentation Health Metrics](./documentation-health-metrics.mdx)
+- [Archival Strategy](./archival-strategy.mdx)
+- [Documentation Sync and Versioning](./documentation-sync-and-versioning.mdx)
+- [Versioning and Audience Strategy](./versioning-and-audience-strategy.mdx)
+
+## Rules
+
+- Keep docs standalone.
+- Keep source-specific implementation detail in scraper-owned docs.
+- Link to Backend API docs only for consumer contracts and database expectations.
+- Never publish raw cookies, bearer tokens, session ids, or tracking identifiers.
+- Generated references must be clearly labeled and free from real source credentials.
+- Sync output must preserve scraper service ownership and publish only into scraper service targets.
+- Major docs changes must follow the review matrix and structural change policy.
+- Stale, deprecated, or archived pages must keep owner and replacement context.

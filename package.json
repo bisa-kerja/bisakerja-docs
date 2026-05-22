@@ -6,6 +6,8 @@
 		"docusaurus": "docusaurus",
 		"start": "docusaurus start",
 		"build": "docusaurus build",
+		"docs:normalize-synced": "bun run ./scripts/normalize-synced-docs.ts",
+		"docs:verify-synced": "bun run ./scripts/verify-synced-docs.ts",
 		"lint": "eslint .",
 		"lint:fix": "eslint . --fix",
 		"format": "prettier --write .",
