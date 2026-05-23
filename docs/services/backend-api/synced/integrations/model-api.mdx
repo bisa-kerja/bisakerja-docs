@@ -85,54 +85,54 @@ Backend-prepared payload shape:
 
 ```json
 {
-  "requestId": "req_123",
-  "inputVersion": "job-fit-v1",
-  "user": {
-    "careerStatus": "FRESH_GRADUATE",
-    "skills": [
-      {
-        "name": "TypeScript",
-        "level": "INTERMEDIATE"
-      }
-    ],
-    "experience": [
-      {
-        "title": "Backend Developer Intern",
-        "description": "Built REST APIs with TypeScript."
-      }
-    ]
-  },
-  "preferences": {
-    "targetRoles": ["Backend Developer"],
-    "locations": [
-      {
-        "province": "DKI Jakarta",
-        "city": "Jakarta Selatan"
-      }
-    ],
-    "workTypes": ["REMOTE"],
-    "salaryExpectation": {
-      "min": 5000000,
-      "max": 10000000,
-      "currency": "IDR",
-      "period": "MONTHLY"
-    }
-  },
-  "job": {
-    "id": "11111111-1111-4111-8111-111111111111",
-    "title": "Backend Developer",
-    "description": "Build backend APIs.",
-    "requirements": [
-      {
-        "type": "SKILL",
-        "value": "TypeScript",
-        "priority": "HIGH"
-      }
-    ],
-    "skills": ["TypeScript", "PostgreSQL"],
-    "workType": "REMOTE",
-    "experienceLevel": "ENTRY_LEVEL"
-  }
+	"requestId": "req_123",
+	"inputVersion": "job-fit-v1",
+	"user": {
+		"careerStatus": "FRESH_GRADUATE",
+		"skills": [
+			{
+				"name": "TypeScript",
+				"level": "INTERMEDIATE"
+			}
+		],
+		"experience": [
+			{
+				"title": "Backend Developer Intern",
+				"description": "Built REST APIs with TypeScript."
+			}
+		]
+	},
+	"preferences": {
+		"targetRoles": ["Backend Developer"],
+		"locations": [
+			{
+				"province": "DKI Jakarta",
+				"city": "Jakarta Selatan"
+			}
+		],
+		"workTypes": ["REMOTE"],
+		"salaryExpectation": {
+			"min": 5000000,
+			"max": 10000000,
+			"currency": "IDR",
+			"period": "MONTHLY"
+		}
+	},
+	"job": {
+		"id": "11111111-1111-4111-8111-111111111111",
+		"title": "Backend Developer",
+		"description": "Build backend APIs.",
+		"requirements": [
+			{
+				"type": "SKILL",
+				"value": "TypeScript",
+				"priority": "HIGH"
+			}
+		],
+		"skills": ["TypeScript", "PostgreSQL"],
+		"workType": "REMOTE",
+		"experienceLevel": "ENTRY_LEVEL"
+	}
 }
 ```
 
@@ -161,30 +161,30 @@ Backend-prepared payload shape:
 
 ```json
 {
-  "requestId": "req_456",
-  "inputVersion": "cv-analyzer-v1",
-  "language": "ID",
-  "inputMode": "UPLOAD",
-  "compareSource": "JOB_SEARCH",
-  "cv": {
-    "fileId": "cv_file_123",
-    "mimeType": "application/pdf",
-    "sizeBytes": 524288,
-    "storageKey": "cv/user_123/cv_file_123.pdf"
-  },
-  "job": {
-    "id": "11111111-1111-4111-8111-111111111111",
-    "title": "Backend Developer",
-    "description": "Build backend APIs.",
-    "requirements": [
-      {
-        "type": "SKILL",
-        "value": "TypeScript",
-        "priority": "HIGH"
-      }
-    ],
-    "skills": ["TypeScript", "PostgreSQL"]
-  }
+	"requestId": "req_456",
+	"inputVersion": "cv-analyzer-v1",
+	"language": "ID",
+	"inputMode": "UPLOAD",
+	"compareSource": "JOB_SEARCH",
+	"cv": {
+		"fileId": "cv_file_123",
+		"mimeType": "application/pdf",
+		"sizeBytes": 524288,
+		"storageKey": "cv/user_123/cv_file_123.pdf"
+	},
+	"job": {
+		"id": "11111111-1111-4111-8111-111111111111",
+		"title": "Backend Developer",
+		"description": "Build backend APIs.",
+		"requirements": [
+			{
+				"type": "SKILL",
+				"value": "TypeScript",
+				"priority": "HIGH"
+			}
+		],
+		"skills": ["TypeScript", "PostgreSQL"]
+	}
 }
 ```
 
@@ -213,52 +213,52 @@ Backend-prepared payload shape:
 
 ```json
 {
-  "requestId": "req_789",
-  "inputVersion": "job-recommendations-v1",
-  "talentProfile": {
-    "targetRole": "Backend Developer",
-    "seniorityLevel": "ENTRY_LEVEL",
-    "hardSkills": ["TypeScript"],
-    "softSkills": [],
-    "domainSignals": ["Engineering"],
-    "toolsAndTechnologies": ["REST API"],
-    "educationSignals": [],
-    "experienceYearsEstimate": null,
-    "locationPreferences": [
-      { "province": "DKI Jakarta", "city": "Jakarta Selatan" }
-    ],
-    "workTypePreferences": ["REMOTE"],
-    "salaryExpectation": {
-      "min": 5000000,
-      "max": 9000000,
-      "currency": "IDR",
-      "period": "MONTHLY"
-    },
-    "redFlags": ["Docker"]
-  },
-  "rankingPolicy": {
-    "maxRecommendations": 10,
-    "requireCandidateJobIds": true,
-    "deduplicateByJobId": true
-  },
-  "jobCandidates": [
-    {
-      "jobId": "11111111-1111-4111-8111-111111111111",
-      "title": "Backend Developer",
-      "companyName": "Nusantara Tech",
-      "location": {
-        "display": "Jakarta Selatan, DKI Jakarta",
-        "province": "DKI Jakarta",
-        "city": "Jakarta Selatan"
-      },
-      "workType": "REMOTE",
-      "experienceLevel": "ENTRY_LEVEL",
-      "descriptionSummary": "Build backend APIs",
-      "requiredSkills": ["TypeScript"],
-      "postedAt": "2026-05-18T00:00:00.000Z",
-      "sourceUpdatedAt": null
-    }
-  ]
+	"requestId": "req_789",
+	"inputVersion": "job-recommendations-v1",
+	"talentProfile": {
+		"targetRole": "Backend Developer",
+		"seniorityLevel": "ENTRY_LEVEL",
+		"hardSkills": ["TypeScript"],
+		"softSkills": [],
+		"domainSignals": ["Engineering"],
+		"toolsAndTechnologies": ["REST API"],
+		"educationSignals": [],
+		"experienceYearsEstimate": null,
+		"locationPreferences": [
+			{ "province": "DKI Jakarta", "city": "Jakarta Selatan" }
+		],
+		"workTypePreferences": ["REMOTE"],
+		"salaryExpectation": {
+			"min": 5000000,
+			"max": 9000000,
+			"currency": "IDR",
+			"period": "MONTHLY"
+		},
+		"redFlags": ["Docker"]
+	},
+	"rankingPolicy": {
+		"maxRecommendations": 10,
+		"requireCandidateJobIds": true,
+		"deduplicateByJobId": true
+	},
+	"jobCandidates": [
+		{
+			"jobId": "11111111-1111-4111-8111-111111111111",
+			"title": "Backend Developer",
+			"companyName": "Nusantara Tech",
+			"location": {
+				"display": "Jakarta Selatan, DKI Jakarta",
+				"province": "DKI Jakarta",
+				"city": "Jakarta Selatan"
+			},
+			"workType": "REMOTE",
+			"experienceLevel": "ENTRY_LEVEL",
+			"descriptionSummary": "Build backend APIs",
+			"requiredSkills": ["TypeScript"],
+			"postedAt": "2026-05-18T00:00:00.000Z",
+			"sourceUpdatedAt": null
+		}
+	]
 }
 ```
 
