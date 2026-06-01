@@ -15,27 +15,27 @@ Health metrics show whether scraper docs remain usable for engineers, operators,
 
 ## Core Metrics
 
-| Metric | Measures | Target |
-| --- | --- | --- |
-| Coverage | Required scraper docs exist for each docs section | Required files present |
-| Freshness | Pages are within review cadence | No stale active page without backlog |
-| Ownership completeness | Every active page has owner and reviewers | 100% |
-| Broken links | Local docs links resolve | 0 broken links |
-| Sync health | Source docs can publish to central target | Latest bundle validates |
-| Secret safety | Docs contain no raw credentials or session values | 0 detected raw secrets |
-| Generated reference freshness | Generated artifacts match implementation | No stale generated artifact after contract change |
-| Scope hygiene | Scraper docs do not duplicate central or Backend API ownership | No unresolved scope conflict |
+| Metric                        | Measures                                                       | Target                                            |
+| ----------------------------- | -------------------------------------------------------------- | ------------------------------------------------- |
+| Coverage                      | Required scraper docs exist for each docs section              | Required files present                            |
+| Freshness                     | Pages are within review cadence                                | No stale active page without backlog              |
+| Ownership completeness        | Every active page has owner and reviewers                      | 100%                                              |
+| Broken links                  | Local docs links resolve                                       | 0 broken links                                    |
+| Sync health                   | Source docs can publish to central target                      | Latest bundle validates                           |
+| Secret safety                 | Docs contain no raw credentials or session values              | 0 detected raw secrets                            |
+| Generated reference freshness | Generated artifacts match implementation                       | No stale generated artifact after contract change |
+| Scope hygiene                 | Scraper docs do not duplicate central or Backend API ownership | No unresolved scope conflict                      |
 
 ## Operational Indicators
 
-| Indicator | Source | Healthy signal |
-| --- | --- | --- |
-| Broken links | Link checker | `0` broken local links |
-| Ownerless active pages | Metadata scan | `0` active pages missing owner or reviewers |
-| Stale pages | `last_reviewed` scan | No active page older than cadence |
-| Sync health | Sync readiness report | Manifest, paths, metadata, links, and secret scan pass |
-| Source contract drift | Contract tests or adapter failures | No unresolved source drift |
-| Raw payload safety | Secret-pattern scan | No bearer, cookie, session, visitor, or device tokens |
+| Indicator              | Source                             | Healthy signal                                         |
+| ---------------------- | ---------------------------------- | ------------------------------------------------------ |
+| Broken links           | Link checker                       | `0` broken local links                                 |
+| Ownerless active pages | Metadata scan                      | `0` active pages missing owner or reviewers            |
+| Stale pages            | `last_reviewed` scan               | No active page older than cadence                      |
+| Sync health            | Sync readiness report              | Manifest, paths, metadata, links, and secret scan pass |
+| Source contract drift  | Contract tests or adapter failures | No unresolved source drift                             |
+| Raw payload safety     | Secret-pattern scan                | No bearer, cookie, session, visitor, or device tokens  |
 
 ## Review Use
 
