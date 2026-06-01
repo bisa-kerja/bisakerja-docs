@@ -15,16 +15,16 @@ This process defines who must review scraper documentation before it is treated 
 
 ## Review Matrix
 
-| Change type                    | Examples                                                  | Required reviewers                                             |
-| ------------------------------ | --------------------------------------------------------- | -------------------------------------------------------------- |
-| Low-risk wording               | Typo, grammar, formatting                                 | `data-ingestion-owner` or delegated maintainer                 |
-| Source adapter contract        | Dealls, Glints, JobStreet, Kalibrr request or field rules | `data-ingestion-owner`, `backend-owner`                        |
-| Raw payload or mapper contract | Nullability, identity, HTML handling, field transforms    | `data-ingestion-owner`, `backend-owner`                        |
-| Operations or runbook          | Deployment, incident triage, observability, testing       | `data-ingestion-owner`, `platform-docs-maintainer`             |
-| Security or redaction          | Credential handling, raw capture publishing, secret scan  | `data-ingestion-owner`, `engineering-lead`                     |
-| Sync or versioning             | Central path mapping, release snapshot, sync rollback     | `data-ingestion-owner`, `platform-docs-maintainer`             |
-| Structural change              | Paths, section moves, navigation, canonical names         | `platform-docs-maintainer`, `engineering-lead`, affected owner |
-| Cross-service boundary         | Backend ownership, trust boundary, main DB sync behavior  | `data-ingestion-owner`, `backend-owner`, `engineering-lead`    |
+| Change type | Examples | Required reviewers |
+| --- | --- | --- |
+| Low-risk wording | Typo, grammar, formatting | `data-ingestion-owner` or delegated maintainer |
+| Source adapter contract | Dealls, Glints, JobStreet, Kalibrr request or field rules | `data-ingestion-owner`, `backend-owner` |
+| Raw payload or mapper contract | Nullability, identity, HTML handling, field transforms | `data-ingestion-owner`, `backend-owner` |
+| Operations or runbook | Deployment, incident triage, observability, testing | `data-ingestion-owner`, `platform-docs-maintainer` |
+| Security or redaction | Credential handling, raw capture publishing, secret scan | `data-ingestion-owner`, `engineering-lead` |
+| Sync or versioning | Central path mapping, release snapshot, sync rollback | `data-ingestion-owner`, `platform-docs-maintainer` |
+| Structural change | Paths, section moves, navigation, canonical names | `platform-docs-maintainer`, `engineering-lead`, affected owner |
+| Cross-service boundary | Backend ownership, trust boundary, main DB sync behavior | `data-ingestion-owner`, `backend-owner`, `engineering-lead` |
 
 ## Workflow
 
@@ -63,3 +63,4 @@ Major changes include:
 - [Contribution Guide](./contribution-guide.mdx)
 - [Structural Change Policy](./structural-change-policy.mdx)
 - [Documentation Release Checklist](../operations/documentation-release-checklist.mdx)
+
