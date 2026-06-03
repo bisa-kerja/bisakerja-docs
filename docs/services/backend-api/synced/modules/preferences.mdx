@@ -103,23 +103,23 @@ If the frontend uses Indonesian labels, the API must still use canonical enum va
 
 ```json
 {
-	"careerStatus": "FRESH_GRADUATE",
-	"jobSeekingStatus": "IMMEDIATE",
-	"targetRoles": ["Backend Developer", "Full Stack Developer"],
-	"locations": [
-		{
-			"province": "DKI Jakarta",
-			"city": "Jakarta Selatan"
-		}
-	],
-	"workTypes": ["REMOTE", "HYBRID"],
-	"salaryExpectation": {
-		"min": 5000000,
-		"max": 10000000,
-		"currency": "IDR",
-		"period": "MONTHLY"
-	},
-	"emailNotificationsEnabled": true
+  "careerStatus": "FRESH_GRADUATE",
+  "jobSeekingStatus": "IMMEDIATE",
+  "targetRoles": ["Backend Developer", "Full Stack Developer"],
+  "locations": [
+    {
+      "province": "DKI Jakarta",
+      "city": "Jakarta Selatan"
+    }
+  ],
+  "workTypes": ["REMOTE", "HYBRID"],
+  "salaryExpectation": {
+    "min": 5000000,
+    "max": 10000000,
+    "currency": "IDR",
+    "period": "MONTHLY"
+  },
+  "emailNotificationsEnabled": true
 }
 ```
 
@@ -142,37 +142,37 @@ Validation:
 
 ## Response Schema
 
-`GET /api/v1/me/preferences` returns message `Preferensi berhasil diambil`.
-`PUT /api/v1/me/preferences` returns message `Preferensi berhasil disimpan`.
-`PATCH /api/v1/me/preferences` returns message `Preferensi berhasil diperbarui`.
+`GET /api/v1/me/preferences` returns message `Preferences retrieved successfully`.
+`PUT /api/v1/me/preferences` returns message `Preferences saved successfully`.
+`PATCH /api/v1/me/preferences` returns message `Preferences updated successfully`.
 
 ```json
 {
-	"success": true,
-	"message": "Preferensi berhasil diambil",
-	"data": {
-		"id": "pref_123",
-		"careerStatus": "FRESH_GRADUATE",
-		"jobSeekingStatus": "IMMEDIATE",
-		"targetRoles": ["Backend Developer", "Full Stack Developer"],
-		"locations": [
-			{
-				"province": "DKI Jakarta",
-				"city": "Jakarta Selatan"
-			}
-		],
-		"workTypes": ["REMOTE", "HYBRID"],
-		"salaryExpectation": {
-			"min": 5000000,
-			"max": 10000000,
-			"currency": "IDR",
-			"period": "MONTHLY"
-		},
-		"emailNotificationsEnabled": true,
-		"createdAt": "2026-04-22T00:00:00.000Z",
-		"updatedAt": "2026-04-22T00:00:00.000Z"
-	},
-	"meta": null
+  "success": true,
+  "message": "Preferences retrieved successfully",
+  "data": {
+    "id": "pref_123",
+    "careerStatus": "FRESH_GRADUATE",
+    "jobSeekingStatus": "IMMEDIATE",
+    "targetRoles": ["Backend Developer", "Full Stack Developer"],
+    "locations": [
+      {
+        "province": "DKI Jakarta",
+        "city": "Jakarta Selatan"
+      }
+    ],
+    "workTypes": ["REMOTE", "HYBRID"],
+    "salaryExpectation": {
+      "min": 5000000,
+      "max": 10000000,
+      "currency": "IDR",
+      "period": "MONTHLY"
+    },
+    "emailNotificationsEnabled": true,
+    "createdAt": "2026-04-22T00:00:00.000Z",
+    "updatedAt": "2026-04-22T00:00:00.000Z"
+  },
+  "meta": null
 }
 ```
 
@@ -253,7 +253,7 @@ Consumers must read persisted preferences from Backend API persistence, not trus
 
 Validation detail example for salary range:
 
-- `salaryExpectation.max`: `Ekspektasi gaji maksimum harus lebih besar atau sama dengan minimum`
+- `salaryExpectation.max`: `Maximum salary expectation must be greater than or equal to minimum`
 
 ## Observability
 

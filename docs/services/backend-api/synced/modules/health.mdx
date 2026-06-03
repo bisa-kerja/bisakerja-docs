@@ -48,14 +48,14 @@ The Health module does not own:
 
 ```json
 {
-	"success": true,
-	"message": "Layanan aktif",
-	"data": {
-		"service": "bisakerja-api",
-		"status": "live",
-		"env": "local"
-	},
-	"meta": null
+  "success": true,
+  "message": "Service is live",
+  "data": {
+    "service": "bisakerja-api",
+    "status": "live",
+    "env": "local"
+  },
+  "meta": null
 }
 ```
 
@@ -63,18 +63,18 @@ The Health module does not own:
 
 ```json
 {
-	"success": true,
-	"message": "Layanan siap",
-	"data": {
-		"service": "bisakerja-api",
-		"status": "ready",
-		"env": "local",
-		"dependencies": {
-			"postgresql": "healthy",
-			"redis": "healthy"
-		}
-	},
-	"meta": null
+  "success": true,
+  "message": "Service is ready",
+  "data": {
+    "service": "bisakerja-api",
+    "status": "ready",
+    "env": "local",
+    "dependencies": {
+      "postgresql": "healthy",
+      "redis": "healthy"
+    }
+  },
+  "meta": null
 }
 ```
 
