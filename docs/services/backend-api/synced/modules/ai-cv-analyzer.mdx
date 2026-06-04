@@ -102,20 +102,20 @@ Successful response:
 
 ```json
 {
-	"success": true,
-	"message": "CV uploaded successfully",
-	"data": {
-		"cvFile": {
-			"id": "11111111-1111-4111-8111-111111111111",
-			"originalFileName": "resume.pdf",
-			"mimeType": "application/pdf",
-			"sizeBytes": 284321,
-			"uploadedAt": "2026-05-18T10:00:00.000Z",
-			"expiresAt": "2026-05-19T10:00:00.000Z",
-			"isActive": true
-		}
-	},
-	"meta": null
+  "success": true,
+  "message": "CV uploaded successfully",
+  "data": {
+    "cvFile": {
+      "id": "11111111-1111-4111-8111-111111111111",
+      "originalFileName": "resume.pdf",
+      "mimeType": "application/pdf",
+      "sizeBytes": 284321,
+      "uploadedAt": "2026-05-18T10:00:00.000Z",
+      "expiresAt": "2026-05-19T10:00:00.000Z",
+      "isActive": true
+    }
+  },
+  "meta": null
 }
 ```
 
@@ -127,11 +127,11 @@ For multipart upload, metadata fields are sent alongside file part.
 
 ```json
 {
-	"jobRoles": ["Backend Developer", "Software Engineer"],
-	"language": "id",
-	"inputMode": "UPLOAD",
-	"compareSource": "JOB_SEARCH",
-	"persistResult": true
+  "jobRoles": ["Backend Developer", "Software Engineer"],
+  "language": "id",
+  "inputMode": "UPLOAD",
+  "compareSource": "JOB_SEARCH",
+  "persistResult": true
 }
 ```
 
@@ -143,7 +143,7 @@ Validation:
 | `language`      | Required enum: `id` or `en`                                                        |
 | `inputMode`     | Required enum: `UPLOAD` or `REFERENCE`                                             |
 | `compareSource` | Optional enum: `BOOKMARK`, `JOB_SEARCH`, `DIRECT_JOB_DETAIL`; default `JOB_SEARCH` |
-| `persistResult` | Optional boolean, default `false`                                                  |
+| `persistResult` | Optional boolean, default `true`; send `false` only to opt out of saving           |
 | `cvFile`        | Required for `UPLOAD` mode                                                         |
 | `cvFileId`      | Optional for `REFERENCE`; when omitted the active CV fallback is used              |
 
@@ -181,22 +181,22 @@ Example `jobCandidates[]` item:
 
 ```json
 {
-	"jobId": "11111111-1111-4111-8111-111111111111",
-	"scoringInput": {
-		"titleText": "Backend Developer",
-		"descriptionText": "Build REST APIs and PostgreSQL services.",
-		"requirementSummary": "TypeScript, PostgreSQL, API testing.",
-		"requiredSkills": ["typescript", "postgresql", "rest api"],
-		"requirements": ["Build REST APIs", "Maintain PostgreSQL schema"],
-		"roleFamily": "backend",
-		"experienceLevel": "ENTRY_LEVEL",
-		"workType": "REMOTE"
-	},
-	"backendMetadata": {
-		"title": "Backend Developer",
-		"companyName": "Nusantara Tech",
-		"source": "JOB_SEARCH"
-	}
+  "jobId": "11111111-1111-4111-8111-111111111111",
+  "scoringInput": {
+    "titleText": "Backend Developer",
+    "descriptionText": "Build REST APIs and PostgreSQL services.",
+    "requirementSummary": "TypeScript, PostgreSQL, API testing.",
+    "requiredSkills": ["typescript", "postgresql", "rest api"],
+    "requirements": ["Build REST APIs", "Maintain PostgreSQL schema"],
+    "roleFamily": "backend",
+    "experienceLevel": "ENTRY_LEVEL",
+    "workType": "REMOTE"
+  },
+  "backendMetadata": {
+    "title": "Backend Developer",
+    "companyName": "Nusantara Tech",
+    "source": "JOB_SEARCH"
+  }
 }
 ```
 
@@ -212,61 +212,61 @@ Payload rules:
 
 ```json
 {
-	"success": true,
-	"message": "CV analysis completed successfully",
-	"data": {
-		"jobRoles": ["Backend Developer", "Software Engineer"],
-		"language": "id",
-		"analysisResult": {
-			"id": "11111111-1111-4111-8111-111111111111",
-			"schemaVersion": "cv-analysis-v2",
-			"jobFitAlignment": {
-				"score": 78,
-				"summary": "The CV is well aligned with the Backend Developer role because it highlights REST API, PostgreSQL, and backend project experience. Fit can improve if deployment experience is made more explicit."
-			},
-			"atsFriendliness": {
-				"score": 84,
-				"summary": "The CV structure is easy enough for ATS to read, but several important keywords are not summarized clearly in the skills section."
-			},
-			"overallImpression": "The CV shows a strong backend foundation for a junior-mid candidate, with the largest improvement areas in impact evidence and keyword alignment for the target role.",
-			"topActionables": [
-				"Add 2-3 measurable bullets to backend experience, such as performance improvement, user count, or data scale.",
-				"Create a technical skills section that groups programming languages, databases, frameworks, and deployment tools.",
-				"Align the profile summary with the Backend Developer role so key keywords appear near the top of the CV."
-			],
-			"sectionReviews": [
-				{
-					"sectionName": "Relevant Skills",
-					"analysis": "Relevant backend skills are present, but not all are grouped clearly.",
-					"actionPoints": [
-						"Group skills into Backend, Database, Testing, and Deployment.",
-						"Prioritize skills most often requested for the target role."
-					],
-					"whyItsImportantForYou": "ATS and recruiters usually look for specific skill keywords before reading experience details."
-				}
-			],
-			"jobRecommendations": [
-				{
-					"jobId": "11111111-1111-4111-8111-111111111111",
-					"title": "Backend Developer",
-					"companyName": "Nusantara Tech",
-					"matchScore": 82,
-					"reason": "This job matches TypeScript, REST API, and PostgreSQL signals in the CV.",
-					"nextStep": "Clarify deployment evidence before sending an application."
-				}
-			],
-			"generatedCv": {
-				"available": false,
-				"note": "Generated CV feature is not available yet."
-			},
-			"model": {
-				"name": "cv-analyzer-model",
-				"version": "v1"
-			},
-			"analyzedAt": "2026-04-22T00:00:00.000Z"
-		}
-	},
-	"meta": null
+  "success": true,
+  "message": "CV analysis completed successfully",
+  "data": {
+    "jobRoles": ["Backend Developer", "Software Engineer"],
+    "language": "id",
+    "analysisResult": {
+      "id": "11111111-1111-4111-8111-111111111111",
+      "schemaVersion": "cv-analysis-v2",
+      "jobFitAlignment": {
+        "score": 78,
+        "summary": "The CV is well aligned with the Backend Developer role because it highlights REST API, PostgreSQL, and backend project experience. Fit can improve if deployment experience is made more explicit."
+      },
+      "atsFriendliness": {
+        "score": 84,
+        "summary": "The CV structure is easy enough for ATS to read, but several important keywords are not summarized clearly in the skills section."
+      },
+      "overallImpression": "The CV shows a strong backend foundation for a junior-mid candidate, with the largest improvement areas in impact evidence and keyword alignment for the target role.",
+      "topActionables": [
+        "Add 2-3 measurable bullets to backend experience, such as performance improvement, user count, or data scale.",
+        "Create a technical skills section that groups programming languages, databases, frameworks, and deployment tools.",
+        "Align the profile summary with the Backend Developer role so key keywords appear near the top of the CV."
+      ],
+      "sectionReviews": [
+        {
+          "sectionName": "Relevant Skills",
+          "analysis": "Relevant backend skills are present, but not all are grouped clearly.",
+          "actionPoints": [
+            "Group skills into Backend, Database, Testing, and Deployment.",
+            "Prioritize skills most often requested for the target role."
+          ],
+          "whyItsImportantForYou": "ATS and recruiters usually look for specific skill keywords before reading experience details."
+        }
+      ],
+      "jobRecommendations": [
+        {
+          "jobId": "11111111-1111-4111-8111-111111111111",
+          "title": "Backend Developer",
+          "companyName": "Nusantara Tech",
+          "matchScore": 82,
+          "reason": "This job matches TypeScript, REST API, and PostgreSQL signals in the CV.",
+          "nextStep": "Clarify deployment evidence before sending an application."
+        }
+      ],
+      "generatedCv": {
+        "available": false,
+        "note": "Generated CV feature is not available yet."
+      },
+      "model": {
+        "name": "cv-analyzer-model",
+        "version": "v1"
+      },
+      "analyzedAt": "2026-04-22T00:00:00.000Z"
+    }
+  },
+  "meta": null
 }
 ```
 
@@ -358,7 +358,7 @@ Optional write models:
 
 Persistence rules:
 
-- Persist sanitized analysis snapshots only when `persistResult=true`.
+- Persist sanitized analysis snapshots by default; `persistResult=false` opts out.
 - Store CV file metadata separately from raw analysis result.
 - `cv_file_metadata.isActive` marks the user's active CV.
 - At most one non-deleted active CV may exist per user.
